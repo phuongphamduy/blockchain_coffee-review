@@ -7,8 +7,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class MainControl {
 	@RequestMapping("/")
-	@ResponseBody
 	public String main() {
-		return "HELLO WORLD";
+		return "introduce/index";
+	}
+	
+	@RequestMapping("post")
+	public String post() {
+		return "post/index";
 	}
 }
