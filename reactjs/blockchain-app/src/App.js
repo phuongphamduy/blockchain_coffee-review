@@ -7,8 +7,8 @@ function App() {
         <>
             <Router>
                 <Routes>
-                    <Route path="/" element={<MainLayout />} />
-                    <Route path="/home" element={<SecondLayout />} />
+                    <Route path="/" element={<SecondLayout />} />
+                    <Route path="/post" element={<MainLayout />} />
                 </Routes>
             </Router>
         </>

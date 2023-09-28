@@ -1,0 +1,50 @@
+.d-flex {
+    display: flex;
+    align-items: center;
+}
+
+.logo-section {
+    display: flex;
+    align-items: center;
+    height: var(--header-height);
+    .header-logo {
+        height: 50px;
+        width: 50px;
+        margin-right: 8px;
+    }
+}
+
+.search-section {
+    display: flex;
+    margin-left: 20px;
+    align-items: center;
+
+    .input {
+        padding: 6px;
+        font-size: 1.4rem;
+    }
+
+    .search-icon {
+        font-size: 2rem;
+        font-family: 700;
+        margin-left: 8px;
+        cursor: pointer;
+    }
+}
+
+.account-section {
+    display: flex;
+    align-items: center;
+    height: var(--header-height);
+    justify-content: right;
+    .btn {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: var(--text-color);
+        padding: 4px 20px;
+        + .btn {
+            margin-left: 10px;
+        }
+    }
+}
+
