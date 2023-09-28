@@ -1,5 +1,11 @@
+import styles from './Header.module.scss';
+
 function Header() {
-    return <div>Hello nice to meet you</div>;
+    return (
+        <>
+            <div className={styles['header-wrapper']}></div>
+        </>
+    );
 }
 
 export default Header;
