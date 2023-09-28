@@ -1,28 +1,22 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "./index.css";
-import App from "./App";
-import reportWebVitals from "./reportWebVitals";
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './index.scss';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+import GlobalStyle from './components/GlobalStyle';
 
-<script
-  src="https://cdn.jsdelivr.net/npm/react/umd/react.production.min.js"
-  crossorigin
-></script>;
-<script
-  src="https://cdn.jsdelivr.net/npm/react-dom/umd/react-dom.production.min.js"
-  crossorigin
-></script>;
-<script
-  src="https://cdn.jsdelivr.net/npm/react-bootstrap@next/dist/react-bootstrap.min.js"
-  crossorigin
-></script>;
+<script src="https://cdn.jsdelivr.net/npm/react/umd/react.production.min.js" crossorigin></script>;
+<script src="https://cdn.jsdelivr.net/npm/react-dom/umd/react-dom.production.min.js" crossorigin></script>;
+<script src="https://cdn.jsdelivr.net/npm/react-bootstrap@next/dist/react-bootstrap.min.js" crossorigin></script>;
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
+const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+    <React.StrictMode>
+        <GlobalStyle>
+            <App />
+        </GlobalStyle>
+    </React.StrictMode>,
 );
 
 // If you want to start measuring performance in your app, pass a function

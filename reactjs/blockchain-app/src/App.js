@@ -1,9 +1,17 @@
-import { Button } from 'react-bootstrap';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import MainLayout from './layout/MainLayout';
+import SecondLayout from './layout/SecondLayout/SecondLayout';
+
 function App() {
     return (
-        <div className="App">
-            <Button>Hello</Button>
-        </div>
+        <>
+            <Router>
+                <Routes>
+                    <Route path="/" element={<MainLayout />} />
+                    <Route path="/home" element={<SecondLayout />} />
+                </Routes>
+            </Router>
+        </>
     );
 }
 
