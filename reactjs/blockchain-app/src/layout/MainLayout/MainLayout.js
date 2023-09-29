@@ -1,7 +1,8 @@
-import { Col, Container, Row } from 'react-bootstrap';
+import { Container, Row } from 'react-bootstrap';
 import styles from './MainLayout.module.scss';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import { Outlet } from 'react-router-dom';
 
 function MainLayout() {
     return (
@@ -13,11 +14,8 @@ function MainLayout() {
                     </Row>
                 </Container>
             </div>
+            <Outlet />
             <Container>
-                <Row>
-                    <Col>post section</Col>
-                    <Col>Map section</Col>
-                </Row>
                 <Row>
                     <Footer />
                 </Row>
