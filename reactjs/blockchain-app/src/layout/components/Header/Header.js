@@ -4,8 +4,45 @@ import Logo from '~/statics/images/Logo_Coffe.png';
 import { useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { Combobox, ComboboxInput, ComboboxPopover, ComboboxList, ComboboxOption } from '@reach/combobox';
+import '@reach/combobox/styles.css';
+import { useEffect, useState } from 'react';
+import _ from 'lodash';
+import { setDefaults, geocode, RequestType } from 'react-geocode';
 function Header() {
     const location = useLocation();
+    const [address, setAddress] = useState('');
+    const [listAddress, setListAddress] = useState([]);
+
+    useEffect(() => {
+        if (address.trim().length === 0) {
+            return;
+        }
+
+        let debounceF = _.debounce(function () {
+            geocode(RequestType.ADDRESS, address)
+                .then((response) => {
+                    console.log(response);
+                    setListAddress(response.results);
+                })
+                .catch((error) => {
+                    console.error(error);
+                    setListAddress([]);
+                });
+        }, 500);
+        debounceF();
+
+        return () => {
+            debounceF.cancel();
+        };
+    }, [address]);
+
+    // using geocoding
+    setDefaults({
+        key: 'AIzaSyAvO0DHfxQd-GNgthlZd15ACPt1DrNkwBA', // Your API key here.
+        language: 'vi', // Default language for responses.
+        region: 'vi', // Default region for responses.
+    });
     return (
         <>
             <Col className={styles['d-flex']}>
@@ -20,9 +57,42 @@ function Header() {
                         <InputGroup className="" size="lg">
                             <Form.Control className={styles['input']} placeholder="I'm looking for..." />
                         </InputGroup>
-                        <InputGroup className="ms-2" size="lg">
-                            <Form.Control className={styles['input']} placeholder="Address..." />
-                        </InputGroup>
+                        <div>
+                            <Combobox>
+                                <ComboboxInput
+                                    aria-labelledby="demo"
+                                    className={styles['input']}
+                                    value={address}
+                                    onChange={(e) => setAddress(e.target.value)}
+                                    placeholder="Address"
+                                />
+                                <ComboboxPopover>
+                                    <ComboboxList aria-labelledby="demo">
+                                        {listAddress && listAddress.length > 0 ? (
+                                            listAddress.map((item, index) => {
+                                                return (
+                                                    <ComboboxOption
+                                                        key={item.place_id}
+                                                        value={item.formatted_address}
+                                                    />
+                                                );
+                                            })
+                                        ) : (
+                                            <p
+                                                style={{
+                                                    margin: 0,
+                                                    color: '#454545',
+                                                    padding: '0.25rem 1rem 0.75rem 1rem',
+                                                    fontStyle: 'italic',
+                                                }}
+                                            >
+                                                No results :(
+                                            </p>
+                                        )}
+                                    </ComboboxList>
+                                </ComboboxPopover>
+                            </Combobox>
+                        </div>
                         <FontAwesomeIcon icon={faMagnifyingGlass} className={styles['search-icon']} />
                     </div>
                 )}

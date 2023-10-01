@@ -4,6 +4,7 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import styles from './Map.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
+
 function Map() {
     //Google map
 
@@ -37,7 +38,7 @@ function Map() {
                 center={{ lat: 10, lng: 50 }}
                 zoom={[5]}
             >
-                <Marker coordinates={[10, 50]} anchor="bottom">
+                <Marker coordinates={[108.277199, 14.058324]} anchor="bottom">
                     <FontAwesomeIcon icon={faLocationDot} className={styles['icon']} />
                 </Marker>
             </Map>
