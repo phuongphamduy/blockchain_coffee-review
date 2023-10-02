@@ -5,6 +5,8 @@ import './index.scss';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import GlobalStyle from './components/GlobalStyle';
+import store from './redux/store';
+import { Provider } from 'react-redux';
 
 <script src="https://cdn.jsdelivr.net/npm/react/umd/react.production.min.js" crossorigin></script>;
 <script src="https://cdn.jsdelivr.net/npm/react-dom/umd/react-dom.production.min.js" crossorigin></script>;
@@ -13,9 +15,11 @@ import GlobalStyle from './components/GlobalStyle';
 
 ReactDOM.render(
     <React.StrictMode>
-        <GlobalStyle>
-            <App />
-        </GlobalStyle>
+        <Provider store={store}>
+            <GlobalStyle>
+                <App />
+            </GlobalStyle>
+        </Provider>
     </React.StrictMode>,
     document.getElementById('root'),
 );

@@ -9,10 +9,13 @@ import '@reach/combobox/styles.css';
 import { useEffect, useState } from 'react';
 import _ from 'lodash';
 import { setDefaults, geocode, RequestType } from 'react-geocode';
+import { useDispatch } from 'react-redux';
+import { chooseAddress } from '~/redux/searchAddress';
 function Header() {
     const location = useLocation();
     const [address, setAddress] = useState('');
     const [listAddress, setListAddress] = useState([]);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         if (address.trim().length === 0) {
@@ -22,11 +25,9 @@ function Header() {
         let debounceF = _.debounce(function () {
             geocode(RequestType.ADDRESS, address)
                 .then((response) => {
-                    console.log(response);
                     setListAddress(response.results);
                 })
                 .catch((error) => {
-                    console.error(error);
                     setListAddress([]);
                 });
         }, 500);
@@ -43,6 +44,17 @@ function Header() {
         language: 'vi', // Default language for responses.
         region: 'vi', // Default region for responses.
     });
+
+    function handleSelect(e) {
+        setAddress(e);
+
+        geocode(RequestType.ADDRESS, e)
+            .then(({ results }) => {
+                const coordinate = results[0].geometry.location;
+                dispatch(chooseAddress(coordinate));
+            })
+            .catch(console.error);
+    }
     return (
         <>
             <Col className={styles['d-flex']}>
@@ -58,7 +70,7 @@ function Header() {
                             <Form.Control className={styles['input']} placeholder="I'm looking for..." />
                         </InputGroup>
                         <div>
-                            <Combobox>
+                            <Combobox onSelect={handleSelect}>
                                 <ComboboxInput
                                     aria-labelledby="demo"
                                     className={styles['input']}

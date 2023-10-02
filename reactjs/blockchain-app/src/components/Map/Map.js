@@ -4,6 +4,8 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import styles from './Map.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
 
 function Map() {
     //Google map
@@ -22,6 +24,9 @@ function Map() {
 
     // mapbox
 
+    const coordinate = useSelector((state) => state.searchAddress.value);
+    console.log(coordinate);
+
     const Map = ReactMapboxGl({
         accessToken: 'pk.eyJ1IjoicGh1b25ncGhhbSIsImEiOiJjbG43azZsbGQwczl6MmtwOW8xZjN5ZDF1In0.X92d8OJ0kj2x4iYvkziY_A',
     });
@@ -35,10 +40,10 @@ function Map() {
                     height: '100%',
                     width: '100%',
                 }}
-                center={{ lat: 10, lng: 50 }}
-                zoom={[5]}
+                center={coordinate}
+                zoom={[10]}
             >
-                <Marker coordinates={[108.277199, 14.058324]} anchor="bottom">
+                <Marker coordinates={[coordinate.lng, coordinate.lat]} anchor="bottom">
                     <FontAwesomeIcon icon={faLocationDot} className={styles['icon']} />
                 </Marker>
             </Map>
