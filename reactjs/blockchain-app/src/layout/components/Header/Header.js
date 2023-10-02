@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react';
 import _ from 'lodash';
 import { setDefaults, geocode, RequestType } from 'react-geocode';
 import { useDispatch } from 'react-redux';
-import { chooseAddress } from '~/redux/searchAddress';
+import { chooseAddress } from '~/redux/coodinate';
 function Header() {
     const location = useLocation();
     const [address, setAddress] = useState('');

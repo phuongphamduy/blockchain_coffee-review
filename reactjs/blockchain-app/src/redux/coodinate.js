@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-export const searchAddress = createSlice({
-    name: 'coordination',
+export const coordinate = createSlice({
+    name: 'coordinate',
     initialState: {
         value: {
             lat: 10.8230989,
@@ -15,6 +15,6 @@ export const searchAddress = createSlice({
     },
 });
 
-export const { chooseAddress } = searchAddress.actions;
+export const { chooseAddress } = coordinate.actions;
 
-export default searchAddress.reducer;
+export default coordinate.reducer;

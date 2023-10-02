@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
-import searchAddress from './searchAddress';
+import coordinate from './coodinate';
 export default configureStore({
     reducer: {
-        searchAddress: searchAddress,
+        coordinate: coordinate,
     },
 });
