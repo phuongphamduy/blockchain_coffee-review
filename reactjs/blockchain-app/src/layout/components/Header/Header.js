@@ -25,9 +25,11 @@ function Header() {
         let debounceF = _.debounce(function () {
             geocode(RequestType.ADDRESS, address)
                 .then((response) => {
+                    console.log(response);
                     setListAddress(response.results);
                 })
                 .catch((error) => {
+                    console.log(error);
                     setListAddress([]);
                 });
         }, 500);
