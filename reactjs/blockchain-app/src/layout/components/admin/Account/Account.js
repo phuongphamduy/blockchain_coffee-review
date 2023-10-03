@@ -1,7 +1,7 @@
 function Account() {
     return (
         <>
-            <h1>Đây là trang quản lý tài khoản</h1>
+            <h1>hello klsdjflsdkjfldskfj</h1>
         </>
     );
 }
