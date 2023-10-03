@@ -57,6 +57,7 @@ function Header() {
             })
             .catch(console.error);
     }
+
     return (
         <>
             <Col className={styles['d-flex']}>
@@ -64,9 +65,7 @@ function Header() {
                     <img src={Logo} className={styles['header-logo']} alt="Logo" />
                     <h1>Coffee Review</h1>
                 </div>
-                {location.pathname === '/' ? (
-                    <></>
-                ) : (
+                {location.pathname === '/post' ? (
                     <div className={styles['search-section']}>
                         <InputGroup className="" size="lg">
                             <Form.Control className={styles['input']} placeholder="I'm looking for..." />
@@ -109,6 +108,8 @@ function Header() {
                         </div>
                         <FontAwesomeIcon icon={faMagnifyingGlass} className={styles['search-icon']} />
                     </div>
+                ) : (
+                    <></>
                 )}
             </Col>
             <Col>
