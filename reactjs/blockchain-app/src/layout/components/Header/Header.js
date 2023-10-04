@@ -65,7 +65,7 @@ function Header() {
                     <img src={Logo} className={styles['header-logo']} alt="Logo" />
                     <h1>Coffee Review</h1>
                 </div>
-                {location.pathname === '/post' ? (
+                {location.pathname.includes('/post') ? (
                     <div className={styles['search-section']}>
                         <InputGroup className="" size="lg">
                             <Form.Control className={styles['input']} placeholder="I'm looking for..." />
