@@ -1,5 +1,3 @@
-
-
 import { useLocation } from 'react-router-dom';
 
 import { Combobox, ComboboxInput, ComboboxPopover, ComboboxList, ComboboxOption } from '@reach/combobox';
@@ -12,13 +10,13 @@ import { chooseAddress } from '~/redux/coodinate';
 import backgroundImage from '~/statics/images/back_map.png';
 import styles from './Home.module.scss';
 
-        const Home = () => {
-        const divStyle = {
-            backgroundImage: `url(${backgroundImage})`,
-            backgroundSize: 'cover',
-            
-          };
-          const location = useLocation();
+const Home = () => {
+    const divStyle = {
+        backgroundImage: `url(${backgroundImage})`,
+        backgroundSize: 'cover',
+
+    };
+    const location = useLocation();
     const [address, setAddress] = useState('');
     const [listAddress, setListAddress] = useState([]);
     const dispatch = useDispatch();
@@ -63,46 +61,46 @@ import styles from './Home.module.scss';
             })
             .catch(console.error);
     }
-          return (
-            <div className={styles['home-background']} style={divStyle}>
-              <p>Má nó ko hiện ra</p>
-              <Combobox onSelect={handleSelect}>
-                                <ComboboxInput
-                                    aria-labelledby="demo"
-                                    className={styles['input']}
-                                    value={address}
-                                    onChange={(e) => setAddress(e.target.value)}
-                                    placeholder="Address"
-                                />
-                                <ComboboxPopover>
-                                    <ComboboxList aria-labelledby="demo">
-                                        {listAddress && listAddress.length > 0 ? (
-                                            listAddress.map((item, index) => {
-                                                return (
-                                                    <ComboboxOption
-                                                        key={item.place_id}
-                                                        value={item.formatted_address}
-                                                    />
-                                                );
-                                            })
-                                        ) : (
-                                            <p
-                                                style={{
-                                                    margin: 0,
-                                                    color: '#454545',
-                                                    padding: '0.25rem 1rem 0.75rem 1rem',
-                                                    fontStyle: 'italic',
-                                                }}
-                                            >
-                                                No results :(
-                                            </p>
-                                        )}
-                                    </ComboboxList>
-                                </ComboboxPopover>
-                            </Combobox>
-            </div>
-          );
-       
+    return (
+        <div className={styles['home-background']} style={divStyle}>
+            <p>Má nó ko hiện ra</p>
+            <Combobox onSelect={handleSelect}>
+                <ComboboxInput
+                    aria-labelledby="demo"
+                    className={styles['input']}
+                    value={address}
+                    onChange={(e) => setAddress(e.target.value)}
+                    placeholder="Address"
+                />
+                <ComboboxPopover>
+                    <ComboboxList aria-labelledby="demo">
+                        {listAddress && listAddress.length > 0 ? (
+                            listAddress.map((item, index) => {
+                                return (
+                                    <ComboboxOption
+                                        key={item.place_id}
+                                        value={item.formatted_address}
+                                    />
+                                );
+                            })
+                        ) : (
+                            <p
+                                style={{
+                                    margin: 0,
+                                    color: '#454545',
+                                    padding: '0.25rem 1rem 0.75rem 1rem',
+                                    fontStyle: 'italic',
+                                }}
+                            >
+                                No results :(
+                            </p>
+                        )}
+                    </ComboboxList>
+                </ComboboxPopover>
+            </Combobox>
+        </div>
+    );
+
 }
 
 export default Home;

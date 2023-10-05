@@ -1,4 +1,11 @@
+.background-color{
+  background-color: rgba(200, 200, 200, 0.5); /* Màu nền với độ trong suốt */
+  padding: 20px;
+  backdrop-filter: blur(10px);
+}
 .home-background {
+
+
     width: 100%;
     height: 100vh; /* Set the height as needed */
     display: flex;
