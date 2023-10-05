@@ -2,7 +2,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Slider from 'react-slick';
 import styles from './PostDetail.module.scss';
-import { Button, Container } from 'react-bootstrap';
+import { Button, Col, Container, Row } from 'react-bootstrap';
 import Cong1 from '~/statics/images/cong1.jpg';
 import Cong2 from '~/statics/images/cong2.jpg';
 import Cong3 from '~/statics/images/cong3.jpg';
@@ -10,8 +10,10 @@ import Cong4 from '~/statics/images/cong4.jpg';
 import Cong5 from '~/statics/images/cong5.jpg';
 import Cong6 from '~/statics/images/cong6.jpg';
 import Cong7 from '~/statics/images/cong7.jpg';
+import HighLand from '~/statics/images/highland.jpg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBookmark, faHeart, faThumbsDown } from '@fortawesome/free-solid-svg-icons';
+import Map from '~/components/Map';
 function PostDetail() {
     const settings = {
         infinite: true,
@@ -120,6 +122,85 @@ function PostDetail() {
                             </div>
                         </div>
                     </div>
+                    <Row className={styles['comment-more-info-wrapper']}>
+                        <Col sm={9}>
+                            <div className={styles['comment-section']}>Đây là phần bình luận</div>
+                        </Col>
+                        <Col sm={3}>
+                            <div className={styles['more-info-section']}>
+                                <div className={styles['map-section']}>
+                                    <Map />
+                                </div>
+                                <div className={styles['places']}>
+                                    <h4>Cộng Cà Phê</h4>
+                                    <p>26 Lý Tự Trọng, Quận 1 Thành phố Hồ Chí Minh</p>
+                                </div>
+                            </div>
+                            <div className={styles['recomment-section']}>
+                                <h3>You might also likes</h3>
+                                <div className={styles['post-wrapper']}>
+                                    <div className={styles['post-info']}>
+                                        <img src={HighLand} alt="img" />
+                                        <div className={styles['post-name']}>
+                                            <h4>Highlands Coffee</h4>
+                                            <p>
+                                                B3, Vincom Center B, 72 Lê Thánh Tôn và 45A Lý Tự Trọng, P.Bến Nghé, Q.1
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div className={styles['post-desc']}>
+                                        <p>HighLand The best places you can go with the loves ones</p>
+                                    </div>
+                                    <span className={styles['rating']}>6.5</span>
+                                </div>
+                                <div className={styles['post-wrapper']}>
+                                    <div className={styles['post-info']}>
+                                        <img src={HighLand} alt="img" />
+                                        <div className={styles['post-name']}>
+                                            <h4>Highlands Coffee</h4>
+                                            <p>
+                                                B3, Vincom Center B, 72 Lê Thánh Tôn và 45A Lý Tự Trọng, P.Bến Nghé, Q.1
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div className={styles['post-desc']}>
+                                        <p>HighLand The best places you can go with the loves ones</p>
+                                    </div>
+                                    <span className={styles['rating']}>6.5</span>
+                                </div>
+                                <div className={styles['post-wrapper']}>
+                                    <div className={styles['post-info']}>
+                                        <img src={HighLand} alt="img" />
+                                        <div className={styles['post-name']}>
+                                            <h4>Highlands Coffee</h4>
+                                            <p>
+                                                B3, Vincom Center B, 72 Lê Thánh Tôn và 45A Lý Tự Trọng, P.Bến Nghé, Q.1
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div className={styles['post-desc']}>
+                                        <p>HighLand The best places you can go with the loves ones</p>
+                                    </div>
+                                    <span className={styles['rating']}>6.5</span>
+                                </div>
+                                <div className={styles['post-wrapper']}>
+                                    <div className={styles['post-info']}>
+                                        <img src={HighLand} alt="img" />
+                                        <div className={styles['post-name']}>
+                                            <h4>Highlands Coffee</h4>
+                                            <p>
+                                                B3, Vincom Center B, 72 Lê Thánh Tôn và 45A Lý Tự Trọng, P.Bến Nghé, Q.1
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div className={styles['post-desc']}>
+                                        <p>HighLand The best places you can go with the loves ones</p>
+                                    </div>
+                                    <span className={styles['rating']}>6.5</span>
+                                </div>
+                            </div>
+                        </Col>
+                    </Row>
                 </Container>
             </div>
         </>

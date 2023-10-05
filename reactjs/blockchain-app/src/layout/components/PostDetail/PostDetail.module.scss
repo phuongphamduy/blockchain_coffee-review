@@ -5,7 +5,7 @@
         padding: 0;
         .post-info-wrapper {
             padding: 5px;
-            border-radius: 5px;
+            border-radius: 2px;
             background-color: #fff;
             box-shadow: #c7cdcf 0 1px 0 0;
             .slider-section {
@@ -50,7 +50,7 @@
                             padding: 8px;
                             border-radius: 4px;
                             color: #fff;
-                            background-color: #73cf42;
+                            background-color: var(--high-rating-color);
                             transform: translateX(10px);
                             position: absolute;
                             right: -35px;
@@ -66,6 +66,96 @@
                         .icon {
                             margin-right: 5px;
                         }
+                    }
+                }
+            }
+        }
+
+        .comment-more-info-wrapper {
+            margin-top: 20px;
+
+            .comment-section {
+                background-color: #fff;
+                padding: 5px;
+                border-radius: 2px;
+            }
+
+            .more-info-section {
+                padding: 5px;
+                border-radius: 2px;
+                background-color: #fff;
+
+                .map-section {
+                    height: 160px;
+                }
+
+                .places {
+                    margin-top: 10px;
+
+                    h4 {
+                        font-weight: 700;
+                    }
+
+                    p {
+                        font-size: 1.4rem;
+                        color: var(--subText-color);
+                    }
+                }
+            }
+
+            .recomment-section {
+                background-color: #fff;
+                padding: 5px;
+                border-radius: 2px;
+                margin-top: 5px;
+
+                h3 {
+                    color: #4e595d;
+                }
+
+                .post-wrapper {
+                    margin-top: 15px;
+                    position: relative;
+                    border-bottom: 1px solid #ccc;
+                    .post-info {
+                        display: flex;
+
+                        img {
+                            width: 80px;
+                            height: 80px;
+                        }
+
+                        .post-name {
+                            margin-left: 5px;
+                            width: 195px;
+                            p {
+                                font-size: 1.2rem;
+                                color: var(--subText-color);
+                            }
+                        }
+                    }
+
+                    .post-desc {
+                        p {
+                            margin-top: 4px;
+                            font-size: 1.3rem;
+                        }
+                    }
+
+                    .rating {
+                        position: absolute;
+                        top: 0;
+                        right: 0;
+                        padding: 4px;
+                        font-size: 1.4rem;
+                        font-weight: 700;
+                        color: #fff;
+                        border-radius: 8px;
+                        background-color: var(--average-rating-color);
+                    }
+
+                    &:hover {
+                        cursor: pointer;
                     }
                 }
             }
