@@ -7,7 +7,7 @@ import Account from './layout/components/admin/Account';
 import PostAdmin from './layout/components/admin/PostAdmin';
 import Statistic from './layout/components/admin/Statistic';
 import AllowPost from './layout/components/admin/AllowPost';
-import reportFeedback from './layout/components/admin/ReportFeedback';
+import ReportFeedback from './layout/components/admin/ReportFeedback';
 
 
 function App() {
@@ -20,7 +20,7 @@ function App() {
                         <Route path="post" element={<PostAdmin />} />
                         <Route path="statistic" element={<Statistic />} />
                         <Route path="allowPost" element={<AllowPost />} />
-                        <Route path="reportFeedback" element={<reportFeedback/>}/>
+                        <Route path="reportFeedback" element={<ReportFeedback/>}/>
                     </Route>
                     <Route path="/post" element={<MainLayout />}>
                         <Route index element={<Post />} />
