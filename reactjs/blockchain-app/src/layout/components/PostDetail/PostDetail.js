@@ -12,8 +12,13 @@ import Cong6 from '~/statics/images/cong6.jpg';
 import Cong7 from '~/statics/images/cong7.jpg';
 import HighLand from '~/statics/images/highland.jpg';
 import NoLogin from '~/statics/images/noLogin.png';
+import CommentUser1 from '~/statics/images/commentuser1.jpg';
+import CommentUser2 from '~/statics/images/commentuser2.jpg';
+import CommentUser3 from '~/statics/images/commentuser3.jpg';
+import CommentImg1 from '~/statics/images/commentimg1.jpg';
+import CommentImg2 from '~/statics/images/commentimg2.jpg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBookmark, faCamera, faHeart, faThumbsDown } from '@fortawesome/free-solid-svg-icons';
+import { faBookmark, faCamera, faEllipsis, faHeart, faThumbsDown, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import Map from '~/components/Map';
 import { createRef } from 'react';
 function PostDetail() {
@@ -154,6 +159,99 @@ function PostDetail() {
                                     <Button variant="secondary" disabled className={styles['post-btn']}>
                                         Post
                                     </Button>
+                                </div>
+                                <div className={styles['comment-list']}>
+                                    <div className={styles['comment-item']}>
+                                        <img src={CommentUser1} alt="img" />
+                                        <div className={styles['comment-content']}>
+                                            <div className={styles['comment-info']}>
+                                                <h4>MK Chan</h4>
+                                                <p>August 27, 2017</p>
+                                            </div>
+                                            <div className={styles['comment-text']}>
+                                                <p>
+                                                    This cafe is located 2nd floor, the entrance is right of building
+                                                    and go up the stairs. The mood is pretty good and u can also enjoy
+                                                    good coffee at terrace as well. There are many people at weekend.
+                                                </p>
+                                            </div>
+                                            <img src={CommentImg1} alt="img" />
+                                            <div className={styles['btn-group']}>
+                                                <Button variant="outline-primary" className={styles['btn']}>
+                                                    <FontAwesomeIcon icon={faThumbsUp} className={styles['icon']} />
+                                                    Like
+                                                </Button>
+                                                <Button variant="outline-danger" className={styles['btn']}>
+                                                    <FontAwesomeIcon icon={faThumbsDown} className={styles['icon']} />
+                                                    Dislike
+                                                </Button>
+                                                <Button variant="outline-secondary" className={styles['btn']}>
+                                                    <FontAwesomeIcon icon={faEllipsis} className={styles['icon']} />
+                                                    More
+                                                </Button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className={styles['comment-item']}>
+                                        <img src={CommentUser2} alt="img" />
+                                        <div className={styles['comment-content']}>
+                                            <div className={styles['comment-info']}>
+                                                <h4>MK Chan</h4>
+                                                <p>August 27, 2017</p>
+                                            </div>
+                                            <div className={styles['comment-text']}>
+                                                <p>
+                                                    This cafe is located 2nd floor, the entrance is right of building
+                                                    and go up the stairs. The mood is pretty good and u can also enjoy
+                                                    good coffee at terrace as well. There are many people at weekend.
+                                                </p>
+                                            </div>
+                                            <img src={CommentImg2} alt="img" />
+                                            <div className={styles['btn-group']}>
+                                                <Button variant="outline-primary" className={styles['btn']}>
+                                                    <FontAwesomeIcon icon={faThumbsUp} className={styles['icon']} />
+                                                    Like
+                                                </Button>
+                                                <Button variant="outline-danger" className={styles['btn']}>
+                                                    <FontAwesomeIcon icon={faThumbsDown} className={styles['icon']} />
+                                                    Dislike
+                                                </Button>
+                                                <Button variant="outline-secondary" className={styles['btn']}>
+                                                    <FontAwesomeIcon icon={faEllipsis} className={styles['icon']} />
+                                                    More
+                                                </Button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className={styles['comment-item']}>
+                                        <img src={CommentUser3} alt="img" />
+                                        <div className={styles['comment-content']}>
+                                            <div className={styles['comment-info']}>
+                                                <h4>MK Chan</h4>
+                                                <p>August 27, 2017</p>
+                                            </div>
+                                            <div className={styles['comment-text']}>
+                                                <p>
+                                                    Like everyone else says: try the coconut coffee. So good. Awesome to
+                                                    sit on the balcony and watch the busy traffic down below.
+                                                </p>
+                                            </div>
+                                            <div className={styles['btn-group']}>
+                                                <Button variant="outline-primary" className={styles['btn']}>
+                                                    <FontAwesomeIcon icon={faThumbsUp} className={styles['icon']} />
+                                                    Like
+                                                </Button>
+                                                <Button variant="outline-danger" className={styles['btn']}>
+                                                    <FontAwesomeIcon icon={faThumbsDown} className={styles['icon']} />
+                                                    Dislike
+                                                </Button>
+                                                <Button variant="outline-secondary" className={styles['btn']}>
+                                                    <FontAwesomeIcon icon={faEllipsis} className={styles['icon']} />
+                                                    More
+                                                </Button>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </Col>
