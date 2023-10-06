@@ -1,5 +1,6 @@
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import 'tippy.js/dist/tippy.css';
 import Slider from 'react-slick';
 import styles from './PostDetail.module.scss';
 import { Button, Col, Container, Row } from 'react-bootstrap';
@@ -20,6 +21,7 @@ import CommentImg2 from '~/statics/images/commentimg2.jpg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBookmark, faCamera, faEllipsis, faHeart, faThumbsDown, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import Map from '~/components/Map';
+import Tippy from '@tippyjs/react/headless';
 import { createRef } from 'react';
 function PostDetail() {
     const inputRef = createRef();
@@ -185,10 +187,39 @@ function PostDetail() {
                                                     <FontAwesomeIcon icon={faThumbsDown} className={styles['icon']} />
                                                     Dislike
                                                 </Button>
-                                                <Button variant="outline-secondary" className={styles['btn']}>
-                                                    <FontAwesomeIcon icon={faEllipsis} className={styles['icon']} />
-                                                    More
-                                                </Button>
+                                                <Tippy
+                                                    interactive
+                                                    placement="bottom-start"
+                                                    trigger="click"
+                                                    sticky
+                                                    render={(attrs) => (
+                                                        <div {...attrs} className={styles['menu-more']}>
+                                                            <h4>Report</h4>
+                                                            <ul className={styles['menu-list']}>
+                                                                <li className={styles['menu-item']}>
+                                                                    <span href="#" className={styles['menu-link']}>
+                                                                        Span
+                                                                    </span>
+                                                                </li>
+                                                                <li className={styles['menu-item']}>
+                                                                    <span href="#" className={styles['menu-link']}>
+                                                                        Offensive
+                                                                    </span>
+                                                                </li>
+                                                                <li className={styles['menu-item']}>
+                                                                    <span href="#" className={styles['menu-link']}>
+                                                                        No longer relevant
+                                                                    </span>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    )}
+                                                >
+                                                    <Button variant="outline-secondary" className={styles['btn']}>
+                                                        <FontAwesomeIcon icon={faEllipsis} className={styles['icon']} />
+                                                        More
+                                                    </Button>
+                                                </Tippy>
                                             </div>
                                         </div>
                                     </div>
