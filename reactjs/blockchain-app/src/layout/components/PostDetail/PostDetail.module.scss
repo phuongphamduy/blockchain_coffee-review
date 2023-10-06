@@ -75,9 +75,62 @@
             margin-top: 20px;
 
             .comment-section {
-                background-color: #fff;
-                padding: 5px;
-                border-radius: 2px;
+                .comment-input-section {
+                    padding: 15px 20px;
+                    border-radius: 2px;
+                    background-color: #fff;
+                    display: flex;
+                    justify-content: space-between;
+
+                    .input-wrapper {
+                        display: flex;
+                        flex: 1;
+                        position: relative;
+                        img {
+                            width: 32px;
+                            height: 32px;
+                            margin-right: 8px;
+                        }
+                        p {
+                            margin-bottom: 0;
+                            font-size: 1.5rem;
+                            align-self: center;
+                        }
+
+                        .input {
+                            font-size: 1.4rem;
+                            height: 38px;
+                            line-height: 20px;
+                            width: 100%;
+                            padding: 8px 10px;
+                            outline: #4e595d;
+                            border: 1px solid #ccc;
+                            margin-right: 10px;
+                            transition: height 0.15s;
+                            resize: none;
+                            &:focus {
+                                height: 100px;
+                            }
+                        }
+
+                        .icon {
+                            height: 30px;
+                            position: absolute;
+                            right: 10px;
+                            padding: 4px;
+                            color: #4e595d;
+                            :hover {
+                                cursor: pointer;
+                            }
+                        }
+                    }
+
+                    .post-btn {
+                        font-size: 1.5rem;
+                        padding: 5px 15px;
+                        height: 35px;
+                    }
+                }
             }
 
             .more-info-section {

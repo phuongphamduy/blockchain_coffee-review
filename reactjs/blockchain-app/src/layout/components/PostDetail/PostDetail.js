@@ -11,10 +11,13 @@ import Cong5 from '~/statics/images/cong5.jpg';
 import Cong6 from '~/statics/images/cong6.jpg';
 import Cong7 from '~/statics/images/cong7.jpg';
 import HighLand from '~/statics/images/highland.jpg';
+import NoLogin from '~/statics/images/noLogin.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBookmark, faHeart, faThumbsDown } from '@fortawesome/free-solid-svg-icons';
+import { faBookmark, faCamera, faHeart, faThumbsDown } from '@fortawesome/free-solid-svg-icons';
 import Map from '~/components/Map';
+import { createRef } from 'react';
 function PostDetail() {
+    const inputRef = createRef();
     const settings = {
         infinite: true,
         slidesToShow: 6,
@@ -23,6 +26,10 @@ function PostDetail() {
         autoplaySpeed: 2000,
         cssEase: 'linear',
     };
+
+    function IconClick(e) {
+        inputRef.current.click();
+    }
 
     return (
         <>
@@ -124,7 +131,31 @@ function PostDetail() {
                     </div>
                     <Row className={styles['comment-more-info-wrapper']}>
                         <Col sm={9}>
-                            <div className={styles['comment-section']}>Đây là phần bình luận</div>
+                            <div className={styles['comment-section']}>
+                                <div className={styles['comment-input-section']}>
+                                    <div className={styles['input-wrapper']}>
+                                        <img src={NoLogin} alt="img" />
+                                        {/* <p>
+                                            <a href="#">Log in</a> to leave a tip here
+                                        </p> */}
+                                        <textarea
+                                            cols="55"
+                                            rows="4"
+                                            className={styles['input']}
+                                            placeholder="leave a tip for others"
+                                        ></textarea>
+                                        <FontAwesomeIcon
+                                            icon={faCamera}
+                                            className={styles['icon']}
+                                            onClick={(e) => IconClick(e)}
+                                        />
+                                        <input ref={inputRef} type="file" hidden id="file" />
+                                    </div>
+                                    <Button variant="secondary" disabled className={styles['post-btn']}>
+                                        Post
+                                    </Button>
+                                </div>
+                            </div>
                         </Col>
                         <Col sm={3}>
                             <div className={styles['more-info-section']}>
