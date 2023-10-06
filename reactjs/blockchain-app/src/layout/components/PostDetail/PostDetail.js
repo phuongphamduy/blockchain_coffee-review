@@ -1,5 +1,6 @@
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import 'tippy.js/dist/tippy.css';
 import Slider from 'react-slick';
 import styles from './PostDetail.module.scss';
 import { Button, Col, Container, Row } from 'react-bootstrap';
@@ -11,10 +12,19 @@ import Cong5 from '~/statics/images/cong5.jpg';
 import Cong6 from '~/statics/images/cong6.jpg';
 import Cong7 from '~/statics/images/cong7.jpg';
 import HighLand from '~/statics/images/highland.jpg';
+import NoLogin from '~/statics/images/noLogin.png';
+import CommentUser1 from '~/statics/images/commentuser1.jpg';
+import CommentUser2 from '~/statics/images/commentuser2.jpg';
+import CommentUser3 from '~/statics/images/commentuser3.jpg';
+import CommentImg1 from '~/statics/images/commentimg1.jpg';
+import CommentImg2 from '~/statics/images/commentimg2.jpg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBookmark, faHeart, faThumbsDown } from '@fortawesome/free-solid-svg-icons';
+import { faBookmark, faCamera, faEllipsis, faHeart, faThumbsDown, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import Map from '~/components/Map';
+import Tippy from '@tippyjs/react/headless';
+import { createRef } from 'react';
 function PostDetail() {
+    const inputRef = createRef();
     const settings = {
         infinite: true,
         slidesToShow: 6,
@@ -23,6 +33,10 @@ function PostDetail() {
         autoplaySpeed: 2000,
         cssEase: 'linear',
     };
+
+    function IconClick(e) {
+        inputRef.current.click();
+    }
 
     return (
         <>
@@ -124,7 +138,153 @@ function PostDetail() {
                     </div>
                     <Row className={styles['comment-more-info-wrapper']}>
                         <Col sm={9}>
-                            <div className={styles['comment-section']}>Đây là phần bình luận</div>
+                            <div className={styles['comment-section']}>
+                                <div className={styles['comment-input-section']}>
+                                    <div className={styles['input-wrapper']}>
+                                        <img src={NoLogin} alt="img" />
+                                        {/* <p>
+                                            <a href="#">Log in</a> to leave a tip here
+                                        </p> */}
+                                        <textarea
+                                            cols="55"
+                                            rows="4"
+                                            className={styles['input']}
+                                            placeholder="leave a tip for others"
+                                        ></textarea>
+                                        <FontAwesomeIcon
+                                            icon={faCamera}
+                                            className={styles['icon']}
+                                            onClick={(e) => IconClick(e)}
+                                        />
+                                        <input ref={inputRef} type="file" hidden id="file" />
+                                    </div>
+                                    <Button variant="secondary" disabled className={styles['post-btn']}>
+                                        Post
+                                    </Button>
+                                </div>
+                                <div className={styles['comment-list']}>
+                                    <div className={styles['comment-item']}>
+                                        <img src={CommentUser1} alt="img" />
+                                        <div className={styles['comment-content']}>
+                                            <div className={styles['comment-info']}>
+                                                <h4>MK Chan</h4>
+                                                <p>August 27, 2017</p>
+                                            </div>
+                                            <div className={styles['comment-text']}>
+                                                <p>
+                                                    This cafe is located 2nd floor, the entrance is right of building
+                                                    and go up the stairs. The mood is pretty good and u can also enjoy
+                                                    good coffee at terrace as well. There are many people at weekend.
+                                                </p>
+                                            </div>
+                                            <img src={CommentImg1} alt="img" />
+                                            <div className={styles['btn-group']}>
+                                                <Button variant="outline-primary" className={styles['btn']}>
+                                                    <FontAwesomeIcon icon={faThumbsUp} className={styles['icon']} />
+                                                    Like
+                                                </Button>
+                                                <Button variant="outline-danger" className={styles['btn']}>
+                                                    <FontAwesomeIcon icon={faThumbsDown} className={styles['icon']} />
+                                                    Dislike
+                                                </Button>
+                                                <Tippy
+                                                    interactive
+                                                    placement="bottom-start"
+                                                    trigger="click"
+                                                    sticky
+                                                    render={(attrs) => (
+                                                        <div {...attrs} className={styles['menu-more']}>
+                                                            <h4>Report</h4>
+                                                            <ul className={styles['menu-list']}>
+                                                                <li className={styles['menu-item']}>
+                                                                    <span href="#" className={styles['menu-link']}>
+                                                                        Span
+                                                                    </span>
+                                                                </li>
+                                                                <li className={styles['menu-item']}>
+                                                                    <span href="#" className={styles['menu-link']}>
+                                                                        Offensive
+                                                                    </span>
+                                                                </li>
+                                                                <li className={styles['menu-item']}>
+                                                                    <span href="#" className={styles['menu-link']}>
+                                                                        No longer relevant
+                                                                    </span>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    )}
+                                                >
+                                                    <Button variant="outline-secondary" className={styles['btn']}>
+                                                        <FontAwesomeIcon icon={faEllipsis} className={styles['icon']} />
+                                                        More
+                                                    </Button>
+                                                </Tippy>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className={styles['comment-item']}>
+                                        <img src={CommentUser2} alt="img" />
+                                        <div className={styles['comment-content']}>
+                                            <div className={styles['comment-info']}>
+                                                <h4>MK Chan</h4>
+                                                <p>August 27, 2017</p>
+                                            </div>
+                                            <div className={styles['comment-text']}>
+                                                <p>
+                                                    This cafe is located 2nd floor, the entrance is right of building
+                                                    and go up the stairs. The mood is pretty good and u can also enjoy
+                                                    good coffee at terrace as well. There are many people at weekend.
+                                                </p>
+                                            </div>
+                                            <img src={CommentImg2} alt="img" />
+                                            <div className={styles['btn-group']}>
+                                                <Button variant="outline-primary" className={styles['btn']}>
+                                                    <FontAwesomeIcon icon={faThumbsUp} className={styles['icon']} />
+                                                    Like
+                                                </Button>
+                                                <Button variant="outline-danger" className={styles['btn']}>
+                                                    <FontAwesomeIcon icon={faThumbsDown} className={styles['icon']} />
+                                                    Dislike
+                                                </Button>
+                                                <Button variant="outline-secondary" className={styles['btn']}>
+                                                    <FontAwesomeIcon icon={faEllipsis} className={styles['icon']} />
+                                                    More
+                                                </Button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className={styles['comment-item']}>
+                                        <img src={CommentUser3} alt="img" />
+                                        <div className={styles['comment-content']}>
+                                            <div className={styles['comment-info']}>
+                                                <h4>MK Chan</h4>
+                                                <p>August 27, 2017</p>
+                                            </div>
+                                            <div className={styles['comment-text']}>
+                                                <p>
+                                                    Like everyone else says: try the coconut coffee. So good. Awesome to
+                                                    sit on the balcony and watch the busy traffic down below.
+                                                </p>
+                                            </div>
+                                            <div className={styles['btn-group']}>
+                                                <Button variant="outline-primary" className={styles['btn']}>
+                                                    <FontAwesomeIcon icon={faThumbsUp} className={styles['icon']} />
+                                                    Like
+                                                </Button>
+                                                <Button variant="outline-danger" className={styles['btn']}>
+                                                    <FontAwesomeIcon icon={faThumbsDown} className={styles['icon']} />
+                                                    Dislike
+                                                </Button>
+                                                <Button variant="outline-secondary" className={styles['btn']}>
+                                                    <FontAwesomeIcon icon={faEllipsis} className={styles['icon']} />
+                                                    More
+                                                </Button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </Col>
                         <Col sm={3}>
                             <div className={styles['more-info-section']}>
