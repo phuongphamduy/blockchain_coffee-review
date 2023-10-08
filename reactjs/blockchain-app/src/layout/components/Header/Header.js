@@ -9,12 +9,14 @@ import '@reach/combobox/styles.css';
 import { useEffect, useState } from 'react';
 import _ from 'lodash';
 import { setDefaults, geocode, RequestType } from 'react-geocode';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { chooseAddress } from '~/redux/coodinate';
+import httpRequest from '~/utils/httpRequest';
 function Header() {
     const location = useLocation();
     const [address, setAddress] = useState('');
     const [listAddress, setListAddress] = useState([]);
+    const user = useSelector((state) => state.user);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -40,13 +42,14 @@ function Header() {
         };
     }, [address]);
 
-    // using geocoding
+    // using geocoding google
     setDefaults({
         key: 'AIzaSyAvO0DHfxQd-GNgthlZd15ACPt1DrNkwBA', // Your API key here.
         language: 'vi', // Default language for responses.
         region: 'vi', // Default region for responses.
     });
 
+    // hàm xử lý khi chọn địa chỉ trên ô tìm kiếm
     function handleSelect(e) {
         setAddress(e);
 
@@ -56,6 +59,19 @@ function Header() {
                 dispatch(chooseAddress(coordinate));
             })
             .catch(console.error);
+    }
+
+    // hàm xử lý đăng nhập
+    function handleLogin() {
+        console.log(user);
+        httpRequest
+            .get('/rest/account')
+            .then((res) => {
+                console.log(res);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     }
 
     return (
@@ -114,7 +130,7 @@ function Header() {
             </Col>
             <Col>
                 <div className={styles['account-section']}>
-                    <Button variant="outline-primary" className={styles['btn']}>
+                    <Button variant="outline-primary" className={styles['btn']} onClick={handleLogin}>
                         Login
                     </Button>
                     <Button variant="outline-warning" className={styles['btn']}>
