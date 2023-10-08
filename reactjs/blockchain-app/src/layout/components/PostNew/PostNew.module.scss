@@ -1,0 +1,22 @@
+.post-form-section {
+    .label {
+        font-size: 1.4rem;
+        margin-top: 10px;
+    }
+    .input {
+        font-size: 1.4rem;
+        padding: 5px 10px;
+    }
+    .img-preview-wrapper {
+        max-height: 400px;
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        overflow: hidden;
+
+        .more-img {
+            font-size: 3rem;
+            margin: auto;
+        }
+    }
+}
