@@ -8,10 +8,10 @@ import { Combobox, ComboboxInput, ComboboxPopover, ComboboxList, ComboboxOption 
 import '@reach/combobox/styles.css';
 import { useEffect, useState } from 'react';
 import _ from 'lodash';
-import { setDefaults, geocode, RequestType } from 'react-geocode';
 import { useDispatch, useSelector } from 'react-redux';
 import { chooseAddress } from '~/redux/coodinate';
 import httpRequest from '~/utils/httpRequest';
+import axios from 'axios';
 function Header() {
     const location = useLocation();
     const [address, setAddress] = useState('');
@@ -19,20 +19,24 @@ function Header() {
     const user = useSelector((state) => state.user);
     const dispatch = useDispatch();
 
+    // goong map api key
+    const api = 'a8onfs2eztyTAudonkL8ParEypAAEu3eRlu29b1N';
+
     useEffect(() => {
         if (address.trim().length === 0) {
             return;
         }
 
         let debounceF = _.debounce(function () {
-            geocode(RequestType.ADDRESS, address)
-                .then((response) => {
-                    console.log(response);
-                    setListAddress(response.results);
+            axios
+                .get(
+                    `https://rsapi.goong.io/Place/AutoComplete?api_key=${api}&location=21.013715429594125,%20105.79829597455202&input=${address}`,
+                )
+                .then((res) => {
+                    setListAddress(res.data.predictions);
                 })
                 .catch((error) => {
                     console.log(error);
-                    setListAddress([]);
                 });
         }, 500);
         debounceF();
@@ -42,28 +46,22 @@ function Header() {
         };
     }, [address]);
 
-    // using geocoding google
-    setDefaults({
-        key: 'AIzaSyAvO0DHfxQd-GNgthlZd15ACPt1DrNkwBA', // Your API key here.
-        language: 'vi', // Default language for responses.
-        region: 'vi', // Default region for responses.
-    });
-
     // hàm xử lý khi chọn địa chỉ trên ô tìm kiếm
     function handleSelect(e) {
-        setAddress(e);
-
-        geocode(RequestType.ADDRESS, e)
-            .then(({ results }) => {
-                const coordinate = results[0].geometry.location;
-                dispatch(chooseAddress(coordinate));
+        axios
+            .get(`https://rsapi.goong.io/geocode?address=${e}&api_key=${api}`)
+            .then((res) => {
+                const cordinate = res.data.results[0].geometry.location;
+                dispatch(chooseAddress(cordinate));
             })
-            .catch(console.error);
+            .catch((error) => {
+                console.log(error);
+            });
+        setAddress(e);
     }
 
     // hàm xử lý đăng nhập
     function handleLogin() {
-        console.log(user);
         httpRequest
             .get('/rest/account')
             .then((res) => {
@@ -99,12 +97,7 @@ function Header() {
                                     <ComboboxList aria-labelledby="demo">
                                         {listAddress && listAddress.length > 0 ? (
                                             listAddress.map((item, index) => {
-                                                return (
-                                                    <ComboboxOption
-                                                        key={item.place_id}
-                                                        value={item.formatted_address}
-                                                    />
-                                                );
+                                                return <ComboboxOption key={item.place_id} value={item.description} />;
                                             })
                                         ) : (
                                             <p
