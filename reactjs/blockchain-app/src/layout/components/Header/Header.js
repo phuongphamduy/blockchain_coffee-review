@@ -8,7 +8,7 @@ import { Combobox, ComboboxInput, ComboboxPopover, ComboboxList, ComboboxOption 
 import '@reach/combobox/styles.css';
 import { useEffect, useState } from 'react';
 import _ from 'lodash';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { chooseAddress } from '~/redux/coodinate';
 import httpRequest from '~/utils/httpRequest';
 import axios from 'axios';
@@ -16,7 +16,7 @@ function Header() {
     const location = useLocation();
     const [address, setAddress] = useState('');
     const [listAddress, setListAddress] = useState([]);
-    const user = useSelector((state) => state.user);
+    // const user = useSelector((state) => state.user);
     const dispatch = useDispatch();
 
     // goong map api key
