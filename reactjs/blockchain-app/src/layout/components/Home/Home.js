@@ -16,6 +16,9 @@ const Home = () => {
         backgroundSize: 'cover',
 
     };
+
+
+
     const location = useLocation();
     const [address, setAddress] = useState('');
     const [listAddress, setListAddress] = useState([]);
@@ -62,42 +65,61 @@ const Home = () => {
             .catch(console.error);
     }
     return (
+
         <div className={styles['home-background']} style={divStyle}>
-            <p>Má nó ko hiện ra</p>
-            <Combobox onSelect={handleSelect}>
-                <ComboboxInput
-                    aria-labelledby="demo"
-                    className={styles['input']}
-                    value={address}
-                    onChange={(e) => setAddress(e.target.value)}
-                    placeholder="Address"
-                />
-                <ComboboxPopover>
-                    <ComboboxList aria-labelledby="demo">
-                        {listAddress && listAddress.length > 0 ? (
-                            listAddress.map((item, index) => {
-                                return (
-                                    <ComboboxOption
-                                        key={item.place_id}
-                                        value={item.formatted_address}
-                                    />
-                                );
-                            })
-                        ) : (
-                            <p
-                                style={{
-                                    margin: 0,
-                                    color: '#454545',
-                                    padding: '0.25rem 1rem 0.75rem 1rem',
-                                    fontStyle: 'italic',
-                                }}
-                            >
-                                No results :(
-                            </p>
-                        )}
-                    </ComboboxList>
-                </ComboboxPopover>
-            </Combobox>
+            <div className={styles['background-color']}>
+
+                <div className={styles['flex']}>
+                <div className={styles['intro_text']} >
+                    <p>COFFEE REVIEW</p></div>
+
+                <div>
+                    <p className={styles['text_1']}>
+                        Xem đánh giá các quán cà phê ở khu vực Hồ Chí Minh
+                    </p>
+                </div>
+                <br />
+                <br />
+                
+
+                    <div>
+                        <Combobox onSelect={handleSelect}>
+                            <ComboboxInput
+                                aria-labelledby="demo"
+                                className={styles['input']}
+                                value={address}
+                                onChange={(e) => setAddress(e.target.value)}
+                                placeholder="Address"
+                            />
+                            <ComboboxPopover>
+                                <ComboboxList aria-labelledby="demo">
+                                    {listAddress && listAddress.length > 0 ? (
+                                        listAddress.map((item, index) => {
+                                            return (
+                                                <ComboboxOption
+                                                    key={item.place_id}
+                                                    value={item.formatted_address}
+                                                />
+                                            );
+                                        })
+                                    ) : (
+                                        <p
+                                            style={{
+                                                margin: 0,
+                                                color: '#454545',
+                                                padding: '0.25rem 1rem 0.75rem 1rem',
+                                                fontStyle: 'italic',
+                                            }}
+                                        >
+                                            No results :(
+                                        </p>
+                                    )}
+                                </ComboboxList>
+                            </ComboboxPopover>
+                        </Combobox></div>
+                </div>
+                
+            </div>
         </div>
     );
 
