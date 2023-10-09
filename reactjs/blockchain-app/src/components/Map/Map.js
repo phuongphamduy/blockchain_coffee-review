@@ -38,7 +38,7 @@ function Map() {
                     height: '100%',
                     width: '100%',
                 }}
-                center={coordinate}
+                center={{ lat: coordinate.lat, lng: coordinate.lng }}
                 zoom={[10]}
             >
                 <Marker coordinates={[coordinate.lng, coordinate.lat]} anchor="bottom">
