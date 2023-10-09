@@ -6,6 +6,7 @@ export const coordinate = createSlice({
         value: {
             lat: 10.8230989,
             lng: 106.6296638,
+            address: '',
         },
     },
     reducers: {
