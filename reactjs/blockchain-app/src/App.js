@@ -8,6 +8,7 @@ import PostAdmin from './layout/components/admin/PostAdmin';
 import Statistic from './layout/components/admin/Statistic';
 import AllowPost from './layout/components/admin/AllowPost';
 import Home from './layout/components/Home';
+import UserInfor from './layout/components/UserInfor';
 
 function App() {
     return (
@@ -26,6 +27,10 @@ function App() {
                     </Route>
                     <Route path="/home" element={<MainLayout />}>
                         <Route index element={<Home />} />
+                       
+                    </Route>
+                    <Route path="/UserInfor" element={<MainLayout />}>
+                        <Route index element={<UserInfor />} />
                        
                     </Route>
                 </Routes>

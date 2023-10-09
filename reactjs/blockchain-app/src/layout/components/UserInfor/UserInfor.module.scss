@@ -1,0 +1,95 @@
+// src/components/ProductCard.module.scss
+.background-color{
+  background-color: rgba(0, 0, 0, 0.5); /* Màu nền với độ trong suốt */
+  width: 100%;
+    height: 100vh;
+}
+
+.product-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid #ffffff;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(255, 255, 255, 0.1);
+  margin: 10px;
+
+  .product-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .product-info {
+    text-align: center;
+
+    .product-name {
+      margin: 10px 0;
+    }
+
+    .product-intro {
+      font-weight: bold;
+    }
+  }
+}
+.container_user {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 20vh;
+  margin: 0 auto;
+}
+
+.container_card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 30vh;
+  margin: 0 auto;
+}
+
+.userProfile {
+  width: 80%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  
+}
+
+.leftSection {
+  display: flex;
+  flex-direction: row; /* Thay đổi thành flex-direction: row */
+  align-items: center; /* Canh giữa các thành phần trong leftSection */
+}
+
+.userInfo {
+  margin-left: 10px; /* Khoảng cách giữa hình ảnh và thông tin người dùng */
+}
+
+.avatar img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px; /* Đẩy hình ảnh về bên trái */
+}
+
+.rightSection {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end; /* Canh phải */
+}
+
+.followCount span {
+  margin-left: 10px;
+}
