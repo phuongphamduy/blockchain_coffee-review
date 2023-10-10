@@ -24,7 +24,7 @@ const Home = () => {
                     <br />
 
                     <div>
-                        <SearchAddress />
+                        <SearchAddress width="500px" portal={false} />
                     </div>
                 </div>
             </div>

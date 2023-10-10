@@ -46,7 +46,7 @@ function Header() {
                             <Form.Control className={styles['input']} placeholder="I'm looking for..." />
                         </InputGroup>
                         <div>
-                            <SearchAddress select={true} portal={true} />
+                            <SearchAddress select={true} portal={true} width="180px" />
                         </div>
                         <FontAwesomeIcon icon={faMagnifyingGlass} className={styles['search-icon']} />
                     </div>

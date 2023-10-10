@@ -33,23 +33,6 @@ function App() {
                     </Route>
                     <Route path="/" element={<MainLayout />}>
                         <Route index element={<Home />} />
-
-
-                    </Route>
-
-                    <Route path="/UserInfor" element={<MainLayout />}>
-                        <Route index element={<UserInfor />} />
-                    </Route>
-                    
-                    <Route path="/login" element={<MainLayout />}>
-                        <Route index element={<Login />} />
-
-                    </Route>
-                    <Route path="/signup" element={<MainLayout />}>
-                        <Route index element={<Signup />} />
-
-
-
                         <Route path="post" element={<Post />} />
                         <Route path="detail" element={<PostDetail />} />
                         <Route path="login" element={<Login />} />
@@ -57,7 +40,6 @@ function App() {
                         <Route path="UserInfo" element={<UserInfor />} />
                         <Route path="login" element={<Login />} />
                         <Route path="signup" element={<Signup />} />
-
                     </Route>
                 </Routes>
             </Router>

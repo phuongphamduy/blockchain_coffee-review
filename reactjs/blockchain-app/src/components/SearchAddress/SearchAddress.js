@@ -55,7 +55,7 @@ function SearchAddress({ width, select, portal }) {
     }
     return (
         <>
-            <Combobox openOnFocus={true} onSelect={handleSelect} style={{ zIndex: 9999999 }}>
+            <Combobox openOnFocus={true} onSelect={handleSelect}>
                 <ComboboxInput
                     aria-labelledby="demo"
                     className={styles['input']}
@@ -64,17 +64,11 @@ function SearchAddress({ width, select, portal }) {
                     placeholder="Address"
                     style={{ width: width }}
                 />
-                <ComboboxPopover style={{ zIndex: 99999999 }} portal={portal}>
-                    <ComboboxList aria-labelledby="demo" style={{ zIndex: 999999999 }}>
+                <ComboboxPopover portal={portal}>
+                    <ComboboxList aria-labelledby="demo">
                         {listAddress && listAddress.length > 0 ? (
                             listAddress.map((item, index) => {
-                                return (
-                                    <ComboboxOption
-                                        key={item.place_id}
-                                        value={item.description}
-                                        style={{ zIndex: 99999999 }}
-                                    />
-                                );
+                                return <ComboboxOption key={item.place_id} value={item.description} />;
                             })
                         ) : (
                             <p
