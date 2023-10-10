@@ -6,9 +6,11 @@ import { useDispatch } from 'react-redux';
 import { Login } from '~/redux/user';
 import { useNavigate } from 'react-router-dom';
 
+
 function LoginForm() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
     async function handleSubmit(e) {
@@ -19,6 +21,7 @@ function LoginForm() {
             navigate('/post');
         }
     }
+
     return (
         <div className="container">
             <div className="row ${styles['full-height']}">

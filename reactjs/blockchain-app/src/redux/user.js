@@ -2,13 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 export const user = createSlice({
     name: 'user',
-<<<<<<< Updated upstream
-    initialState: null,
-    reducers: {},
-});
-
-=======
-    initialState: { user: {} },
+  initialState: { user: {} },
     reducers: {
         Login: (state, action) => {
             sessionStorage.setItem('user', action.payload);
@@ -21,5 +15,4 @@ export const user = createSlice({
 
 export const { Login, setUser } = user.actions;
 
->>>>>>> Stashed changes
 export default user.reducer;

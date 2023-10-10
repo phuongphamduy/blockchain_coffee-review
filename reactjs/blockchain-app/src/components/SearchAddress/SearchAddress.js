@@ -41,16 +41,17 @@ function SearchAddress({ width, select, portal }) {
     // hàm xử lý khi chọn địa chỉ trên ô tìm kiếm
     function handleSelect(e) {
         setAddress(e);
-        axios
-            .get(`https://rsapi.goong.io/geocode?address=${e}&api_key=${api}`)
-            .then((res) => {
-                const cordinate = res.data.results[0].geometry.location;
-                cordinate.address = e;
-                dispatch(chooseAddress(cordinate));
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+        if (select) {
+            axios
+                .get(`https://rsapi.goong.io/geocode?address=${e}&api_key=${api}`)
+                .then((res) => {
+                    const cordinate = res.data.results[0].geometry.location;
+                    dispatch(chooseAddress(cordinate));
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        }
     }
     return (
         <>
