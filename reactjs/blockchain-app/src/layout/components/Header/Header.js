@@ -46,7 +46,7 @@ function Header() {
                             <Form.Control className={styles['input']} placeholder="I'm looking for..." />
                         </InputGroup>
                         <div>
-                            <SearchAddress portal={true} />
+                            <SearchAddress select={true} portal={true} />
                         </div>
                         <FontAwesomeIcon icon={faMagnifyingGlass} className={styles['search-icon']} />
                     </div>
@@ -72,7 +72,7 @@ function Header() {
                     <Modal.Title>Create a new post</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <PostNew close={handleClose} />
+                    <PostNew />
                 </Modal.Body>
             </Modal>
         </>
