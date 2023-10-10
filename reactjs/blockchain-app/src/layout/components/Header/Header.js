@@ -9,11 +9,17 @@ import { useState } from 'react';
 import httpRequest from '~/utils/httpRequest';
 import PostNew from '../PostNew';
 import SearchAddress from '~/components/SearchAddress';
-import { useSelector } from 'react-redux';
+
+function getUser() {
+    if (sessionStorage.getItem('user')) {
+        return JSON.parse(sessionStorage.getItem('user'));
+    }
+}
+
 function Header() {
     const location = useLocation();
     const [show, setShow] = useState(false);
-    const user = useSelector((state) => state.user);
+    const user = getUser();
     // hàm xử lý đăng nhập
     function handleLogin() {
         httpRequest
@@ -56,7 +62,7 @@ function Header() {
             </Col>
             <Col>
                 <div className={styles['account-section']}>
-                    {Object.keys(user.user).length > 0 ? (
+                    {Object.keys(user).length > 0 ? (
                         <Button variant="primary" className={styles['btn']} onClick={handleShow}>
                             Post
                         </Button>

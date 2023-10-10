@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import Style from './Login.module.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import httpRequest from '~/utils/httpRequest';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 function LoginForm() {
@@ -13,7 +12,7 @@ function LoginForm() {
         e.preventDefault();
         const res = await httpRequest.post('/rest/account', { email, password });
         if (res.data) {
-            sessionStorage.setItem('user', res.data);
+            sessionStorage.setItem('user', JSON.stringify(res.data));
             navigate('/post');
         }
     }

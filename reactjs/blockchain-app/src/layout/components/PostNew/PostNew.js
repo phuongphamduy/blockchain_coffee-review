@@ -11,12 +11,19 @@ import { v4 as uuidv4 } from 'uuid';
 import httpRequest from '~/utils/httpRequest';
 import { useSelector } from 'react-redux';
 
+function getUser() {
+    if (sessionStorage.getItem('user')) {
+        return JSON.parse(sessionStorage.getItem('user'));
+    }
+}
+
 function PostNew({ close }) {
     const [ListImg, setListImg] = useState([]);
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [show, setShow] = useState(false);
     const coordinate = useSelector((state) => state.coordinate.value);
+    const user = getUser();
     function handleChange(e) {
         var fileList = e.target.files;
         var array = [];
@@ -59,7 +66,7 @@ function PostNew({ close }) {
             description,
             createdate: new Date(),
             account: {
-                id: 1,
+                id: user.id,
             },
             get images() {
                 return imgUrls.map((item) => {
