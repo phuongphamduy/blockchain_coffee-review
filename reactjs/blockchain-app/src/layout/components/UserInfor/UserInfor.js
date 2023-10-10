@@ -1,24 +1,25 @@
 // src/components/ProductCard.js
-
+import UserInfor from '~/statics/images/user_cafe.webp';
+import avt from '~/statics/images/noImg.png';
 import React from 'react';
 import styles from './UserInfor.module.scss';
 
 const productData = [
   {
     id: 1,
-    image: '~/statics/images/user_cafe.webp',
+    image: UserInfor,
     name: 'My List Coffee',
     intro: '1 places including Coffeehouse',
   },
   {
     id: 2,
-    image: '~/statics/images/user_cafe.webp',
+    image: UserInfor,
     name: 'My Saved places',
     intro: '1 places including Coffeehouse',
   },
   {
     id: 3,
-    image: '~/statics/images/noImg.png',
+    image: UserInfor,
     name: 'My  Liked places',
     intro: '1 places including Coffeehouse',
   },
@@ -33,7 +34,7 @@ const ProductCard = () => {
         <div className={styles.userProfile}>
           <div className={styles.leftSection}>
             <div className={styles.avatar}>
-              <img src="~/statics/images/noImg.png" alt="Avatar" />
+              <img src={avt} alt="Avatar" />
             </div>
             <div className={styles.userInfo}>
               <h2>Tài khoản</h2>

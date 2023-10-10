@@ -32,19 +32,21 @@ function App() {
 
                     <Route path="/home" element={<MainLayout />}>
                         <Route index element={<Home />} />
-                       
+
                     </Route>
+
                     <Route path="/UserInfor" element={<MainLayout />}>
                         <Route index element={<UserInfor />} />
-
+                    </Route>
+                    
                     <Route path="/login" element={<MainLayout />}>
                         <Route index element={<Login />} />
-                       
+
                     </Route>
                     <Route path="/signup" element={<MainLayout />}>
                         <Route index element={<Signup />} />
 
-                       
+
                     </Route>
                 </Routes>
             </Router>
