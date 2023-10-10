@@ -18,7 +18,7 @@ const productData = [
   },
   {
     id: 3,
-    image: '~/statics/images/user_cafe.webp',
+    image: '~/statics/images/noImg.png',
     name: 'My  Liked places',
     intro: '1 places including Coffeehouse',
   },
@@ -33,7 +33,7 @@ const ProductCard = () => {
         <div className={styles.userProfile}>
           <div className={styles.leftSection}>
             <div className={styles.avatar}>
-              <img src="path_to_avatar.jpg" alt="Avatar" />
+              <img src="~/statics/images/noImg.png" alt="Avatar" />
             </div>
             <div className={styles.userInfo}>
               <h2>Tài khoản</h2>

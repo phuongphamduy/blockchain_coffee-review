@@ -64,32 +64,59 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  
 }
 
 .leftSection {
   display: flex;
-  flex-direction: row; /* Thay đổi thành flex-direction: row */
-  align-items: center; /* Canh giữa các thành phần trong leftSection */
+  flex-direction: row;
+  align-items: center;
 }
 
 .userInfo {
-  margin-left: 10px; /* Khoảng cách giữa hình ảnh và thông tin người dùng */
+  margin-left: 10px;
+  color: white;
+  font-size: 1.2em;
 }
 
 .avatar img {
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  margin-right: 10px; /* Đẩy hình ảnh về bên trái */
+  margin-right: 10px;
 }
 
 .rightSection {
   display: flex;
   flex-direction: column;
-  align-items: flex-end; /* Canh phải */
+  align-items: flex-end;
+}
+
+.followCount {
+  display: flex;
+  align-items: center; /* Canh giữa theo chiều dọc */
 }
 
 .followCount span {
   margin-left: 10px;
+  font-weight: bold;
+  color: white;
+  font-size: 1.2em;
+}
+
+.followCount::before {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid white; /* Đường ngang màu trắng */
+  margin-right: 10px;
+}
+
+.editButton {
+  margin-top: 10px;
+  padding: 10px 15px; /* Điều chỉnh padding để nút gần hơn */
+  margin-left: 10px; /* Điều chỉnh margin để nút và thông tin gần hơn */
+  background-color: #3498db;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2em;
 }
