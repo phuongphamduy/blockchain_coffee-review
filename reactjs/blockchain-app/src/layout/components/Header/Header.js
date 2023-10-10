@@ -9,11 +9,11 @@ import { useState } from 'react';
 import httpRequest from '~/utils/httpRequest';
 import PostNew from '../PostNew';
 import SearchAddress from '~/components/SearchAddress';
+import { useSelector } from 'react-redux';
 function Header() {
     const location = useLocation();
     const [show, setShow] = useState(false);
-    // const user = useSelector((state) => state.user);
-
+    const user = useSelector((state) => state.user);
     // hàm xử lý đăng nhập
     function handleLogin() {
         httpRequest
@@ -56,15 +56,20 @@ function Header() {
             </Col>
             <Col>
                 <div className={styles['account-section']}>
-                    <Button variant="primary" className={styles['btn']} onClick={handleShow}>
-                        Post{' '}
-                    </Button>
-                    <Button variant="outline-primary" className={styles['btn']} onClick={handleLogin}>
-                        Login
-                    </Button>
-                    <Button variant="outline-warning" className={styles['btn']}>
-                        Sign up
-                    </Button>
+                    {Object.keys(user.user).length > 0 ? (
+                        <Button variant="primary" className={styles['btn']} onClick={handleShow}>
+                            Post
+                        </Button>
+                    ) : (
+                        <>
+                            <Button variant="outline-primary" className={styles['btn']} onClick={handleLogin}>
+                                Login
+                            </Button>
+                            <Button variant="outline-warning" className={styles['btn']}>
+                                Sign up
+                            </Button>
+                        </>
+                    )}
                 </div>
             </Col>
             <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false}>
