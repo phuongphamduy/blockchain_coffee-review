@@ -1,0 +1,122 @@
+// src/components/ProductCard.module.scss
+.background-color{
+  background-color: rgba(0, 0, 0, 0.5); /* Màu nền với độ trong suốt */
+  width: 100%;
+    height: 100vh;
+}
+
+.product-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid #ffffff;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(255, 255, 255, 0.1);
+  margin: 10px;
+
+  .product-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 10%;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .product-info {
+    text-align: center;
+
+    .product-name {
+      margin: 10px 0;
+    }
+
+    .product-intro {
+      font-weight: bold;
+    }
+  }
+}
+.container_user {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 20vh;
+  margin: 0 auto;
+}
+
+.container_card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 30vh;
+  margin: 0 auto;
+}
+
+.userProfile {
+  width: 80%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.leftSection {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.userInfo {
+  margin-left: 10px;
+  color: white;
+  font-size: 1.2em;
+}
+
+.avatar img {
+  width: 50px;
+  height: 50px;
+  border-radius: 10%;
+  margin-right: 10px;
+}
+
+.rightSection {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.followCount {
+  display: flex;
+  align-items: center; /* Canh giữa theo chiều dọc */
+}
+
+.followCount span {
+  margin-left: 10px;
+  font-weight: bold;
+  color: white;
+  font-size: 1.2em;
+}
+
+.followCount::before {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid white; /* Đường ngang màu trắng */
+  margin-right: 10px;
+}
+
+.editButton {
+  margin-top: 10px;
+  padding: 10px 15px; /* Điều chỉnh padding để nút gần hơn */
+  margin-left: 10px; /* Điều chỉnh margin để nút và thông tin gần hơn */
+  background-color: #3498db;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2em;
+}

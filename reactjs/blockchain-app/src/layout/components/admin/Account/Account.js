@@ -7,6 +7,7 @@ function Account() {
     return (
         <>
 
+
             <div className={styles['container']}>
                 <br/>
                 <br/>
@@ -87,8 +88,6 @@ function Account() {
                     </Table>
                     <br></br>
                 </div>
-         
-
         </>
     );
 }
