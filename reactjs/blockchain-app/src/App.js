@@ -7,8 +7,12 @@ import Account from './layout/components/admin/Account';
 import PostAdmin from './layout/components/admin/PostAdmin';
 import Statistic from './layout/components/admin/Statistic';
 import AllowPost from './layout/components/admin/AllowPost';
+
+import Home from './layout/components/Home';
+import UserInfor from './layout/components/UserInfor';
 import Login from './layout/components/Login';
 import Signup from './layout/components/Signup';
+
 
 function App() {
     return (
@@ -25,12 +29,21 @@ function App() {
                         <Route index element={<Post />} />
                         <Route path="detail" element={<PostDetail />} />
                     </Route>
+
+                    <Route path="/home" element={<MainLayout />}>
+                        <Route index element={<Home />} />
+                       
+                    </Route>
+                    <Route path="/UserInfor" element={<MainLayout />}>
+                        <Route index element={<UserInfor />} />
+
                     <Route path="/login" element={<MainLayout />}>
                         <Route index element={<Login />} />
                        
                     </Route>
                     <Route path="/signup" element={<MainLayout />}>
                         <Route index element={<Signup />} />
+
                        
                     </Route>
                 </Routes>
