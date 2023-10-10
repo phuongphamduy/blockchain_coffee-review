@@ -1,20 +1,20 @@
 
 
-// import { Container, Col, Row, Image } from 'react-bootstrap';
-import  './Account.module.scss';
+
+import styles from './Account.module.scss';
 import { Table } from 'react-bootstrap';
 function Account() {
     return (
         <>
 
-            <div className="Container" style={{ backgroundColor: 'aqua', textAlign: 'center' }}>
+            <div className={styles['container']}>
                 <br/>
                 <br/>
-                <h1 style={{ color:'red'}}>Danh sách tài khoản</h1>
+                <h1 className={styles['heading']}>Danh sách tài khoản</h1>
                 <br />
                 <br />
-                <div className='Tablestyle' >
-                    <Table striped bordered hover>
+               
+                    <Table className={styles['table_content']}>
                         <thead>
                             <tr>
                                 <th>ID</th>
@@ -85,8 +85,9 @@ function Account() {
                             </tr>
                         </tbody>
                     </Table>
+                    <br></br>
                 </div>
-            </div>
+         
 
         </>
     );

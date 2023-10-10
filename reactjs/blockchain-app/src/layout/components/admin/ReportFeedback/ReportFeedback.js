@@ -1,17 +1,21 @@
-import './ReportFeedback.module.scss'
+import styles from './ReportFeedback.module.scss'
 import {Table} from 'react-bootstrap';
+
+
 function ReportFeedback(){
     return (
         <>
+     
 
-        <div className="Container" style={{ backgroundColor: 'aqua', textAlign: 'center' }}>
+        <div className={styles['container']}>
             <br/>
             <br/>
-            <h1 style={{ color:'red'}}>Báo cáo & Phản hồi</h1>
+            <h1 className={styles['heading']}>Báo cáo & Phản hồi</h1>
             <br />
             <br />
-            <div className='Tablestyle' >
-                <Table striped bordered hover>
+            {/* <div className='table' > */}
+               {/*  striped bordered hover */}
+                <Table className={styles['table_content']}>
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -66,7 +70,8 @@ function ReportFeedback(){
                         </tr>
                     </tbody>
                 </Table>
-            </div>
+                <br></br>
+            {/* </div> */}
         </div>
 
     </>
