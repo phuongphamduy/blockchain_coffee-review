@@ -13,12 +13,8 @@ import Signup from './layout/components/Signup';
 import { useDispatch } from 'react-redux';
 import { setUser } from './redux/user';
 
-
 import Home from './layout/components/Home';
 import UserInfor from './layout/components/UserInfor';
-import Login from './layout/components/Login';
-import Signup from './layout/components/Signup';
-
 
 function App() {
     const dispatch = useDispatch();
@@ -35,35 +31,16 @@ function App() {
                         <Route path="statistic" element={<Statistic />} />
                         <Route path="allowPost" element={<AllowPost />} />
                     </Route>
-                    <Route path="/post" element={<MainLayout />}>
-                        <Route index element={<Post />} />
-                        <Route path="detail" element={<PostDetail />} />
-                    </Route>
-
-                    <Route path="/login" element={<MainLayout />}>
-                        <Route index element={<Login />} />
-                    </Route>
-                    <Route path="/signup" element={<MainLayout />}>
-                        <Route index element={<Signup />} />
-                    </Route>
-
-                    <Route path="/home" element={<MainLayout />}>
+                    <Route path="/" element={<MainLayout />}>
                         <Route index element={<Home />} />
-                       
+                        <Route path="post" element={<Post />} />
+                        <Route path="detail" element={<PostDetail />} />
+                        <Route path="login" element={<Login />} />
+                        <Route path="signup" element={<Signup />} />
+                        <Route path="UserInfo" element={<UserInfor />} />
+                        <Route path="login" element={<Login />} />
+                        <Route path="signup" element={<Signup />} />
                     </Route>
-                    <Route path="/UserInfor" element={<MainLayout />}>
-                        <Route index element={<UserInfor />} />
-
-                    <Route path="/login" element={<MainLayout />}>
-                        <Route index element={<Login />} />
-                       
-                    </Route>
-                    <Route path="/signup" element={<MainLayout />}>
-                        <Route index element={<Signup />} />
-
-                       
-                    </Route>
-
                 </Routes>
             </Router>
         </>
