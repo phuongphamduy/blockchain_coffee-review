@@ -3,21 +3,17 @@ import Style from './Login.module.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import httpRequest from '~/utils/httpRequest';
 import { useDispatch } from 'react-redux';
-import { Login } from '~/redux/user';
 import { useNavigate } from 'react-router-dom';
-
 
 function LoginForm() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-
-    const dispatch = useDispatch();
     const navigate = useNavigate();
     async function handleSubmit(e) {
         e.preventDefault();
         const res = await httpRequest.post('/rest/account', { email, password });
         if (res.data) {
-            dispatch(Login(res.data));
+            sessionStorage.setItem('user', res.data);
             navigate('/post');
         }
     }

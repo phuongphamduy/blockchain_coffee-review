@@ -28,10 +28,9 @@ public class AccountServiceImpl implements AccountService {
 			return null;
 		}
 		if(account.getPassword().equals(data.findValue("password").asText())) {
-			System.out.println("đúng");
+			
 			return account;
 		}
-		
 		return null;
 		
 	}

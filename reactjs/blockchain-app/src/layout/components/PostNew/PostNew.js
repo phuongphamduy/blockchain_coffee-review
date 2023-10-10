@@ -5,29 +5,79 @@ import { useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import { storage } from '~/utils/firebase';
+import { v4 as uuidv4 } from 'uuid';
+import httpRequest from '~/utils/httpRequest';
+import { useSelector } from 'react-redux';
 
-function PostNew() {
+function PostNew({ close }) {
     const [ListImg, setListImg] = useState([]);
+    const [name, setName] = useState('');
+    const [description, setDescription] = useState('');
     const [show, setShow] = useState(false);
+    const coordinate = useSelector((state) => state.coordinate.value);
     function handleChange(e) {
         var fileList = e.target.files;
         var array = [];
         var id = ListImg.length > 0 ? ListImg[ListImg.length - 1].id : 0;
         for (var i = 0; i < fileList.length; i++) {
             id++;
-            array.push({ preview: URL.createObjectURL(fileList[i]), id: id });
+            array.push({
+                preview: URL.createObjectURL(fileList[i]),
+                id: id,
+                name: fileList[i].name,
+                file: fileList[i],
+            });
         }
         setListImg((prev) => {
             return [...prev, ...array];
         });
     }
-
     function handleClose() {
         setShow(false);
     }
-
     function handleShow() {
         setShow(true);
+    }
+
+    async function handlePost() {
+        if (ListImg.length === 0) {
+            return;
+        }
+        const imgUrls = [];
+        for (var i = 0; i < ListImg.length; i++) {
+            var imgRef = ref(storage, `images/${ListImg[i].name + uuidv4()}`);
+            const snapshot = await uploadBytes(imgRef, ListImg[i].file);
+            imgUrls.push(await getDownloadURL(snapshot.ref));
+        }
+        const post = {
+            name: name,
+            address: coordinate.address,
+            lat: coordinate.lat,
+            lng: coordinate.lng,
+            description,
+            createdate: new Date(),
+            account: {
+                id: 1,
+            },
+            get images() {
+                return imgUrls.map((item) => {
+                    return {
+                        url: item,
+                    };
+                });
+            },
+        };
+        httpRequest
+            .post('/rest/post', post)
+            .then((res) => {
+                alert('Post success');
+                close();
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     }
 
     function handleDelete(e) {
@@ -37,9 +87,6 @@ function PostNew() {
         }
         setListImg((prev) => {
             return prev.filter((item) => {
-                if (item.id !== Number.parseInt(index)) {
-                    URL.revokeObjectURL(item.preview);
-                }
                 return item.id !== Number.parseInt(index);
             });
         });
@@ -49,11 +96,17 @@ function PostNew() {
             <div className={styles['post-form-section']}>
                 <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                     <Form.Label className={styles['label']}>Name of coffee shop</Form.Label>
-                    <Form.Control type="text" placeholder="Name of the coffee shop" className={styles['input']} />
+                    <Form.Control
+                        type="text"
+                        placeholder="Name of the coffee shop"
+                        className={styles['input']}
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                    />
                 </Form.Group>
                 <div>
                     <Form.Label className={styles['label']}>Address</Form.Label>
-                    <SearchAddress width="100%" select={false} portal={false} />
+                    <SearchAddress width="100%" portal={false} />
                 </div>
                 <div>
                     <Form.Label className={styles['label']}>Description</Form.Label>
@@ -61,6 +114,8 @@ function PostNew() {
                         as="textarea"
                         placeholder="Description"
                         style={{ height: '100px', fontSize: '1.4rem' }}
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
                     />
                 </div>
                 <div>
@@ -85,7 +140,7 @@ function PostNew() {
                     )}
                 </div>
                 <div className={styles['btn-group']}>
-                    <Button variant="primary" className={styles['btn']}>
+                    <Button variant="primary" className={styles['btn']} onClick={handlePost}>
                         Post
                     </Button>
                     <Button variant="danger" className={styles['btn']} onClick={handleShow}>
@@ -118,5 +173,4 @@ function PostNew() {
         </>
     );
 }
-
 export default PostNew;

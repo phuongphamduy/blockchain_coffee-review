@@ -3,7 +3,6 @@ package com.blockchain.model;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,10 +11,11 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -27,8 +27,11 @@ public class Post implements Serializable {
 	Integer Id;
 	String name;
 	String address;
+	String description;
 	Double lat;
 	Double lng;
+	@Temporal(TemporalType.DATE)
+	Date createdate = new Date();
 	@ManyToOne
 	@JoinColumn(name = "accountid")
 	Account account;
@@ -36,5 +39,7 @@ public class Post implements Serializable {
 	List<Review> reviews;
 	@OneToMany(mappedBy = "post")
 	List<Favorite> favorites;
-	
+	@OneToMany(mappedBy = "post")
+	List<Image> images;
+
 }
