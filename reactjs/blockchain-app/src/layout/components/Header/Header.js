@@ -14,12 +14,34 @@ function getUser() {
     if (sessionStorage.getItem('user')) {
         return JSON.parse(sessionStorage.getItem('user'));
     }
+    return null;
 }
 
 function Header() {
     const location = useLocation();
     const [show, setShow] = useState(false);
+    const [isConnect, setIsConnect] = useState(false);
+    const [pubKey, setPubKey] = useState(null);
     const user = getUser();
+    const isPhantomInstalled = window.phantom?.solana?.isPhantom;
+    var provider = null;
+    const getProvider = () => {
+        if ('phantom' in window) {
+            const provider = window.phantom?.solana;
+
+            if (provider?.isPhantom) {
+                return provider;
+            }
+        }
+    };
+
+    if (user) {
+        if (!isPhantomInstalled) {
+            alert('Hãy cài ví Phantom để có trải nghiệm tốt nhất');
+            window.open('https://phantom.app/', '_blank');
+        }
+    }
+
     // hàm xử lý đăng nhập
     function handleLogin() {
         httpRequest
@@ -38,6 +60,29 @@ function Header() {
 
     function handleShow() {
         setShow(true);
+    }
+
+    function handleDownloadPhantom() {
+        window.open('https://phantom.app/', '_blank');
+    }
+
+    async function handleConnect() {
+        provider = getProvider();
+        try {
+            const resp = await provider.request({ method: 'connect' });
+            setIsConnect(provider.isConnected);
+            console.log(resp.publicKey.toString());
+            setPubKey(resp.publicKey.toString());
+        } catch (err) {
+            // { code: 4001, message: 'User rejected the request.' }
+        }
+    }
+
+    async function handleDisconnect() {
+        provider = getProvider();
+        await provider.request({ method: 'disconnect' });
+        setIsConnect(provider.isConnected);
+        setPubKey(null);
     }
     return (
         <>
@@ -62,10 +107,30 @@ function Header() {
             </Col>
             <Col>
                 <div className={styles['account-section']}>
-                    {Object.keys(user).length > 0 ? (
-                        <Button variant="primary" className={styles['btn']} onClick={handleShow}>
-                            Post
+                    {user && Object.keys(user).length > 0 && !isPhantomInstalled ? (
+                        <Button className={styles['btn-down']} onClick={handleDownloadPhantom}>
+                            Download Phantom
                         </Button>
+                    ) : (
+                        <></>
+                    )}
+                    {user && Object.keys(user).length > 0 && isPhantomInstalled ? (
+                        <>
+                            {isConnect ? (
+                                <Button className={styles['btn-down']} onClick={handleDisconnect}>
+                                    Disconnect wallet
+                                </Button>
+                            ) : (
+                                <Button className={styles['btn-down']} onClick={handleConnect}>
+                                    Connect to phantom wallet
+                                </Button>
+                            )}
+
+                            <Button variant="primary" className={styles['btn']} onClick={handleShow}>
+                                Post
+                            </Button>
+                            <span className={styles['user-name']}>Welcome back {user.fullname}</span>
+                        </>
                     ) : (
                         <>
                             <Button variant="outline-primary" className={styles['btn']} onClick={handleLogin}>
