@@ -13,7 +13,6 @@ function Post() {
         httpRequest
             .get('/rest/post')
             .then((res) => {
-                console.log(res);
                 setListPost(res.data);
             })
             .catch((error) => {
