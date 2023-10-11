@@ -3,36 +3,36 @@ import 'slick-carousel/slick/slick-theme.css';
 import 'tippy.js/dist/tippy.css';
 import Slider from 'react-slick';
 import styles from './PostDetail.module.scss';
-import { Button, Col, Container, Row } from 'react-bootstrap';
+import { Alert, Button, Col, Container, Row } from 'react-bootstrap';
 import Cong1 from '~/statics/images/cong1.jpg';
-import Cong2 from '~/statics/images/cong2.jpg';
-import Cong3 from '~/statics/images/cong3.jpg';
-import Cong4 from '~/statics/images/cong4.jpg';
-import Cong5 from '~/statics/images/cong5.jpg';
-import Cong6 from '~/statics/images/cong6.jpg';
-import Cong7 from '~/statics/images/cong7.jpg';
 import HighLand from '~/statics/images/highland.jpg';
 import NoLogin from '~/statics/images/noLogin.png';
-import CommentUser1 from '~/statics/images/commentuser1.jpg';
-import CommentUser2 from '~/statics/images/commentuser2.jpg';
-import CommentUser3 from '~/statics/images/commentuser3.jpg';
-import CommentImg1 from '~/statics/images/commentimg1.jpg';
-import CommentImg2 from '~/statics/images/commentimg2.jpg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBookmark, faCamera, faEllipsis, faHeart, faThumbsDown, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
+import { faBookmark, faCamera, faHeart, faThumbsDown } from '@fortawesome/free-solid-svg-icons';
 import Map from '~/components/Map';
-import Tippy from '@tippyjs/react/headless';
-import { createRef } from 'react';
+import { createRef, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import httpRequest from '~/utils/httpRequest';
 
 function PostDetail() {
+    const [postDetail, setPostDetail] = useState(null);
     const location = useLocation();
-    console.log(location.pathname);
-    console.log(location.pathname.charAt(location.pathname.lastIndexOf + 1));
+    useEffect(() => {
+        const id = location.pathname.charAt(location.pathname.length - 1);
+        httpRequest
+            .get(`/rest/post/${id}`)
+            .then((res) => {
+                console.log(res.data);
+                setPostDetail(res.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }, []);
     const inputRef = createRef();
     const settings = {
         infinite: true,
-        slidesToShow: 6,
+        slidesToShow: 7,
         slidesToScroll: 2,
         autoplay: true,
         autoplaySpeed: 2000,
@@ -50,69 +50,15 @@ function PostDetail() {
                     <div className={styles['post-info-wrapper']}>
                         <div className={styles['slider-section']}>
                             <Slider {...settings}>
-                                <div className={styles['slider-item']}>
-                                    <img src={Cong1} alt="img" />
-                                </div>
-                                <div className={styles['slider-item']}>
-                                    <img src={Cong2} alt="img" />
-                                </div>
-                                <div className={styles['slider-item']}>
-                                    <img src={Cong3} alt="img" />
-                                </div>
-                                <div className={styles['slider-item']}>
-                                    <img src={Cong4} alt="img" />
-                                </div>
-                                <div className={styles['slider-item']}>
-                                    <img src={Cong5} alt="img" />
-                                </div>
-                                <div className={styles['slider-item']}>
-                                    <img src={Cong6} alt="img" />
-                                </div>
-                                <div className={styles['slider-item']}>
-                                    <img src={Cong7} alt="img" />
-                                </div>
-                                <div className={styles['slider-item']}>
-                                    <img src={Cong1} alt="img" />
-                                </div>
-                                <div className={styles['slider-item']}>
-                                    <img src={Cong2} alt="img" />
-                                </div>
-                                <div className={styles['slider-item']}>
-                                    <img src={Cong3} alt="img" />
-                                </div>
-                                <div className={styles['slider-item']}>
-                                    <img src={Cong4} alt="img" />
-                                </div>
-                                <div className={styles['slider-item']}>
-                                    <img src={Cong5} alt="img" />
-                                </div>
-                                <div className={styles['slider-item']}>
-                                    <img src={Cong6} alt="img" />
-                                </div>
-                                <div className={styles['slider-item']}>
-                                    <img src={Cong7} alt="img" />
-                                </div>
-                                <div className={styles['slider-item']}>
-                                    <img src={Cong1} alt="img" />
-                                </div>
-                                <div className={styles['slider-item']}>
-                                    <img src={Cong2} alt="img" />
-                                </div>
-                                <div className={styles['slider-item']}>
-                                    <img src={Cong3} alt="img" />
-                                </div>
-                                <div className={styles['slider-item']}>
-                                    <img src={Cong4} alt="img" />
-                                </div>
-                                <div className={styles['slider-item']}>
-                                    <img src={Cong5} alt="img" />
-                                </div>
-                                <div className={styles['slider-item']}>
-                                    <img src={Cong6} alt="img" />
-                                </div>
-                                <div className={styles['slider-item']}>
-                                    <img src={Cong7} alt="img" />
-                                </div>
+                                {postDetail &&
+                                    postDetail.images &&
+                                    postDetail.images.map((item) => {
+                                        return (
+                                            <div key={item.id} className={styles['slider-item']}>
+                                                <img src={item.url} alt="img" />
+                                            </div>
+                                        );
+                                    })}
                             </Slider>
                         </div>
                         <div className={styles['post-info-section']}>
@@ -120,9 +66,12 @@ function PostDetail() {
                                 <img src={Cong1} alt="img" />
                                 <div className={styles['post-name']}>
                                     <h1>
-                                        Cộng Cà Phê <span>8.7</span>
+                                        {postDetail && postDetail.name}
+                                        {postDetail && postDetail.reviews && postDetail.reviews.length > 0 && (
+                                            <span>8.7</span>
+                                        )}
                                     </h1>
-                                    <p>26 Lý Tự Trọng, Quận 1 Thành phố Hồ Chí Minh</p>
+                                    <p>{postDetail && postDetail.address}</p>
                                 </div>
                             </div>
                             <div className={styles['post-interact']}>
@@ -168,7 +117,7 @@ function PostDetail() {
                                     </Button>
                                 </div>
                                 <div className={styles['comment-list']}>
-                                    <div className={styles['comment-item']}>
+                                    {/* <div className={styles['comment-item']}>
                                         <img src={CommentUser1} alt="img" />
                                         <div className={styles['comment-content']}>
                                             <div className={styles['comment-info']}>
@@ -287,6 +236,9 @@ function PostDetail() {
                                                 </Button>
                                             </div>
                                         </div>
+                                    </div> */}
+                                    <div className={styles['no-comment']}>
+                                        <Alert variant="light">There are no comments here. Let be the first one!</Alert>
                                     </div>
                                 </div>
                             </div>
@@ -294,11 +246,11 @@ function PostDetail() {
                         <Col sm={3}>
                             <div className={styles['more-info-section']}>
                                 <div className={styles['map-section']}>
-                                    <Map />
+                                    <Map lat={postDetail && postDetail.lat} lng={postDetail && postDetail.lng} />
                                 </div>
                                 <div className={styles['places']}>
-                                    <h4>Cộng Cà Phê</h4>
-                                    <p>26 Lý Tự Trọng, Quận 1 Thành phố Hồ Chí Minh</p>
+                                    <h4>{postDetail && postDetail.name}</h4>
+                                    <p>{postDetail && postDetail.address}</p>
                                 </div>
                             </div>
                             <div className={styles['recomment-section']}>

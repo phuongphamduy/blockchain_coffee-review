@@ -6,6 +6,7 @@ import { faBookmark } from '@fortawesome/free-solid-svg-icons';
 import Map from '~/components/Map';
 import { useEffect, useState } from 'react';
 import httpRequest from '~/utils/httpRequest';
+import { Link } from 'react-router-dom';
 function Post() {
     const [listPost, setListPost] = useState([]);
 
@@ -44,7 +45,7 @@ function Post() {
                                 </div>
                                 {listPost.map((item) => {
                                     return (
-                                        <div key={item.id} className={styles['post-section']}>
+                                        <Link to={`/post/${item.id}`} key={item.id} className={styles['post-section']}>
                                             <div className={styles['post-wrapper']}>
                                                 <div className={styles['post-upper']}>
                                                     <img
@@ -77,7 +78,7 @@ function Post() {
                                                     <></>
                                                 )}
                                             </div>
-                                        </div>
+                                        </Link>
                                     );
                                 })}
 

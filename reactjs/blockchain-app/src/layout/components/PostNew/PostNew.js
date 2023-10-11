@@ -10,15 +10,7 @@ import { storage } from '~/utils/firebase';
 import { v4 as uuidv4 } from 'uuid';
 import httpRequest from '~/utils/httpRequest';
 import { useSelector } from 'react-redux';
-import {
-    Connection,
-    SystemProgram,
-    Transaction,
-    clusterApiUrl,
-    PublicKey,
-    LAMPORTS_PER_SOL,
-    Keypair,
-} from '@solana/web3.js';
+import { Connection, SystemProgram, Transaction, clusterApiUrl, LAMPORTS_PER_SOL, Keypair } from '@solana/web3.js';
 import bs58 from 'bs58';
 import * as buffer from 'buffer';
 
@@ -89,7 +81,7 @@ function PostNew({ close }) {
         transaction.feePayer = provider.publicKey;
         try {
             const { signature } = await provider.signAndSendTransaction(transaction);
-            const res = await connection.getSignatureStatus(signature);
+            await connection.getSignatureStatus(signature);
             alert('payment success!');
             return true;
         } catch (error) {
@@ -98,8 +90,8 @@ function PostNew({ close }) {
     }
 
     async function handlePost() {
-        if (ListImg.length === 0) {
-            alert('you not choose any images');
+        if (ListImg.length >= 7) {
+            alert('Choose atlest 7 images');
             return;
         }
         var isSend = await handleSend();
