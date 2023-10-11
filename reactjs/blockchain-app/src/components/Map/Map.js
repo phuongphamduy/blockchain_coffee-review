@@ -32,7 +32,7 @@ function Map() {
                     width: '100%',
                 }}
                 center={{ lat: coordinate.lat, lng: coordinate.lng }}
-                zoom={[10]}
+                zoom={[13]}
             >
                 <Marker coordinates={[coordinate.lng, coordinate.lat]} anchor="bottom">
                     <FontAwesomeIcon icon={faLocationDot} className={styles['icon']} />

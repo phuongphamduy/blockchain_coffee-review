@@ -15,11 +15,9 @@ function MainLayout() {
                 </Container>
             </div>
             <Outlet />
-            <Container>
-                <Row>
-                    <Footer />
-                </Row>
-            </Container>
+            <Row>
+                <Footer />
+            </Row>
         </>
     );
 }

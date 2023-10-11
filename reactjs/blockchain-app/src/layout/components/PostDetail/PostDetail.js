@@ -23,6 +23,8 @@ import { faBookmark, faCamera, faEllipsis, faHeart, faThumbsDown, faThumbsUp } f
 import Map from '~/components/Map';
 import Tippy from '@tippyjs/react/headless';
 import { createRef } from 'react';
+import { useLoaderData } from 'react-router-dom';
+
 function PostDetail() {
     const inputRef = createRef();
     const settings = {

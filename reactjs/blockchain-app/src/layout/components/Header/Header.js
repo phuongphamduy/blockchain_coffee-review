@@ -1,7 +1,7 @@
 import styles from './Header.module.scss';
 import { Button, Col, Form, InputGroup, Modal } from 'react-bootstrap';
 import Logo from '~/statics/images/Logo_Coffe.png';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import '@reach/combobox/styles.css';
@@ -75,10 +75,10 @@ function Header() {
     return (
         <>
             <Col className={styles['d-flex']}>
-                <div className={styles['logo-section']}>
+                <Link to="/" className={styles['logo-section']}>
                     <img src={Logo} className={styles['header-logo']} alt="Logo" />
                     <h1>Coffee Review</h1>
-                </div>
+                </Link>
                 {location.pathname.includes('/post') ? (
                     <div className={styles['search-section']}>
                         <InputGroup className="" size="lg">
@@ -124,12 +124,12 @@ function Header() {
                         </>
                     ) : (
                         <>
-                            <Button variant="outline-primary" className={styles['btn']} onClick={handleLogin}>
+                            <Link to="/login" className={styles['btn']} onClick={handleLogin}>
                                 Login
-                            </Button>
-                            <Button variant="outline-warning" className={styles['btn']}>
+                            </Link>
+                            <Link to="/signUp" className={styles['btn']}>
                                 Sign up
-                            </Button>
+                            </Link>
                         </>
                     )}
                 </div>
