@@ -119,7 +119,12 @@ function Header() {
                                     Connect to phantom wallet
                                 </Button>
                             )}
-
+                        </>
+                    ) : (
+                        <></>
+                    )}
+                    {user && Object.keys(user).length > 0 ? (
+                        <>
                             <span className={styles['user-name']}>Welcome back {user.fullname}</span>
                         </>
                     ) : (

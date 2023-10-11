@@ -5,7 +5,7 @@ import styles from './Map.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
 import { useSelector } from 'react-redux';
-function Map() {
+function Map({ lat, lng }) {
     //Google map
     // const center = useMemo(() => {
     //     return { lat: 10.81344, lng: 106.6205184 };
@@ -31,10 +31,10 @@ function Map() {
                     height: '100%',
                     width: '100%',
                 }}
-                center={{ lat: coordinate.lat, lng: coordinate.lng }}
+                center={{ lat: lat || coordinate.lat, lng: lng || coordinate.lng }}
                 zoom={[13]}
             >
-                <Marker coordinates={[coordinate.lng, coordinate.lat]} anchor="bottom">
+                <Marker coordinates={[lng || coordinate.lng, lat || coordinate.lat]} anchor="bottom">
                     <FontAwesomeIcon icon={faLocationDot} className={styles['icon']} />
                 </Marker>
             </Map>

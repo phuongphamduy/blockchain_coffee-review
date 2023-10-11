@@ -14,7 +14,6 @@ import Signup from './layout/components/Signup';
 import Home from './layout/components/Home';
 import UserInfor from './layout/components/UserInfor';
 import ReportFeedback from './layout/components/admin/ReportFeedback';
-import { getPostDetail } from './layout/components/PostDetail/PostDetail';
 
 function App() {
     return (
