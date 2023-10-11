@@ -1,7 +1,9 @@
 package com.blockchain.serviceImpl;
 
-import com.blockchain.service.FavoriteService;
+import org.springframework.stereotype.Service;
 
+import com.blockchain.service.FavoriteService;
+@Service
 public class FavoriteServiceImpl implements FavoriteService{
 
 }

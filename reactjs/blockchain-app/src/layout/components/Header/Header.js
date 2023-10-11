@@ -6,25 +6,43 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import '@reach/combobox/styles.css';
 import { useState } from 'react';
-import httpRequest from '~/utils/httpRequest';
 import PostNew from '../PostNew';
 import SearchAddress from '~/components/SearchAddress';
-import { useSelector } from 'react-redux';
+
+function getUser() {
+    if (sessionStorage.getItem('user')) {
+        return JSON.parse(sessionStorage.getItem('user'));
+    }
+    return null;
+}
+
 function Header() {
     const location = useLocation();
     const [show, setShow] = useState(false);
-    const user = useSelector((state) => state.user);
-    // hàm xử lý đăng nhập
-    function handleLogin() {
-        httpRequest
-            .get('/rest/account')
-            .then((res) => {
-                console.log(res);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+    const [isConnect, setIsConnect] = useState(false);
+    const user = getUser();
+    const isPhantomInstalled = window.phantom?.solana?.isPhantom;
+    var provider = null;
+
+    const getProvider = () => {
+        if ('phantom' in window) {
+            const provider = window.phantom?.solana;
+
+            if (provider?.isPhantom) {
+                return provider;
+            }
+        }
+    };
+
+    if (user) {
+        if (!isPhantomInstalled) {
+            alert('Hãy cài ví Phantom để có trải nghiệm tốt nhất');
+            window.open('https://phantom.app/', '_blank');
+        }
     }
+
+    // hàm xử lý đăng nhập
+    function handleLogin() {}
 
     function handleClose() {
         setShow(false);
@@ -32,6 +50,27 @@ function Header() {
 
     function handleShow() {
         setShow(true);
+    }
+
+    function handleDownloadPhantom() {
+        window.open('https://phantom.app/', '_blank');
+    }
+
+    async function handleConnect() {
+        provider = getProvider();
+        try {
+            const resp = await provider.request({ method: 'connect' });
+            setIsConnect(provider.isConnected);
+            console.log(resp.publicKey.toString());
+        } catch (err) {
+            // { code: 4001, message: 'User rejected the request.' }
+        }
+    }
+
+    async function handleDisconnect() {
+        provider = getProvider();
+        await provider.request({ method: 'disconnect' });
+        setIsConnect(provider.isConnected);
     }
     return (
         <>
@@ -46,7 +85,7 @@ function Header() {
                             <Form.Control className={styles['input']} placeholder="I'm looking for..." />
                         </InputGroup>
                         <div>
-                            <SearchAddress select={true} portal={true} width="180px" />
+                            <SearchAddress portal={true} width="180px" />
                         </div>
                         <FontAwesomeIcon icon={faMagnifyingGlass} className={styles['search-icon']} />
                     </div>
@@ -56,10 +95,33 @@ function Header() {
             </Col>
             <Col>
                 <div className={styles['account-section']}>
-                    {Object.keys(user.user).length > 0 ? (
-                        <Button variant="primary" className={styles['btn']} onClick={handleShow}>
-                            Post
+                    {user && Object.keys(user).length > 0 && !isPhantomInstalled ? (
+                        <Button className={styles['btn-down']} onClick={handleDownloadPhantom}>
+                            Download Phantom
                         </Button>
+                    ) : (
+                        <></>
+                    )}
+                    {user && Object.keys(user).length > 0 && isPhantomInstalled ? (
+                        <>
+                            {isConnect ? (
+                                <>
+                                    <Button className={styles['btn-down']} onClick={handleDisconnect}>
+                                        Disconnect wallet
+                                    </Button>
+                                    <Button variant="primary" className={styles['btn']} onClick={handleShow}>
+                                        Post
+                                    </Button>
+                                    {/* <span className={styles['number-sol']}>0 Sol</span> */}
+                                </>
+                            ) : (
+                                <Button className={styles['btn-down']} onClick={handleConnect}>
+                                    Connect to phantom wallet
+                                </Button>
+                            )}
+
+                            <span className={styles['user-name']}>Welcome back {user.fullname}</span>
+                        </>
                     ) : (
                         <>
                             <Button variant="outline-primary" className={styles['btn']} onClick={handleLogin}>
@@ -77,7 +139,7 @@ function Header() {
                     <Modal.Title>Create a new post</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <PostNew />
+                    <PostNew close={handleClose} />
                 </Modal.Body>
             </Modal>
         </>

@@ -12,17 +12,11 @@ import ReportFeedback from './layout/components/admin/ReportFeedback';
 
 import Login from './layout/components/Login';
 import Signup from './layout/components/Signup';
-import { useDispatch } from 'react-redux';
-import { setUser } from './redux/user';
 
 import Home from './layout/components/Home';
 import UserInfor from './layout/components/UserInfor';
 
 function App() {
-    const dispatch = useDispatch();
-    if (sessionStorage.getItem('user')) {
-        dispatch(setUser(sessionStorage.getItem('user')));
-    }
     return (
         <>
             <Router>
