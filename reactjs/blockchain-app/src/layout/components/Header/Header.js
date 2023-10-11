@@ -6,7 +6,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import '@reach/combobox/styles.css';
 import { useState } from 'react';
-import httpRequest from '~/utils/httpRequest';
 import PostNew from '../PostNew';
 import SearchAddress from '~/components/SearchAddress';
 
@@ -21,10 +20,10 @@ function Header() {
     const location = useLocation();
     const [show, setShow] = useState(false);
     const [isConnect, setIsConnect] = useState(false);
-    const [pubKey, setPubKey] = useState(null);
     const user = getUser();
     const isPhantomInstalled = window.phantom?.solana?.isPhantom;
     var provider = null;
+
     const getProvider = () => {
         if ('phantom' in window) {
             const provider = window.phantom?.solana;
@@ -43,16 +42,7 @@ function Header() {
     }
 
     // hàm xử lý đăng nhập
-    function handleLogin() {
-        httpRequest
-            .get('/rest/account')
-            .then((res) => {
-                console.log(res);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    }
+    function handleLogin() {}
 
     function handleClose() {
         setShow(false);
@@ -72,7 +62,6 @@ function Header() {
             const resp = await provider.request({ method: 'connect' });
             setIsConnect(provider.isConnected);
             console.log(resp.publicKey.toString());
-            setPubKey(resp.publicKey.toString());
         } catch (err) {
             // { code: 4001, message: 'User rejected the request.' }
         }
@@ -82,7 +71,6 @@ function Header() {
         provider = getProvider();
         await provider.request({ method: 'disconnect' });
         setIsConnect(provider.isConnected);
-        setPubKey(null);
     }
     return (
         <>
@@ -117,18 +105,21 @@ function Header() {
                     {user && Object.keys(user).length > 0 && isPhantomInstalled ? (
                         <>
                             {isConnect ? (
-                                <Button className={styles['btn-down']} onClick={handleDisconnect}>
-                                    Disconnect wallet
-                                </Button>
+                                <>
+                                    <Button className={styles['btn-down']} onClick={handleDisconnect}>
+                                        Disconnect wallet
+                                    </Button>
+                                    <Button variant="primary" className={styles['btn']} onClick={handleShow}>
+                                        Post
+                                    </Button>
+                                    {/* <span className={styles['number-sol']}>0 Sol</span> */}
+                                </>
                             ) : (
                                 <Button className={styles['btn-down']} onClick={handleConnect}>
                                     Connect to phantom wallet
                                 </Button>
                             )}
 
-                            <Button variant="primary" className={styles['btn']} onClick={handleShow}>
-                                Post
-                            </Button>
                             <span className={styles['user-name']}>Welcome back {user.fullname}</span>
                         </>
                     ) : (
