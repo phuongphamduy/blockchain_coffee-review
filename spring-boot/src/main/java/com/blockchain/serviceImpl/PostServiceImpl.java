@@ -40,4 +40,14 @@ public class PostServiceImpl implements PostService {
 		return post;
 	}
 
+	@Override
+	public List<Post> getAll() {
+		return pdao.findAll();
+	}
+
+	@Override
+	public Post getById(Integer id) {
+		return pdao.findById(id).get();
+	}
+
 }

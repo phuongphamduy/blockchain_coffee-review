@@ -2,6 +2,9 @@ import '@reach/combobox/styles.css';
 import backgroundImage from '~/statics/images/back_map.png';
 import styles from './Home.module.scss';
 import SearchAddress from '~/components/SearchAddress';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
 
 const Home = () => {
     const divStyle = {
@@ -23,8 +26,12 @@ const Home = () => {
                     <br />
                     <br />
 
-                    <div>
-                        <SearchAddress width="500px" portal={false} />
+                    <div className={styles['group-search']}>
+                        <SearchAddress width="500px" portal={true} />
+                        <Link to="/post" className={styles['btn']}>
+                            <FontAwesomeIcon className={styles['icon']} icon={faSearch} />
+                            Search
+                        </Link>
                     </div>
                 </div>
             </div>

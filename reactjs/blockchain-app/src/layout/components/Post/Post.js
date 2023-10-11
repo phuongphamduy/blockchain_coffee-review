@@ -4,7 +4,21 @@ import Cong from '~/statics/images/cong.jpg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBookmark } from '@fortawesome/free-solid-svg-icons';
 import Map from '~/components/Map';
+import { useEffect, useState } from 'react';
+import httpRequest from '~/utils/httpRequest';
 function Post() {
+    const [listPost, setListPost] = useState([]);
+
+    useEffect(() => {
+        httpRequest
+            .get('/rest/post')
+            .then((res) => {
+                setListPost(res.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }, []);
     return (
         <>
             <div className={styles['post-section-background-color']}>
@@ -28,6 +42,45 @@ function Post() {
                                         <option value="2">Lowest rating to highest rating</option>
                                     </Form.Select>
                                 </div>
+                                {listPost.map((item) => {
+                                    return (
+                                        <div key={item.id} className={styles['post-section']}>
+                                            <div className={styles['post-wrapper']}>
+                                                <div className={styles['post-upper']}>
+                                                    <img
+                                                        src={item.images[0].url}
+                                                        alt="Images"
+                                                        className={styles['post-image']}
+                                                    />
+                                                    <div className={styles['post-info']}>
+                                                        <h2 className={styles['post-name']}>{item.name}</h2>
+                                                        <p className={styles['address']}>{item.address}</p>
+                                                        <p className={styles['address']}>{item.createdate}</p>
+                                                        <Button variant="secondary" className={styles['btn']}>
+                                                            <FontAwesomeIcon
+                                                                icon={faBookmark}
+                                                                className={styles['icon']}
+                                                            />
+                                                            Save
+                                                        </Button>
+                                                    </div>
+                                                </div>
+                                                <div className={styles['description-wrapper']}>
+                                                    <h5 className={styles['heading']}>Description</h5>
+                                                    <p className={styles['text']}>{item.description}</p>
+                                                </div>
+                                                {item.reviews.length > 0 ? (
+                                                    <div className={styles['rating-wrapper']}>
+                                                        <span>8.5</span>
+                                                    </div>
+                                                ) : (
+                                                    <></>
+                                                )}
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+
                                 <div className={styles['post-section']}>
                                     <div className={styles['post-wrapper']}>
                                         <div className={styles['post-upper']}>
