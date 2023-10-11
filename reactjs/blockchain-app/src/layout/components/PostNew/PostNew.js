@@ -90,7 +90,7 @@ function PostNew({ close }) {
     }
 
     async function handlePost() {
-        if (ListImg.length >= 7) {
+        if (ListImg.length < 7) {
             alert('Choose atlest 7 images');
             return;
         }

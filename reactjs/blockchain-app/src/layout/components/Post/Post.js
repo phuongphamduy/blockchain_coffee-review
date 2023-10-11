@@ -9,11 +9,17 @@ import httpRequest from '~/utils/httpRequest';
 import { Link } from 'react-router-dom';
 function Post() {
     const [listPost, setListPost] = useState([]);
-
+    const [listAddress, setListAddress] = useState([]);
     useEffect(() => {
         httpRequest
             .get('/rest/post')
             .then((res) => {
+                var data = res.data;
+                var array = [];
+                for (var i = 0; i < data.length; i++) {
+                    array.push({ id: data[i].id, lat: data[i].lat, lng: data[i].lng });
+                }
+                setListAddress(array);
                 setListPost(res.data);
             })
             .catch((error) => {
@@ -54,7 +60,9 @@ function Post() {
                                                         className={styles['post-image']}
                                                     />
                                                     <div className={styles['post-info']}>
-                                                        <h2 className={styles['post-name']}>{item.name}</h2>
+                                                        <h2 className={styles['post-name']}>
+                                                            {item.id} {item.name}
+                                                        </h2>
                                                         <p className={styles['address']}>{item.address}</p>
                                                         <p className={styles['address']}>{item.createdate}</p>
                                                         <Button variant="secondary" className={styles['btn']}>
@@ -253,7 +261,7 @@ function Post() {
                             </div>
                         </Col>
                         <Col>
-                            <Map />
+                            <Map listAddress={listAddress} />
                         </Col>
                     </Row>
                 </Container>

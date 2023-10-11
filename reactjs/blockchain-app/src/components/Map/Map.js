@@ -5,7 +5,8 @@ import styles from './Map.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
 import { useSelector } from 'react-redux';
-function Map({ lat, lng }) {
+import { Link } from 'react-router-dom';
+function Map({ lat, lng, listAddress }) {
     //Google map
     // const center = useMemo(() => {
     //     return { lat: 10.81344, lng: 106.6205184 };
@@ -32,8 +33,20 @@ function Map({ lat, lng }) {
                     width: '100%',
                 }}
                 center={{ lat: lat || coordinate.lat, lng: lng || coordinate.lng }}
-                zoom={[13]}
+                zoom={[10]}
             >
+                {listAddress &&
+                    listAddress.length > 0 &&
+                    listAddress.map((item) => {
+                        return (
+                            <Marker key={item.id} coordinates={[item.lng, item.lat]} anchor="bottom">
+                                <Link to={`/post/${item.id}`}>
+                                    <div className={styles['marker']}>{item.id}</div>
+                                    <div className={styles['tamgiac']}></div>
+                                </Link>
+                            </Marker>
+                        );
+                    })}
                 <Marker coordinates={[lng || coordinate.lng, lat || coordinate.lat]} anchor="bottom">
                     <FontAwesomeIcon icon={faLocationDot} className={styles['icon']} />
                 </Marker>

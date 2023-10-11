@@ -63,7 +63,7 @@ function PostDetail() {
                         </div>
                         <div className={styles['post-info-section']}>
                             <div className={styles['post-info']}>
-                                <img src={Cong1} alt="img" />
+                                <img src={postDetail && postDetail.images && postDetail.images[0]} alt="img" />
                                 <div className={styles['post-name']}>
                                     <h1>
                                         {postDetail && postDetail.name}
