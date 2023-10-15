@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './Login.module.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import httpRequest from '~/utils/httpRequest';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 import { faFacebookF } from '@fortawesome/free-brands-svg-icons';
@@ -11,10 +11,20 @@ function LoginForm() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
+    const { state } = useLocation();
+
+    // lấy email và password đăng ký truyền qua
+    useEffect(() => {
+        if (state !== null) {
+            setEmail(state.email);
+            setPassword(state.password);
+        }
+    }, []);
+
     async function handleSubmit(e) {
         e.preventDefault();
         try {
-            const res = await httpRequest.post('/rest/account', { email, password });
+            const res = await httpRequest.post('/rest/account/login', { email, password });
             if (res.data) {
                 sessionStorage.setItem('user', JSON.stringify(res.data));
                 navigate('/post');
@@ -83,7 +93,7 @@ function LoginForm() {
                                             className="btn btn-google btn-login text-uppercase fw-bold bg-danger text-white fs-4"
                                             type="submit"
                                         >
-                                            <FontAwesomeIcon icon={faGoogle} />{' '}
+                                            <FontAwesomeIcon icon={faGoogle} />
                                             <span style={{ marginLeft: '8px' }}></span> Sign in with Google
                                         </button>
                                     </div>
@@ -92,7 +102,7 @@ function LoginForm() {
                                             className="btn btn-facebook btn-login text-uppercase fw-bold bg-primary text-white fs-4"
                                             type="submit"
                                         >
-                                            <FontAwesomeIcon icon={faFacebookF} />{' '}
+                                            <FontAwesomeIcon icon={faFacebookF} />
                                             <span style={{ marginLeft: '8px' }}></span> Sign in with Facebook
                                         </button>
                                     </div>

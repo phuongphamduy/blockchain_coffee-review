@@ -33,7 +33,7 @@ public class Account implements Serializable {
 	@Temporal(TemporalType.DATE)
 	Date birthday;
 	String phone;
-	Boolean isblock;
+	Boolean isblock = false;
 	@JsonIgnore
 	@OneToMany(mappedBy = "account")
 	List<Post> posts;

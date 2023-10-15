@@ -1,12 +1,37 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './Signup.module.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 import { faFacebookF } from '@fortawesome/free-brands-svg-icons';
 import Logo_Coffe from '~/statics/images/Logo_Coffe.png';
+import { Link, useNavigate } from 'react-router-dom';
+import httpRequest from '~/utils/httpRequest';
 
 function RegisterForm() {
+    const [fullname, setFullName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [rePassword, setRePassword] = useState('');
+    const navigate = useNavigate();
+    function handleSubmit(e) {
+        e.preventDefault();
+
+        if (password === rePassword) {
+            httpRequest
+                .post('/rest/account/signUp', { fullname, email, password })
+                .then((res) => {
+                    alert('Sign up successfully');
+                    navigate('/login', { state: { email, password } });
+                })
+                .catch((error) => {
+                    console.log(error);
+                    alert('Sign up failed');
+                });
+        } else {
+            alert('confirm password không giống');
+        }
+    }
     return (
         <div className={styles['background-color']}>
             <div className={styles['full-height']}>
@@ -21,7 +46,7 @@ function RegisterForm() {
                                 <h5 className="card-title text-center mb-5 fw-light fs-1 fw-bold text-primary">
                                     Register
                                 </h5>
-                                <form>
+                                <form onSubmit={handleSubmit}>
                                     <div className="form-floating mb-3">
                                         <input
                                             type="text"
@@ -30,8 +55,10 @@ function RegisterForm() {
                                             placeholder="myusername"
                                             required
                                             autoFocus
+                                            value={fullname}
+                                            onChange={(e) => setFullName(e.target.value)}
                                         />
-                                        <label htmlFor="floatingInputUsername">Username</label>
+                                        <label htmlFor="floatingInputUsername">Fullname</label>
                                     </div>
 
                                     <div className="form-floating mb-3">
@@ -40,6 +67,8 @@ function RegisterForm() {
                                             className="form-control fs-3"
                                             id="floatingInputEmail"
                                             placeholder="name@example.com"
+                                            value={email}
+                                            onChange={(e) => setEmail(e.target.value)}
                                         />
                                         <label htmlFor="floatingInputEmail">Email address</label>
                                     </div>
@@ -52,6 +81,8 @@ function RegisterForm() {
                                             className="form-control fs-3"
                                             id="floatingPassword"
                                             placeholder="Password"
+                                            value={password}
+                                            onChange={(e) => setPassword(e.target.value)}
                                         />
                                         <label htmlFor="floatingPassword">Password</label>
                                     </div>
@@ -62,6 +93,8 @@ function RegisterForm() {
                                             className="form-control fs-3"
                                             id="floatingPasswordConfirm"
                                             placeholder="Confirm Password"
+                                            value={rePassword}
+                                            onChange={(e) => setRePassword(e.target.value)}
                                         />
                                         <label htmlFor="floatingPasswordConfirm">Confirm Password</label>
                                     </div>
@@ -75,7 +108,9 @@ function RegisterForm() {
                                         </button>
                                     </div>
 
-                                    <a className="d-block text-center mt-2 small fs-4">Have an account? Sign In</a>
+                                    <Link to="/login" className="d-block text-center mt-2 small fs-4">
+                                        Have an account? Sign In
+                                    </Link>
 
                                     <hr className="my-4" />
 

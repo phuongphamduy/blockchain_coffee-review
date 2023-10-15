@@ -35,4 +35,11 @@ public class AccountServiceImpl implements AccountService {
 		
 	}
 
+	@Override
+	public Account signUp(Account acc) {
+		System.out.println(acc.getFullname());
+		Account account = dao.save(acc);
+		return account;
+	}
+
 }
