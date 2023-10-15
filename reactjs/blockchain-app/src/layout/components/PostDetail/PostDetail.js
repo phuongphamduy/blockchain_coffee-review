@@ -4,7 +4,6 @@ import 'tippy.js/dist/tippy.css';
 import Slider from 'react-slick';
 import styles from './PostDetail.module.scss';
 import { Alert, Button, Col, Container, Row } from 'react-bootstrap';
-import Cong1 from '~/statics/images/cong1.jpg';
 import HighLand from '~/statics/images/highland.jpg';
 import NoLogin from '~/statics/images/noLogin.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -28,7 +27,7 @@ function PostDetail() {
             .catch((error) => {
                 console.log(error);
             });
-    }, []);
+    }, [location]);
     const inputRef = createRef();
     const settings = {
         infinite: true,
@@ -63,7 +62,7 @@ function PostDetail() {
                         </div>
                         <div className={styles['post-info-section']}>
                             <div className={styles['post-info']}>
-                                <img src={postDetail && postDetail.images && postDetail.images[0]} alt="img" />
+                                <img src={postDetail && postDetail.images && postDetail.images[0].url} alt="img" />
                                 <div className={styles['post-name']}>
                                     <h1>
                                         {postDetail && postDetail.name}

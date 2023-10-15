@@ -28,8 +28,13 @@ public class AccountRestController {
 		return service.getAll();
 	}
 	
-	@PostMapping
+	@PostMapping("login")
 	public Account login(@RequestBody JsonNode data) {
 		return service.login(data);
+	}
+	
+	@PostMapping("signUp")
+	public Account signUp(@RequestBody Account acc) {
+		return service.signUp(acc);
 	}
 }
