@@ -5,9 +5,13 @@ import { Link, useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import '@reach/combobox/styles.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import PostNew from '../PostNew';
 import SearchAddress from '~/components/SearchAddress';
+import Tippy from '@tippyjs/react/headless';
+import 'tippy.js/dist/tippy.css';
+import _ from 'lodash';
+import httpRequest from '~/utils/httpRequest';
 
 function getUser() {
     if (sessionStorage.getItem('user')) {
@@ -23,6 +27,27 @@ function Header() {
     const user = getUser();
     const isPhantomInstalled = window.phantom?.solana?.isPhantom;
     var provider = null;
+    const [place, setPlace] = useState('');
+    const [listPlace, setListPlace] = useState([]);
+
+    useEffect(() => {
+        var debounce = _.debounce(() => {
+            httpRequest
+                .get('/rest/post/get/places', { params: { name: place } })
+                .then((res) => {
+                    console.log(res);
+                    setListPlace(res.data);
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        }, 500);
+        debounce();
+
+        return () => {
+            debounce.cancel();
+        };
+    }, [place]);
 
     const getProvider = () => {
         if ('phantom' in window) {
@@ -81,9 +106,40 @@ function Header() {
                 </Link>
                 {location.pathname.includes('/post') ? (
                     <div className={styles['search-section']}>
-                        <InputGroup className="" size="lg">
-                            <Form.Control className={styles['input']} placeholder="I'm looking for..." />
-                        </InputGroup>
+                        <Tippy
+                            // visible
+                            interactive
+                            trigger="focusin"
+                            placement="bottom-end"
+                            render={(attrs) => {
+                                return (
+                                    <div className={styles['box']} tabIndex="-1" {...attrs}>
+                                        <ul className={styles['list']}>
+                                            {listPlace &&
+                                                listPlace.map((item) => {
+                                                    return (
+                                                        <li key={item.id} className={styles['item']}>
+                                                            <Link to={`/post/${item.id}`} className={styles['link']}>
+                                                                {item.name}
+                                                                <div className={styles['address']}>{item.address}</div>
+                                                            </Link>
+                                                        </li>
+                                                    );
+                                                })}
+                                        </ul>
+                                    </div>
+                                );
+                            }}
+                        >
+                            <InputGroup className="" size="lg">
+                                <Form.Control
+                                    className={styles['input']}
+                                    placeholder="I'm looking for..."
+                                    value={place}
+                                    onChange={(e) => setPlace(e.target.value)}
+                                />
+                            </InputGroup>
+                        </Tippy>
                         <div>
                             <SearchAddress portal={true} width="180px" />
                         </div>

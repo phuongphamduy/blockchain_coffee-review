@@ -13,4 +13,6 @@ public interface PostService {
 
 	Post getById(Integer id);
 
+	List<Post> getByName(String name);
+
 }
