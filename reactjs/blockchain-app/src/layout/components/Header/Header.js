@@ -97,6 +97,10 @@ function Header() {
         await provider.request({ method: 'disconnect' });
         setIsConnect(provider.isConnected);
     }
+
+    function handleSignOut() {
+        sessionStorage.removeItem('user');
+    }
     return (
         <>
             <Col className={styles['d-flex']}>
@@ -181,7 +185,32 @@ function Header() {
                     )}
                     {user && Object.keys(user).length > 0 ? (
                         <>
-                            <span className={styles['user-name']}>Welcome back {user.fullname}</span>
+                            <Tippy
+                                placement="bottom-end"
+                                interactive
+                                trigger="mouseenter"
+                                render={(attrs) => {
+                                    return (
+                                        <div className={styles['menu-user']} tabIndex="-1" {...attrs}>
+                                            <ul className={styles['list']}>
+                                                <li className={styles['item']}>
+                                                    <Link className={styles['link']}>Profile</Link>
+                                                </li>
+                                                <li className={styles['item']}>
+                                                    <Link className={styles['link']}>Edit information</Link>
+                                                </li>
+                                                <li className={styles['item']}>
+                                                    <Link className={styles['link']} onClick={handleSignOut}>
+                                                        Sign out
+                                                    </Link>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    );
+                                }}
+                            >
+                                <span className={styles['user-name']}>Welcome back {user.fullname}</span>
+                            </Tippy>
                         </>
                     ) : (
                         <>

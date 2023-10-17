@@ -7,27 +7,51 @@ import { Alert, Button, Col, Container, Row } from 'react-bootstrap';
 import HighLand from '~/statics/images/highland.jpg';
 import NoLogin from '~/statics/images/noLogin.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBookmark, faCamera, faHeart, faThumbsDown } from '@fortawesome/free-solid-svg-icons';
+import { faBookmark, faCamera, faEllipsis, faHeart, faThumbsDown, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import Map from '~/components/Map';
 import { createRef, useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import httpRequest from '~/utils/httpRequest';
+import CommentUser1 from '~/statics/images/noImg.png';
+import Tippy from '@tippyjs/react/headless';
+import { v4 as uuidv4 } from 'uuid';
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import { storage } from '~/utils/firebase';
+
+function getUser() {
+    if (sessionStorage.getItem('user')) {
+        return JSON.parse(sessionStorage.getItem('user'));
+    }
+    return null;
+}
 
 function PostDetail() {
     const [postDetail, setPostDetail] = useState(null);
+    const [listComment, setListComment] = useState(null);
+    const [preview, setPreview] = useState('');
+    const [input, setInput] = useState('');
+    const [imageFile, setImageFile] = useState({});
+    const navigate = useNavigate();
     const location = useLocation();
+    const user = getUser();
     useEffect(() => {
         const id = location.pathname.charAt(location.pathname.length - 1);
         httpRequest
             .get(`/rest/post/${id}`)
             .then((res) => {
-                console.log(res.data);
                 setPostDetail(res.data);
+                setListComment(res.data.reviews);
             })
             .catch((error) => {
                 console.log(error);
             });
     }, [location]);
+
+    useEffect(() => {
+        return () => {
+            URL.revokeObjectURL(preview);
+        };
+    });
     const inputRef = createRef();
     const settings = {
         infinite: true,
@@ -40,6 +64,40 @@ function PostDetail() {
 
     function IconClick(e) {
         inputRef.current.click();
+    }
+
+    function handleChangeImg(e) {
+        var image = {};
+        image.file = e.target.files[0];
+        image.name = e.target.files[0].name;
+        setImageFile(image);
+        setPreview(URL.createObjectURL(e.target.files[0]));
+    }
+
+    async function handlePost() {
+        if (input.trim().length > 0) {
+            var imageUrl;
+            const obj = {
+                comment: input.trim(),
+                account: { id: user.id },
+                post: { id: postDetail.id },
+            };
+            if (JSON.stringify(imageFile) !== '{}') {
+                var imageRef = ref(storage, `images/${imageFile.name + uuidv4()}`);
+                const snapshot = await uploadBytes(imageRef, imageFile.file);
+                imageUrl = await getDownloadURL(snapshot.ref);
+                obj.image = { url: imageUrl, post: { id: postDetail.id } };
+            }
+            console.log(obj);
+            httpRequest
+                .post('/rest/review', obj)
+                .then((res) => {
+                    navigate(0);
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        }
     }
 
     return (
@@ -93,151 +151,153 @@ function PostDetail() {
                         <Col sm={9}>
                             <div className={styles['comment-section']}>
                                 <div className={styles['comment-input-section']}>
-                                    <div className={styles['input-wrapper']}>
-                                        <img src={NoLogin} alt="img" />
-                                        {/* <p>
-                                            <a href="#">Log in</a> to leave a tip here
-                                        </p> */}
-                                        <textarea
-                                            cols="55"
-                                            rows="4"
-                                            className={styles['input']}
-                                            placeholder="leave a tip for others"
-                                        ></textarea>
-                                        <FontAwesomeIcon
-                                            icon={faCamera}
-                                            className={styles['icon']}
-                                            onClick={(e) => IconClick(e)}
-                                        />
-                                        <input ref={inputRef} type="file" hidden id="file" />
+                                    <div className={styles['comment-input-flex']}>
+                                        <div className={styles['input-wrapper']}>
+                                            <img src={NoLogin} alt="img" />
+                                            {/* <p>
+                                                <a href="#">Log in</a> to leave a tip here
+                                            </p> */}
+                                            <textarea
+                                                cols="55"
+                                                rows="4"
+                                                className={styles['input']}
+                                                placeholder="leave a tip for others"
+                                                value={input}
+                                                onChange={(e) => setInput(e.target.value)}
+                                            ></textarea>
+                                            <FontAwesomeIcon
+                                                icon={faCamera}
+                                                className={styles['icon']}
+                                                onClick={(e) => IconClick(e)}
+                                            />
+                                            <input
+                                                ref={inputRef}
+                                                type="file"
+                                                hidden
+                                                id="file"
+                                                onChange={handleChangeImg}
+                                            />
+                                        </div>
+                                        {user ? (
+                                            <Button
+                                                variant="secondary"
+                                                className={styles['post-btn']}
+                                                onClick={handlePost}
+                                            >
+                                                Post
+                                            </Button>
+                                        ) : (
+                                            <Button variant="secondary" disabled className={styles['post-btn']}>
+                                                Post
+                                            </Button>
+                                        )}
                                     </div>
-                                    <Button variant="secondary" disabled className={styles['post-btn']}>
-                                        Post
-                                    </Button>
+                                    <img src={preview} className={styles['img']} alt="Ảnh tham khảo" />
                                 </div>
                                 <div className={styles['comment-list']}>
-                                    {/* <div className={styles['comment-item']}>
-                                        <img src={CommentUser1} alt="img" />
-                                        <div className={styles['comment-content']}>
-                                            <div className={styles['comment-info']}>
-                                                <h4>MK Chan</h4>
-                                                <p>August 27, 2017</p>
-                                            </div>
-                                            <div className={styles['comment-text']}>
-                                                <p>
-                                                    This cafe is located 2nd floor, the entrance is right of building
-                                                    and go up the stairs. The mood is pretty good and u can also enjoy
-                                                    good coffee at terrace as well. There are many people at weekend.
-                                                </p>
-                                            </div>
-                                            <img src={CommentImg1} alt="img" />
-                                            <div className={styles['btn-group']}>
-                                                <Button variant="outline-primary" className={styles['btn']}>
-                                                    <FontAwesomeIcon icon={faThumbsUp} className={styles['icon']} />
-                                                    Like
-                                                </Button>
-                                                <Button variant="outline-danger" className={styles['btn']}>
-                                                    <FontAwesomeIcon icon={faThumbsDown} className={styles['icon']} />
-                                                    Dislike
-                                                </Button>
-                                                <Tippy
-                                                    interactive
-                                                    placement="bottom-start"
-                                                    trigger="click"
-                                                    sticky
-                                                    render={(attrs) => (
-                                                        <div {...attrs} className={styles['menu-more']}>
-                                                            <h4>Report</h4>
-                                                            <ul className={styles['menu-list']}>
-                                                                <li className={styles['menu-item']}>
-                                                                    <span href="#" className={styles['menu-link']}>
-                                                                        Span
-                                                                    </span>
-                                                                </li>
-                                                                <li className={styles['menu-item']}>
-                                                                    <span href="#" className={styles['menu-link']}>
-                                                                        Offensive
-                                                                    </span>
-                                                                </li>
-                                                                <li className={styles['menu-item']}>
-                                                                    <span href="#" className={styles['menu-link']}>
-                                                                        No longer relevant
-                                                                    </span>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    )}
-                                                >
-                                                    <Button variant="outline-secondary" className={styles['btn']}>
-                                                        <FontAwesomeIcon icon={faEllipsis} className={styles['icon']} />
-                                                        More
-                                                    </Button>
-                                                </Tippy>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className={styles['comment-item']}>
-                                        <img src={CommentUser2} alt="img" />
-                                        <div className={styles['comment-content']}>
-                                            <div className={styles['comment-info']}>
-                                                <h4>MK Chan</h4>
-                                                <p>August 27, 2017</p>
-                                            </div>
-                                            <div className={styles['comment-text']}>
-                                                <p>
-                                                    This cafe is located 2nd floor, the entrance is right of building
-                                                    and go up the stairs. The mood is pretty good and u can also enjoy
-                                                    good coffee at terrace as well. There are many people at weekend.
-                                                </p>
-                                            </div>
-                                            <img src={CommentImg2} alt="img" />
-                                            <div className={styles['btn-group']}>
-                                                <Button variant="outline-primary" className={styles['btn']}>
-                                                    <FontAwesomeIcon icon={faThumbsUp} className={styles['icon']} />
-                                                    Like
-                                                </Button>
-                                                <Button variant="outline-danger" className={styles['btn']}>
-                                                    <FontAwesomeIcon icon={faThumbsDown} className={styles['icon']} />
-                                                    Dislike
-                                                </Button>
-                                                <Button variant="outline-secondary" className={styles['btn']}>
-                                                    <FontAwesomeIcon icon={faEllipsis} className={styles['icon']} />
-                                                    More
-                                                </Button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className={styles['comment-item']}>
-                                        <img src={CommentUser3} alt="img" />
-                                        <div className={styles['comment-content']}>
-                                            <div className={styles['comment-info']}>
-                                                <h4>MK Chan</h4>
-                                                <p>August 27, 2017</p>
-                                            </div>
-                                            <div className={styles['comment-text']}>
-                                                <p>
-                                                    Like everyone else says: try the coconut coffee. So good. Awesome to
-                                                    sit on the balcony and watch the busy traffic down below.
-                                                </p>
-                                            </div>
-                                            <div className={styles['btn-group']}>
-                                                <Button variant="outline-primary" className={styles['btn']}>
-                                                    <FontAwesomeIcon icon={faThumbsUp} className={styles['icon']} />
-                                                    Like
-                                                </Button>
-                                                <Button variant="outline-danger" className={styles['btn']}>
-                                                    <FontAwesomeIcon icon={faThumbsDown} className={styles['icon']} />
-                                                    Dislike
-                                                </Button>
-                                                <Button variant="outline-secondary" className={styles['btn']}>
-                                                    <FontAwesomeIcon icon={faEllipsis} className={styles['icon']} />
-                                                    More
-                                                </Button>
-                                            </div>
-                                        </div>
-                                    </div> */}
                                     <div className={styles['no-comment']}>
-                                        <Alert variant="light">There are no comments here. Let be the first one!</Alert>
+                                        {listComment && listComment.length > 0 ? (
+                                            listComment.map((item) => {
+                                                return (
+                                                    <div key={item.id} className={styles['comment-item']}>
+                                                        <img src={CommentUser1} alt="img" />
+                                                        <div className={styles['comment-content']}>
+                                                            <div className={styles['comment-info']}>
+                                                                <h4>{item.account.fullname}</h4>
+                                                                <p>
+                                                                    {new Date(item.createdate).getDate() +
+                                                                        '-' +
+                                                                        (new Date(item.createdate).getMonth() + 1) +
+                                                                        '-' +
+                                                                        new Date(item.createdate).getFullYear()}
+                                                                </p>
+                                                            </div>
+                                                            <div className={styles['comment-text']}>
+                                                                <p>{item.comment}</p>
+                                                            </div>
+                                                            {item.image && item.image.url && (
+                                                                <img src={item.image.url} alt="img" />
+                                                            )}
+
+                                                            <div className={styles['btn-group']}>
+                                                                <Button
+                                                                    variant="outline-primary"
+                                                                    className={styles['btn']}
+                                                                >
+                                                                    <FontAwesomeIcon
+                                                                        icon={faThumbsUp}
+                                                                        className={styles['icon']}
+                                                                    />
+                                                                    Like
+                                                                </Button>
+                                                                <Button
+                                                                    variant="outline-danger"
+                                                                    className={styles['btn']}
+                                                                >
+                                                                    <FontAwesomeIcon
+                                                                        icon={faThumbsDown}
+                                                                        className={styles['icon']}
+                                                                    />
+                                                                    Dislike
+                                                                </Button>
+                                                                <Tippy
+                                                                    interactive
+                                                                    placement="bottom-start"
+                                                                    trigger="click"
+                                                                    sticky
+                                                                    render={(attrs) => (
+                                                                        <div {...attrs} className={styles['menu-more']}>
+                                                                            <h4>Report</h4>
+                                                                            <ul className={styles['menu-list']}>
+                                                                                <li className={styles['menu-item']}>
+                                                                                    <span
+                                                                                        href="#"
+                                                                                        className={styles['menu-link']}
+                                                                                    >
+                                                                                        Span
+                                                                                    </span>
+                                                                                </li>
+                                                                                <li className={styles['menu-item']}>
+                                                                                    <span
+                                                                                        href="#"
+                                                                                        className={styles['menu-link']}
+                                                                                    >
+                                                                                        Offensive
+                                                                                    </span>
+                                                                                </li>
+                                                                                <li className={styles['menu-item']}>
+                                                                                    <span
+                                                                                        href="#"
+                                                                                        className={styles['menu-link']}
+                                                                                    >
+                                                                                        No longer relevant
+                                                                                    </span>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    )}
+                                                                >
+                                                                    <Button
+                                                                        variant="outline-secondary"
+                                                                        className={styles['btn']}
+                                                                    >
+                                                                        <FontAwesomeIcon
+                                                                            icon={faEllipsis}
+                                                                            className={styles['icon']}
+                                                                        />
+                                                                        More
+                                                                    </Button>
+                                                                </Tippy>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                );
+                                            })
+                                        ) : (
+                                            <Alert variant="light">
+                                                There are no comments here. Let be the first one!
+                                            </Alert>
+                                        )}
                                     </div>
                                 </div>
                             </div>
