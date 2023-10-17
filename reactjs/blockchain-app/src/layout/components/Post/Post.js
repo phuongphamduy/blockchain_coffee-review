@@ -61,7 +61,7 @@ function Post() {
                                                     />
                                                     <div className={styles['post-info']}>
                                                         <h2 className={styles['post-name']}>
-                                                            {item.id} {item.name}
+                                                            {item.id}. {item.name}
                                                         </h2>
                                                         <p className={styles['address']}>{item.address}</p>
                                                         <p className={styles['address']}>{item.createdate}</p>

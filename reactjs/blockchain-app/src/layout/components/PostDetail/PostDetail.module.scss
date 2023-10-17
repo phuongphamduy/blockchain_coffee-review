@@ -80,8 +80,17 @@
                     padding: 15px 20px;
                     border-radius: 2px;
                     background-color: #fff;
-                    display: flex;
-                    justify-content: space-between;
+
+                    .comment-input-flex {
+                        display: flex;
+                        justify-content: space-between;
+                    }
+
+                    .img {
+                        width: 100%;
+                        margin-top: 10px;
+                        height: 325px;
+                    }
 
                     .input-wrapper {
                         display: flex;
@@ -132,6 +141,7 @@
                         font-size: 1.5rem;
                         padding: 5px 15px;
                         height: 35px;
+                        background-color: #00b551;
                     }
                 }
 
@@ -171,14 +181,14 @@
                             .comment-text {
                                 p {
                                     font-size: 1.4rem;
-                                    margin-top: 5px;
+                                    margin-top: 20px;
                                     margin-bottom: 10px;
                                 }
                             }
 
                             img {
                                 width: 100%;
-                                height: auto;
+                                height: 300px;
                             }
 
                             .btn-group {

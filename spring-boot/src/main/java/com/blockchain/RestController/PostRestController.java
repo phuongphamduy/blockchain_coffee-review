@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.blockchain.model.Post;
@@ -33,6 +34,11 @@ public class PostRestController {
 	@GetMapping("/{id}")
 	public Post getById(@PathVariable Integer id) {
 		return service.getById(id);
+	}
+	
+	@GetMapping("get/places")
+	public List<Post> getPostByName(@RequestParam("name") String name) {
+		return service.getByName(name);
 	}
 
 	@PostMapping()

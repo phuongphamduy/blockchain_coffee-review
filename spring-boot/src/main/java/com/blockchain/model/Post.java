@@ -40,6 +40,7 @@ public class Post implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "accountid")
 	Account account;
+	@JsonManagedReference
 	@OneToMany(mappedBy = "post")
 	List<Review> reviews;
 	@OneToMany(mappedBy = "post")
