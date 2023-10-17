@@ -1,0 +1,59 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0 auto;
+  }
+  
+  .userProfile {
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  
+  .leftSection {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  
+  .avatar img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+  }
+  
+  .rightSection {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 20px; /* Tạo khoảng cách giữa ảnh và thông tin */
+  }
+  
+  .userInfo {
+    margin-top: 10px; /* Tạo khoảng cách giữa ảnh và thông tin */
+  }
+  
+  .stats {
+    display: flex;
+    flex-direction: row; /* Sắp xếp theo hàng ngang */
+  }
+  
+  .stat {
+    margin-right: 10px; /* Khoảng cách giữa mỗi mục */
+  }
+  
+  .stat span {
+    padding: 5px 10px; /* Tạo khoảng cách giữa số lượng và tên */
+    border-radius: 5px; /* Bo góc */
+    border: 1px solid #ccc; /* Vách ngăn */
+    margin-bottom: 10px; /* Khoảng cách giữa các mục */
+  }
+  
+  .editButton {
+    margin-top: 20px; /* Khoảng cách giữa thông tin và nút Edit */
+  }
+  

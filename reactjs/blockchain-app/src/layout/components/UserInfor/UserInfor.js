@@ -1,5 +1,6 @@
 // src/components/ProductCard.js
 import UserInfor from '~/statics/images/user_cafe.webp';
+import {Container, Row, Col } from 'react-bootstrap';
 import avt from '~/statics/images/noImg.png';
 import React from 'react';
 import styles from './UserInfor.module.scss';
@@ -23,6 +24,7 @@ const productData = [
     name: 'My  Liked places',
     intro: '1 places including Coffeehouse',
   },
+  
 
 ];
 
@@ -43,17 +45,38 @@ const ProductCard = () => {
             <button className={styles.editButton}>Edit Profile</button>
           </div>
           <div className={styles.rightSection}>
-            <div className={styles.followCount}>
-              <span>Followers: 1000</span>
-              <span>Likes: 500</span>
+          
+          <div className={styles.stats}>
+            <div className={styles.stat}>
+              <span>500</span>
+              <span>Likes</span>
+            </div>
+            <div className={styles.stat}>
+              <span>1000</span>
+              <span>Followers</span>
+            </div>
+            <div className={styles.stat}>
+              <span>200</span>
+              <span>Posts</span>
+            </div>
+            <div className={styles.stat}>
+              <span>10</span>
+              <span>List</span>
             </div>
           </div>
         </div>
+        </div>
       </div>
+      <Container>
       <div className={styles.container_card}>
-        <div className="row">
+        <div className={styles.recentlist}>
+          <h2>Recent lists:</h2>
+        </div>
+        <Row>
+        
           {productData.map((product) => (
-            <div key={product.id} className="col-lg-4 col-md-6">
+            <Col xs={4} md={3}>
+            <div key={product.id} >
               <div className={styles['product-card']}>
                 <div className={styles['product-image']}>
                   <img src={product.image} alt="Product" />
@@ -64,9 +87,13 @@ const ProductCard = () => {
                 </div>
               </div>
             </div>
-          ))}
-        </div> 
+          
+            </Col>
+            ))}
+    
+        </Row> 
       </div>
+      </Container>
 
 
     </div>
