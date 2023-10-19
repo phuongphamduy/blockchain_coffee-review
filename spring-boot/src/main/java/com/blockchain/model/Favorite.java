@@ -2,6 +2,9 @@ package com.blockchain.model;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,6 +28,7 @@ public class Favorite implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "accountid")
 	Account account;
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "postid")
 	Post post;

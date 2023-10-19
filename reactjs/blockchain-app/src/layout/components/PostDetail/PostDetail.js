@@ -7,7 +7,15 @@ import { Alert, Button, Col, Container, Row } from 'react-bootstrap';
 import HighLand from '~/statics/images/highland.jpg';
 import NoLogin from '~/statics/images/noLogin.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBookmark, faCamera, faEllipsis, faHeart, faThumbsDown, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
+import {
+    faBookmark,
+    faCamera,
+    faEllipsis,
+    faHeart,
+    faThumbsDown,
+    faThumbsUp,
+    faXmark,
+} from '@fortawesome/free-solid-svg-icons';
 import Map from '~/components/Map';
 import { createRef, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -31,6 +39,7 @@ function PostDetail() {
     const [input, setInput] = useState('');
     const [imageFile, setImageFile] = useState({});
     const [isLike, setIsLike] = useState(null);
+    const [favorite, setFavorite] = useState(null);
     const navigate = useNavigate();
     const location = useLocation();
     const user = getUser();
@@ -40,10 +49,17 @@ function PostDetail() {
             .get(`/rest/post/${id}`)
             .then((res) => {
                 setPostDetail(res.data);
+                const favorites = res.data.favorites;
                 const interactions = res.data.interactions;
                 interactions.forEach((item) => {
                     if (item.account.id === user.id) {
                         setIsLike(item);
+                        return;
+                    }
+                });
+                favorites.forEach((item) => {
+                    if (item.account.id === user.id) {
+                        setFavorite(item);
                         return;
                     }
                 });
@@ -80,7 +96,12 @@ function PostDetail() {
         setPreview(URL.createObjectURL(e.target.files[0]));
     }
 
-    async function handlePost() {
+    function handleDeleteFileChange() {
+        setImageFile({});
+        setPreview('');
+    }
+
+    async function handlePostComment() {
         if (input.trim().length > 0) {
             var imageUrl;
             const obj = {
@@ -103,6 +124,28 @@ function PostDetail() {
                     console.log(error);
                 });
         }
+    }
+
+    function handleSavePost() {
+        httpRequest
+            .post('/rest/favorites', { account: { id: user.id }, post: { id: postDetail.id } })
+            .then((res) => {
+                setFavorite(res.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+
+    function handleRemoveSavePost() {
+        httpRequest
+            .delete(`/rest/favorites/remove/${favorite.id}`)
+            .then((res) => {
+                setFavorite(null);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     }
 
     function handleLike() {
@@ -195,10 +238,17 @@ function PostDetail() {
                                 </div>
                             </div>
                             <div className={styles['post-interact']}>
-                                <Button variant="secondary" className={styles['btn']}>
-                                    <FontAwesomeIcon icon={faBookmark} className={styles['icon']} />
-                                    Saved
-                                </Button>
+                                {favorite ? (
+                                    <Button variant="warning" className={styles['btn']} onClick={handleRemoveSavePost}>
+                                        <FontAwesomeIcon icon={faBookmark} className={styles['icon']} />
+                                        Saved
+                                    </Button>
+                                ) : (
+                                    <Button variant="secondary" className={styles['btn']} onClick={handleSavePost}>
+                                        <FontAwesomeIcon icon={faBookmark} className={styles['icon']} />
+                                        Saved
+                                    </Button>
+                                )}
                                 {isLike && isLike.islike ? (
                                     <>
                                         <Button
@@ -271,7 +321,7 @@ function PostDetail() {
                                             <Button
                                                 variant="secondary"
                                                 className={styles['post-btn']}
-                                                onClick={handlePost}
+                                                onClick={handlePostComment}
                                             >
                                                 Post
                                             </Button>
@@ -281,7 +331,18 @@ function PostDetail() {
                                             </Button>
                                         )}
                                     </div>
-                                    <img src={preview} className={styles['img']} alt="Ảnh tham khảo" />
+                                    {imageFile && imageFile.file ? (
+                                        <div className={styles['img-wrapper']}>
+                                            <FontAwesomeIcon
+                                                icon={faXmark}
+                                                className={styles['icon']}
+                                                onClick={handleDeleteFileChange}
+                                            />
+                                            <img src={preview} className={styles['img']} alt="Ảnh tham khảo" />
+                                        </div>
+                                    ) : (
+                                        <></>
+                                    )}
                                 </div>
                                 <div className={styles['comment-list']}>
                                     <div className={styles['no-comment']}>
