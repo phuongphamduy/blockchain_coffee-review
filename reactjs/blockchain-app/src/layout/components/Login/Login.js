@@ -31,7 +31,7 @@ function LoginForm() {
 
         try {
             const res = await httpRequest.get('/rest/account');
-            const existingAccount = res.data.find((account) => account.email === email);
+            const existingAccount = res.data.find(account => account.email === email);
             if (existingAccount) {
                 if (existingAccount.password === password) {
                     alert('Đăng nhập thành công');

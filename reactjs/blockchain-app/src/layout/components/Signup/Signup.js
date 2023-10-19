@@ -17,10 +17,9 @@ function RegisterForm() {
     function handleSubmit(e) {
         e.preventDefault();
 
-        httpRequest
-            .get('/rest/account')
-            .then((res) => {
-                const existingAccount = res.data.find((account) => account.email === email);
+        httpRequest.get("/rest/account")
+            .then(res => {
+                const existingAccount = res.data.find(account => account.email === email);
                 if (existingAccount) {
                     alert('Email đã tồn tại');
                 } else {
@@ -46,7 +45,7 @@ function RegisterForm() {
                     }
                 }
             })
-            .catch((error) => {
+            .catch(error => {
                 console.error(error);
                 alert('Đã có lỗi xảy ra khi kiểm tra tài khoản.');
             });
