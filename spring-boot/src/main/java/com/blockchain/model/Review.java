@@ -15,6 +15,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -29,7 +31,7 @@ public class Review implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY) 
 	Integer Id;
 	String comment;
-	Boolean islike;
+	@Temporal(TemporalType.DATE)
 	Date createdate = new Date();
 	@ManyToOne
 	@JoinColumn(name = "accountid")

@@ -49,4 +49,9 @@ public class ReviewServiceImpl implements ReviewService {
 		return list;
 	}
 
+	@Override
+	public void deleteComment(Integer id) {
+		rdao.deleteById(id);
+	}
+
 }

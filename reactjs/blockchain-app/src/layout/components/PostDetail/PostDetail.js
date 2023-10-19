@@ -27,10 +27,10 @@ function getUser() {
 
 function PostDetail() {
     const [postDetail, setPostDetail] = useState(null);
-    const [listComment, setListComment] = useState(null);
     const [preview, setPreview] = useState('');
     const [input, setInput] = useState('');
     const [imageFile, setImageFile] = useState({});
+    const [isLike, setIsLike] = useState(null);
     const navigate = useNavigate();
     const location = useLocation();
     const user = getUser();
@@ -40,7 +40,13 @@ function PostDetail() {
             .get(`/rest/post/${id}`)
             .then((res) => {
                 setPostDetail(res.data);
-                setListComment(res.data.reviews);
+                const interactions = res.data.interactions;
+                interactions.forEach((item) => {
+                    if (item.account.id === user.id) {
+                        setIsLike(item);
+                        return;
+                    }
+                });
             })
             .catch((error) => {
                 console.log(error);
@@ -51,7 +57,7 @@ function PostDetail() {
         return () => {
             URL.revokeObjectURL(preview);
         };
-    });
+    }, [preview]);
     const inputRef = createRef();
     const settings = {
         infinite: true,
@@ -88,7 +94,6 @@ function PostDetail() {
                 imageUrl = await getDownloadURL(snapshot.ref);
                 obj.image = { url: imageUrl, post: { id: postDetail.id } };
             }
-            console.log(obj);
             httpRequest
                 .post('/rest/review', obj)
                 .then((res) => {
@@ -98,6 +103,64 @@ function PostDetail() {
                     console.log(error);
                 });
         }
+    }
+
+    function handleLike() {
+        httpRequest
+            .post('/rest/interact', { islike: true, post: { id: postDetail.id }, account: { id: user.id } })
+            .then((res) => {
+                setIsLike(res.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+
+    function handleRemoveLike(e) {
+        const id = e.target.getAttribute('data');
+        httpRequest
+            .delete(`/rest/interact/removeLike/${id}`)
+            .then((res) => {
+                setIsLike(null);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+
+    function handleDislike() {
+        httpRequest
+            .post('/rest/interact', { islike: false, post: { id: postDetail.id }, account: { id: user.id } })
+            .then((res) => {
+                setIsLike(res.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+
+    function handleRemoveDislike(e) {
+        const id = e.target.getAttribute('data');
+        httpRequest
+            .delete(`/rest/interact/removeLike/${id}`)
+            .then((res) => {
+                setIsLike(null);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+
+    function handleDeleteComment(e) {
+        const id = e.target.getAttribute('data');
+        httpRequest
+            .delete(`/rest/review/delete/${id}`)
+            .then((res) => {
+                navigate(0);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     }
 
     return (
@@ -136,14 +199,40 @@ function PostDetail() {
                                     <FontAwesomeIcon icon={faBookmark} className={styles['icon']} />
                                     Saved
                                 </Button>
-                                <Button variant="secondary" className={styles['btn']}>
-                                    <FontAwesomeIcon icon={faHeart} className={styles['icon']} />
-                                    Liked
-                                </Button>
-                                <Button variant="secondary" className={styles['btn']}>
-                                    <FontAwesomeIcon icon={faThumbsDown} className={styles['icon']} />
-                                    Disliked
-                                </Button>
+                                {isLike && isLike.islike ? (
+                                    <>
+                                        <Button
+                                            variant="success"
+                                            data={isLike && isLike.id}
+                                            className={styles['btn']}
+                                            onClick={handleRemoveLike}
+                                        >
+                                            <FontAwesomeIcon icon={faHeart} className={styles['icon']} />
+                                            Liked
+                                        </Button>
+                                    </>
+                                ) : (
+                                    <Button variant="secondary" className={styles['btn']} onClick={handleLike}>
+                                        <FontAwesomeIcon icon={faHeart} className={styles['icon']} />
+                                        Liked
+                                    </Button>
+                                )}
+                                {isLike && !isLike.islike ? (
+                                    <Button
+                                        variant="danger"
+                                        className={styles['btn']}
+                                        data={isLike && isLike.id}
+                                        onClick={handleRemoveDislike}
+                                    >
+                                        <FontAwesomeIcon icon={faThumbsDown} className={styles['icon']} />
+                                        Disliked
+                                    </Button>
+                                ) : (
+                                    <Button variant="secondary" className={styles['btn']} onClick={handleDislike}>
+                                        <FontAwesomeIcon icon={faThumbsDown} className={styles['icon']} />
+                                        Disliked
+                                    </Button>
+                                )}
                             </div>
                         </div>
                     </div>
@@ -196,8 +285,8 @@ function PostDetail() {
                                 </div>
                                 <div className={styles['comment-list']}>
                                     <div className={styles['no-comment']}>
-                                        {listComment && listComment.length > 0 ? (
-                                            listComment.map((item) => {
+                                        {postDetail && postDetail.reviews && postDetail.reviews.length > 0 ? (
+                                            postDetail.reviews.map((item) => {
                                                 return (
                                                     <div key={item.id} className={styles['comment-item']}>
                                                         <img src={CommentUser1} alt="img" />
@@ -273,6 +362,25 @@ function PostDetail() {
                                                                                         No longer relevant
                                                                                     </span>
                                                                                 </li>
+                                                                                {item.account &&
+                                                                                user &&
+                                                                                item.account.id === user.id ? (
+                                                                                    <li className={styles['menu-item']}>
+                                                                                        <span
+                                                                                            className={
+                                                                                                styles['menu-link']
+                                                                                            }
+                                                                                            onClick={
+                                                                                                handleDeleteComment
+                                                                                            }
+                                                                                            data={item.id}
+                                                                                        >
+                                                                                            Delete comment
+                                                                                        </span>
+                                                                                    </li>
+                                                                                ) : (
+                                                                                    <></>
+                                                                                )}
                                                                             </ul>
                                                                         </div>
                                                                     )}

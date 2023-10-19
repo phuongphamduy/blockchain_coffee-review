@@ -43,4 +43,7 @@ public class Account implements Serializable {
 	List<Review> reviews;
 	@OneToMany(mappedBy = "account")
 	List<Favorite> favorites;
+	@JsonIgnore
+	@OneToMany(mappedBy = "account")
+	List<Interaction> interactions;
 }

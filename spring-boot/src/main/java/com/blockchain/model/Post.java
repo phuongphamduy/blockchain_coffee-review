@@ -48,5 +48,8 @@ public class Post implements Serializable {
 	@JsonManagedReference
 	@OneToMany(mappedBy = "post")
 	List<Image> images;
+	@JsonManagedReference
+	@OneToMany(mappedBy = "post")
+	List<Interaction> interactions;
 
 }
