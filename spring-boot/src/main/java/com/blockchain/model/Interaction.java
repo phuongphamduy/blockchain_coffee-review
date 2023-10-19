@@ -3,7 +3,6 @@ package com.blockchain.model;
 import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,16 +19,17 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "Favorites")
-public class Favorite implements Serializable {
+@Table(name = "Interactions")
+public class Interaction implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Integer Id;
-	@ManyToOne
-	@JoinColumn(name = "accountid")
-	Account account;
+	Integer id;
+	Boolean islike;
 	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "postid")
 	Post post;
+	@ManyToOne
+	@JoinColumn(name = "accountid")
+	Account account;
 }

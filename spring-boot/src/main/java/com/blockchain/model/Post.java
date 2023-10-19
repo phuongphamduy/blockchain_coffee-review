@@ -43,10 +43,14 @@ public class Post implements Serializable {
 	@JsonManagedReference
 	@OneToMany(mappedBy = "post")
 	List<Review> reviews;
+	@JsonManagedReference
 	@OneToMany(mappedBy = "post")
 	List<Favorite> favorites;
 	@JsonManagedReference
 	@OneToMany(mappedBy = "post")
 	List<Image> images;
+	@JsonManagedReference
+	@OneToMany(mappedBy = "post")
+	List<Interaction> interactions;
 
 }
