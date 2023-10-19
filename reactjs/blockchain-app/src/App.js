@@ -31,7 +31,7 @@ function App() {
                     <Route
                         path="/admin"
                         element={
-                            <ProtectedRoute isAllow={user.isadmin}>
+                            <ProtectedRoute isAllow={user && user.isadmin}>
                                 <AdminLayout />
                             </ProtectedRoute>
                         }

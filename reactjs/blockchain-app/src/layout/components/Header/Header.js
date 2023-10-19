@@ -198,6 +198,14 @@ function Header() {
                                                 <li className={styles['item']}>
                                                     <Link className={styles['link']}>Edit information</Link>
                                                 </li>
+                                                {user && user.isadmin && (
+                                                    <li className={styles['item']}>
+                                                        <Link to="/admin" className={styles['link']}>
+                                                            Admin
+                                                        </Link>
+                                                    </li>
+                                                )}
+
                                                 <li className={styles['item']}>
                                                     <Link className={styles['link']} onClick={handleSignOut}>
                                                         Sign out

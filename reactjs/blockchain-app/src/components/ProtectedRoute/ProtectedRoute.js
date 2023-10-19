@@ -9,8 +9,13 @@ function getUser() {
 
 function ProtectedRoute({ children, isAllow }) {
     const user = getUser();
-    if (user === null || !isAllow) {
+
+    if (user === null) {
         return <Navigate to="/login" replace />;
+    }
+
+    if (!isAllow) {
+        return <Navigate to="/post" replace />;
     }
 
     return children;
