@@ -23,14 +23,29 @@ function LoginForm() {
 
     async function handleSubmit(e) {
         e.preventDefault();
+
+        if (!email || !password) {
+            alert('Vui lòng nhập đầy đủ email và mật khẩu.');
+            return;
+        }
+
         try {
-            const res = await httpRequest.post('/rest/account/login', { email, password });
-            if (res.data) {
-                sessionStorage.setItem('user', JSON.stringify(res.data));
-                navigate('/post');
+            const res = await httpRequest.get('/rest/account');
+            const existingAccount = res.data.find((account) => account.email === email);
+            if (existingAccount) {
+                if (existingAccount.password === password) {
+                    alert('Đăng nhập thành công');
+                    sessionStorage.setItem('user', JSON.stringify(existingAccount));
+                    navigate('/post');
+                } else {
+                    alert('Sai mật khẩu.');
+                }
+            } else {
+                alert('Không có tài khoản có email bạn nhập.');
             }
         } catch (error) {
-            alert('Kết nối server thất bại');
+            console.error(error);
+            alert('Kết nối server thất bại. Vui lòng thử lại sau.');
         }
     }
 
@@ -39,10 +54,10 @@ function LoginForm() {
             <div className="container">
                 <div className={styles['full-height']}>
                     <div className="col-sm-9 col-md-7 col-lg-5 mx-auto my-auto">
-                        <div className="card border-0 shadow rounded-3 my-5  ${styles['card-background']}">
+                        <div className="card border-0 shadow rounded-3 my-5 ">
                             <div className="card-body p-4 p-sm-5">
                                 <h5 className="card-title text-center mb-5 fw-light fs-1 fw-bold">Sign In</h5>
-                                <form>
+                                <form onSubmit={handleSubmit}>
                                     <div className="form-floating mb-3">
                                         <input
                                             type="email"

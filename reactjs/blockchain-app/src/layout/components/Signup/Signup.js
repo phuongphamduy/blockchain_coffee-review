@@ -17,20 +17,39 @@ function RegisterForm() {
     function handleSubmit(e) {
         e.preventDefault();
 
-        if (password === rePassword) {
-            httpRequest
-                .post('/rest/account/signUp', { fullname, email, password })
-                .then((res) => {
-                    alert('Sign up successfully');
-                    navigate('/login', { state: { email, password } });
-                })
-                .catch((error) => {
-                    console.log(error);
-                    alert('Sign up failed');
-                });
-        } else {
-            alert('confirm password không giống');
-        }
+        httpRequest
+            .get('/rest/account')
+            .then((res) => {
+                const existingAccount = res.data.find((account) => account.email === email);
+                if (existingAccount) {
+                    alert('Email đã tồn tại');
+                } else {
+                    // Tiếp tục với xử lý đăng ký khi không có tài khoản nào có email đã nhập
+                    if (!fullname || !email || !password || !rePassword) {
+                        alert('Vui lòng điền đầy đủ thông tin.');
+                        return;
+                    }
+
+                    if (password === rePassword) {
+                        httpRequest
+                            .post('/rest/account/signUp', { fullname, email, password })
+                            .then((res) => {
+                                alert('Đăng ký thành công');
+                                navigate('/login', { state: { email, password } });
+                            })
+                            .catch((error) => {
+                                console.log(error);
+                                alert('Đăng ký thất bại');
+                            });
+                    } else {
+                        alert('Xác nhận mật khẩu không khớp');
+                    }
+                }
+            })
+            .catch((error) => {
+                console.error(error);
+                alert('Đã có lỗi xảy ra khi kiểm tra tài khoản.');
+            });
     }
     return (
         <div className={styles['background-color']}>
