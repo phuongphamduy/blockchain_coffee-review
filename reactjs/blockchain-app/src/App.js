@@ -14,13 +14,28 @@ import Signup from './layout/components/Signup';
 import Home from './layout/components/Home';
 import UserInfor from './layout/components/UserInfor';
 import ReportFeedback from './layout/components/admin/ReportFeedback';
+import ProtectedRoute from './components/ProtectedRoute';
 
+function getUser() {
+    if (sessionStorage.getItem('user')) {
+        return JSON.parse(sessionStorage.getItem('user'));
+    }
+    return null;
+}
 function App() {
+    const user = getUser();
     return (
         <>
             <Router>
                 <Routes>
-                    <Route path="/admin" element={<AdminLayout />}>
+                    <Route
+                        path="/admin"
+                        element={
+                            <ProtectedRoute isAllow={user.isadmin}>
+                                <AdminLayout />
+                            </ProtectedRoute>
+                        }
+                    >
                         <Route path="account" element={<Account />} />
                         <Route path="post" element={<PostAdmin />} />
                         <Route path="statistic" element={<Statistic />} />
@@ -33,7 +48,14 @@ function App() {
                         <Route path="post/:postId" element={<PostDetail />} />
                         <Route path="login" element={<Login />} />
                         <Route path="signup" element={<Signup />} />
-                        <Route path="UserInfo" element={<UserInfor />} />
+                        <Route
+                            path="userinfo"
+                            element={
+                                <ProtectedRoute>
+                                    <UserInfor />
+                                </ProtectedRoute>
+                            }
+                        />
                         <Route path="login" element={<Login />} />
                         <Route path="signup" element={<Signup />} />
                     </Route>

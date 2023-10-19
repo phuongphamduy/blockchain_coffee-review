@@ -35,7 +35,6 @@ function Header() {
             httpRequest
                 .get('/rest/post/get/places', { params: { name: place } })
                 .then((res) => {
-                    console.log(res);
                     setListPlace(res.data);
                 })
                 .catch((error) => {
