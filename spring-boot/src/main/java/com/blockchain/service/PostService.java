@@ -9,7 +9,7 @@ public interface PostService {
 
 	Post create(JsonNode postdata);
 
-	List<Post> getAll();
+	List<Post> getPostConfirm(boolean b);
 
 	Post getById(Integer id);
 

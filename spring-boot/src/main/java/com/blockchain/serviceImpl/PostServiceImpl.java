@@ -41,11 +41,6 @@ public class PostServiceImpl implements PostService {
 	}
 
 	@Override
-	public List<Post> getAll() {
-		return pdao.findAll();
-	}
-
-	@Override
 	public Post getById(Integer id) {
 		return pdao.findById(id).get();
 	}
@@ -57,6 +52,11 @@ public class PostServiceImpl implements PostService {
 			return null;	
 		}
 		return list;
+	}
+
+	@Override
+	public List<Post> getPostConfirm(boolean b) {
+		return pdao.findByIsConfirm(b);
 	}
 
 }

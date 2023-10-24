@@ -28,7 +28,12 @@ public class PostRestController {
 	
 	@GetMapping
 	public List<Post> getAll() {
-		return service.getAll();
+		return service.getPostConfirm(true);
+	}
+	
+	@GetMapping("/notConfirm")
+	public List<Post> getPostNotConfirm() {
+		return service.getPostConfirm(false);
 	}
 	
 	@GetMapping("/{id}")

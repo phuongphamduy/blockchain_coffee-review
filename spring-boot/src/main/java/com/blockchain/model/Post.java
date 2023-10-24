@@ -35,6 +35,7 @@ public class Post implements Serializable {
 	String description;
 	Double lat;
 	Double lng;
+	Boolean isconfirm = false;
 	@Temporal(TemporalType.DATE)
 	Date createdate = new Date();
 	@ManyToOne
