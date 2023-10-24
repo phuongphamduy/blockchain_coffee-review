@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -37,6 +38,12 @@ public class AccountRestController {
 	@PostMapping("signUp")
 	public Account signUp(@RequestBody Account acc) {
 		return service.signUp(acc);
+	}
+	
+	@PutMapping("/exm")
+	public Account sua(@RequestBody JsonNode node) {
+		System.out.println(node);
+		return null;
 	}
 	
 	@PatchMapping("giveAdmin")

@@ -1,0 +1,51 @@
+.wrapper {
+    font-size: 1.4rem;
+    .heading {
+        color: #fff;
+        margin-top: 15px;
+        text-align: center;
+    }
+
+    .text {
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .block {
+        max-height: 50px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        max-width: 100px;
+    }
+
+    .group-action {
+        display: flex;
+        flex-direction: column;
+        min-height: 94px;
+    }
+
+    .btn {
+        margin-top: 5px;
+        font-size: 1.3rem;
+    }
+}
+
+.wrapper-img {
+    display: flex;
+}
+
+.images {
+    height: 650px;
+    width: 680px;
+    margin: auto;
+    overflow-y: scroll;
+}
+
+.img {
+    height: 200px;
+    width: 200px;
+    margin: 5px 10px;
+}

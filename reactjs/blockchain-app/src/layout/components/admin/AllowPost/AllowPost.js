@@ -1,11 +1,99 @@
+import { Button, Modal, Table } from 'react-bootstrap';
 import styles from './AllowPost.module.scss';
+import { useEffect, useState } from 'react';
+import httpRequest from '~/utils/httpRequest';
 
 function AllowPost() {
+    const [show, setShow] = useState(false);
+    const [posts, setPosts] = useState([]);
+    const [images, setImages] = useState([]);
+    useEffect(() => {
+        httpRequest
+            .get('/rest/post/notConfirm')
+            .then((res) => {
+                setPosts(res.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }, []);
+
+    const handleClose = () => setShow(false);
+    const handleShow = (id) => {
+        const post = posts.find((item) => {
+            return item.id === id;
+        });
+        setImages(post.images);
+        setShow(true);
+    };
     return (
         <>
             <div className={styles['wrapper']}>
-                <h1>Post confirmation</h1>
+                <h1 className={styles['heading']}>Post confirmation</h1>
+                <Table striped bordered hover>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Address</th>
+                            <th>Description</th>
+                            <th className={styles['text']}>Create date</th>
+                            <th>Creator</th>
+                            <th>Images</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {posts.map((item) => {
+                            return (
+                                <tr key={item.id}>
+                                    <td className={styles['block']}>{item.name}</td>
+                                    <td className={styles['block']}>{item.address}</td>
+                                    <td className={styles['block']}>{item.description}</td>
+                                    <td className={styles['block']}>{item.createdate}</td>
+                                    <td className={styles['block']}>{item.account.fullname}</td>
+                                    <td>
+                                        <Button
+                                            variant="primary"
+                                            className={styles['btn']}
+                                            onClick={() => handleShow(item.id)}
+                                        >
+                                            View images
+                                        </Button>
+                                    </td>
+                                    <td className={styles['group-action']}>
+                                        <Button variant="success" className={styles['btn']}>
+                                            Confirm
+                                        </Button>
+                                        <Button variant="danger" className={styles['btn']}>
+                                            Refuse
+                                        </Button>
+                                    </td>
+                                </tr>
+                            );
+                        })}
+                    </tbody>
+                </Table>
             </div>
+
+            <Modal size="lg" show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Images list</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <div className={styles['wrapper-img']}>
+                        <div className={styles['images']}>
+                            {images.map((item) => {
+                                return <img key={item.id} className={styles['img']} src={item.url} alt="img" />;
+                            })}
+                        </div>
+                    </div>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Close
+                    </Button>
+                </Modal.Footer>
+            </Modal>
 
             {/* <div className="box-container" style={{ backgroundColor: 'white', height: '100%', marginTop: '30px' }}>
                 <div className="row" style={{ position: 'relative', top: '30px' }}>
