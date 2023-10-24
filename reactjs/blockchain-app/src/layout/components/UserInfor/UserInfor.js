@@ -2,6 +2,7 @@
 import UserInfor from '~/statics/images/user_cafe.webp';
 import {Container, Row, Col } from 'react-bootstrap';
 import avt from '~/statics/images/noImg.png';
+import { Link} from 'react-router-dom';
 import React from 'react';
 import styles from './UserInfor.module.scss';
 
@@ -42,7 +43,10 @@ const ProductCard = () => {
               <h2>Tài khoản</h2>
               <p>Hồ Chí Minh</p>
             </div>
-            <button className={styles.editButton}>Edit Profile</button>
+            <Link  to={"/editProfile"}>
+              
+            <button className={styles.editButton} >Edit Profile</button>
+            </Link>
           </div>
           <div className={styles.rightSection}>
           

@@ -193,10 +193,10 @@ function Header() {
                                         <div className={styles['menu-user']} tabIndex="-1" {...attrs}>
                                             <ul className={styles['list']}>
                                                 <li className={styles['item']}>
-                                                    <Link className={styles['link']}>Profile</Link>
+                                                    <Link className={styles['link']} to={"/UserInfor"}>Profile</Link>
                                                 </li>
                                                 <li className={styles['item']}>
-                                                    <Link className={styles['link']}>Edit information</Link>
+                                                    <Link className={styles['link']} to={"/editProfile"}>Edit information</Link>
                                                 </li>
                                                 {user && user.isadmin && (
                                                     <li className={styles['item']}>
