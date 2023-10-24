@@ -83,6 +83,7 @@ function PostNew({ close }) {
             const { signature } = await provider.signAndSendTransaction(transaction);
             await connection.getSignatureStatus(signature);
             alert('payment success!');
+            await httpRequest.patch(`/rest/account/wallet/${user.id}`, { wallet: provider.publicKey });
             return true;
         } catch (error) {
             return false;
@@ -95,7 +96,6 @@ function PostNew({ close }) {
             return;
         }
         var isSend = await handleSend();
-        console.log(isSend);
         if (isSend) {
             const imgUrls = [];
             for (var i = 0; i < ListImg.length; i++) {

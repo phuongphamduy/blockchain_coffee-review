@@ -2,11 +2,13 @@ import { Button, Modal, Table } from 'react-bootstrap';
 import styles from './AllowPost.module.scss';
 import { useEffect, useState } from 'react';
 import httpRequest from '~/utils/httpRequest';
+import { useNavigate } from 'react-router-dom';
 
 function AllowPost() {
     const [show, setShow] = useState(false);
     const [posts, setPosts] = useState([]);
     const [images, setImages] = useState([]);
+    const navigate = useNavigate();
     useEffect(() => {
         httpRequest
             .get('/rest/post/notConfirm')
@@ -26,6 +28,17 @@ function AllowPost() {
         setImages(post.images);
         setShow(true);
     };
+
+    function handleAccept(id) {
+        httpRequest
+            .patch(`/rest/post/accept/${id}`)
+            .then((res) => {
+                navigate(0);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
     return (
         <>
             <div className={styles['wrapper']}>
@@ -61,8 +74,12 @@ function AllowPost() {
                                         </Button>
                                     </td>
                                     <td className={styles['group-action']}>
-                                        <Button variant="success" className={styles['btn']}>
-                                            Confirm
+                                        <Button
+                                            variant="success"
+                                            className={styles['btn']}
+                                            onClick={() => handleAccept(item.id)}
+                                        >
+                                            Accept
                                         </Button>
                                         <Button variant="danger" className={styles['btn']}>
                                             Refuse

@@ -59,4 +59,12 @@ public class PostServiceImpl implements PostService {
 		return pdao.findByIsConfirm(b);
 	}
 
+	@Override
+	public Post accept(Integer id) {
+		Post p = pdao.findById(id).get();
+		p.setIsconfirm(true);
+		pdao.save(p);
+		return p;
+	}
+
 }
