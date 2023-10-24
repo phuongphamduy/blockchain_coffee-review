@@ -14,6 +14,7 @@ import Signup from './layout/components/Signup';
 import Home from './layout/components/Home';
 import UserInfor from './layout/components/UserInfor';
 import ReportFeedback from './layout/components/admin/ReportFeedback';
+import EditProfile from './layout/components/EditProfile';
 
 function App() {
     return (
@@ -33,9 +34,10 @@ function App() {
                         <Route path="post/:postId" element={<PostDetail />} />
                         <Route path="login" element={<Login />} />
                         <Route path="signup" element={<Signup />} />
-                        <Route path="UserInfo" element={<UserInfor />} />
+                        <Route path="UserInfor" element={<UserInfor />} />
                         <Route path="login" element={<Login />} />
                         <Route path="signup" element={<Signup />} />
+                        <Route path="EditProfile" element={<EditProfile />} />
                     </Route>
                 </Routes>
             </Router>

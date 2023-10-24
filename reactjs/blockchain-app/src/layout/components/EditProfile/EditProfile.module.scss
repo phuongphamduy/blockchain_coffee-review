@@ -1,0 +1,45 @@
+/* EditProfile.module.scss */
+.editProfile {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f5ee;
+  text-align: light;
+
+  h2 {
+    font-size: 24px;
+    color: #734d26;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+
+    label {
+      font-weight: bold;
+      color: #734d26;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #734d26;
+      border-radius: 5px;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #734d26;
+      color: #f9f5ee;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #a36d39;
+      }
+    }
+  }
+}
