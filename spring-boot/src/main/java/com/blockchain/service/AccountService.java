@@ -11,4 +11,8 @@ public interface AccountService {
 	public Account login(JsonNode data);
 
 	public Account signUp(Account acc);
+
+	public Account giveAdmin(JsonNode acc);
+
+	public Account removeAdmin(JsonNode acc);
 }

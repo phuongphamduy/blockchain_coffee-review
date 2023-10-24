@@ -7,14 +7,14 @@ function getUser() {
     return null;
 }
 
-function ProtectedRoute({ children, isAllow }) {
+function ProtectedRoute({ children }) {
     const user = getUser();
 
     if (user === null) {
         return <Navigate to="/login" replace />;
     }
 
-    if (!isAllow) {
+    if (!user.isadmin) {
         return <Navigate to="/post" replace />;
     }
 

@@ -16,14 +16,7 @@ import UserInfor from './layout/components/UserInfor';
 import ReportFeedback from './layout/components/admin/ReportFeedback';
 import ProtectedRoute from './components/ProtectedRoute';
 
-function getUser() {
-    if (sessionStorage.getItem('user')) {
-        return JSON.parse(sessionStorage.getItem('user'));
-    }
-    return null;
-}
 function App() {
-    const user = getUser();
     return (
         <>
             <Router>
@@ -31,7 +24,7 @@ function App() {
                     <Route
                         path="/admin"
                         element={
-                            <ProtectedRoute isAllow={user && user.isadmin}>
+                            <ProtectedRoute>
                                 <AdminLayout />
                             </ProtectedRoute>
                         }

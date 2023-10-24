@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,5 +37,15 @@ public class AccountRestController {
 	@PostMapping("signUp")
 	public Account signUp(@RequestBody Account acc) {
 		return service.signUp(acc);
+	}
+	
+	@PatchMapping("giveAdmin")
+	public Account giveAdmin(@RequestBody JsonNode acc) {
+		return service.giveAdmin(acc);
+	}
+	
+	@PatchMapping("removeAdmin")
+	public Account removeAdmin(@RequestBody JsonNode acc) {
+		return service.removeAdmin(acc);
 	}
 }
