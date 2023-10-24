@@ -54,7 +54,6 @@ public class PostServiceImpl implements PostService {
 	public List<Post> getByName(String name) {
 		List<Post> list = pdao.findTop3ByNameLike("%"+name+"%");
 		if(list.isEmpty()) {
-			System.out.println("sai");
 			return null;	
 		}
 		return list;

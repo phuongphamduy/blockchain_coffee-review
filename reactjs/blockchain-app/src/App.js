@@ -14,6 +14,7 @@ import Signup from './layout/components/Signup';
 import Home from './layout/components/Home';
 import UserInfor from './layout/components/UserInfor';
 import ReportFeedback from './layout/components/admin/ReportFeedback';
+import ProtectedRoute from './components/ProtectedRoute';
 import EditProfile from './layout/components/EditProfile';
 
 function App() {
@@ -21,7 +22,14 @@ function App() {
         <>
             <Router>
                 <Routes>
-                    <Route path="/admin" element={<AdminLayout />}>
+                    <Route
+                        path="/admin"
+                        element={
+                            <ProtectedRoute>
+                                <AdminLayout />
+                            </ProtectedRoute>
+                        }
+                    >
                         <Route path="account" element={<Account />} />
                         <Route path="post" element={<PostAdmin />} />
                         <Route path="statistic" element={<Statistic />} />
@@ -34,7 +42,14 @@ function App() {
                         <Route path="post/:postId" element={<PostDetail />} />
                         <Route path="login" element={<Login />} />
                         <Route path="signup" element={<Signup />} />
-                        <Route path="UserInfor" element={<UserInfor />} />
+                        <Route
+                            path="userinfo"
+                            element={
+                                <ProtectedRoute>
+                                    <UserInfor />
+                                </ProtectedRoute>
+                            }
+                        />
                         <Route path="login" element={<Login />} />
                         <Route path="signup" element={<Signup />} />
                         <Route path="EditProfile" element={<EditProfile />} />

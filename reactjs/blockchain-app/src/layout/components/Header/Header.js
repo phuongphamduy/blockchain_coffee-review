@@ -35,7 +35,6 @@ function Header() {
             httpRequest
                 .get('/rest/post/get/places', { params: { name: place } })
                 .then((res) => {
-                    console.log(res);
                     setListPlace(res.data);
                 })
                 .catch((error) => {
@@ -199,6 +198,14 @@ function Header() {
                                                 <li className={styles['item']}>
                                                     <Link className={styles['link']} to={"/editProfile"}>Edit information</Link>
                                                 </li>
+                                                {user && user.isadmin && (
+                                                    <li className={styles['item']}>
+                                                        <Link to="/admin" className={styles['link']}>
+                                                            Admin
+                                                        </Link>
+                                                    </li>
+                                                )}
+
                                                 <li className={styles['item']}>
                                                     <Link className={styles['link']} onClick={handleSignOut}>
                                                         Sign out

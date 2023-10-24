@@ -2,6 +2,7 @@ import { Col, Row } from 'react-bootstrap';
 import styles from './HeaderAdmin.module.scss';
 import Logo from '~/statics/images/Logo_Coffe.png';
 import NoImage from '~/statics/images/noImg.png';
+import { Link } from 'react-router-dom';
 function HeaderAdmin() {
     return (
         <>
@@ -13,10 +14,10 @@ function HeaderAdmin() {
                 </Col>
                 <Col sm={9}>
                     <div className={styles['left-section']}>
-                        <div className={styles['logo-section']}>
+                        <Link to="/post" className={styles['logo-section']}>
                             <img src={Logo} className={styles['header-logo']} alt="Logo" />
                             <h1>Coffee Review</h1>
-                        </div>
+                        </Link>
                         <div className={styles['account-section']}>
                             <img src={NoImage} className={styles['img']} alt="img" />
                             <h4>Phương Phạm</h4>

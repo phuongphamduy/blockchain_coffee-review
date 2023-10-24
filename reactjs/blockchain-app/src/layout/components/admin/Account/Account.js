@@ -1,93 +1,96 @@
-
-
-
+import { useEffect, useState } from 'react';
 import styles from './Account.module.scss';
-import { Table } from 'react-bootstrap';
+import { Button, Table } from 'react-bootstrap';
+import httpRequest from '~/utils/httpRequest';
+import { useNavigate } from 'react-router-dom';
 function Account() {
+    const [accounts, setAccounts] = useState([]);
+    const navigate = useNavigate();
+    useEffect(() => {
+        httpRequest
+            .get(`/rest/account`)
+            .then((res) => {
+                console.log(res);
+                setAccounts(res.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }, []);
+
+    function giveAdmin(e) {
+        const id = e.target.getAttribute('data');
+        httpRequest
+            .patch('/rest/account/giveAdmin', { id: id })
+            .then((res) => {
+                navigate(0);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+
+    function removeAdmin(e) {
+        const id = e.target.getAttribute('data');
+        httpRequest
+            .patch('/rest/account/removeAdmin', { id: id })
+            .then((res) => {
+                navigate(0);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
     return (
         <>
-
-
             <div className={styles['container']}>
-                <br/>
-                <br/>
+                <br />
+                <br />
                 <h1 className={styles['heading']}>Danh sách tài khoản</h1>
                 <br />
                 <br />
-               
-                    <Table className={styles['table_content']}>
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                                <th>Password</th>
-                                <th>Phone</th>
-                                <th>Email</th>
-                                <th>Birthday</th>
 
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Pham</td>
-                                <td>Duy Phuong</td>
-                                <td>phuong123</td>
-                                <td>0123456789</td>
-                                <td>phuongpd@fpt.edu.vn</td>
-                                <td>17-3-2003</td>
-
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Huynh</td>
-                                <td>Van Truong</td>
-                                <td>truong123</td>
-                                <td>0123456789</td>
-                                <td>truonghv@fpt.edu.vn</td>
-                                <td>17-3-2003</td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>Vo</td>
-                                <td>Minh Tam</td>
-                                <td>tam123</td>
-                                <td>0123456789</td>
-                                <td>tamvm@fpt.edu.vn</td>
-                                <td>17-9-2003</td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>Phan Hoang</td>
-                                <td>Hoai Bao</td>
-                                <td>bao123</td>
-                                <td>0123456789</td>
-                                <td>baoph@fpt.edu.vn</td>
-                                <td>17-3-2003</td>
-                            </tr>
-                            <tr>
-                                <td>5</td>
-                                <td>Ho</td>
-                                <td>Thanh Dien</td>
-                                <td>dien123</td>
-                                <td>0123456789</td>
-                                <td>dienht@fpt.edu.vn</td>
-                                <td>17-3-2003</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Pham</td>
-                                <td>Duy Phuong</td>
-                                <td>phuong123</td>
-                                <td>0123456789</td>
-                                <td>phuongpd@fpt.edu.vn</td>
-                                <td>17-3-2003</td>
-                            </tr>
-                        </tbody>
-                    </Table>
-                    <br></br>
-                </div>
+                <Table className={styles['table-content']}>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Full name</th>
+                            <th>Email</th>
+                            <th>Password</th>
+                            <th>Birthday</th>
+                            <th>Phone</th>
+                            <th>Admin</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {accounts &&
+                            accounts.map((item) => {
+                                return (
+                                    <tr key={item.id}>
+                                        <td>{item.id}</td>
+                                        <td>{item.fullname}</td>
+                                        <td>{item.email}</td>
+                                        <td>{item.password}</td>
+                                        <td>{item.birthday || 'empty'}</td>
+                                        <td>{item.phone || 'empty'}</td>
+                                        <td>
+                                            {item.isadmin ? (
+                                                <Button variant="danger" onClick={removeAdmin} data={item.id}>
+                                                    Remove permission
+                                                </Button>
+                                            ) : (
+                                                <Button variant="success" onClick={giveAdmin} data={item.id}>
+                                                    Give permission
+                                                </Button>
+                                            )}
+                                        </td>
+                                    </tr>
+                                );
+                            })}
+                    </tbody>
+                </Table>
+                <br></br>
+            </div>
         </>
     );
 }

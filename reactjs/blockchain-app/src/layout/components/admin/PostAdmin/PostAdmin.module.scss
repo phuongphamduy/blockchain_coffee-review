@@ -1,18 +1,23 @@
-.postAdmin{
+.postAdmin {
     background-color: rgb(213, 236, 247);
     position: relative;
     // margin-top: 30px;
     margin: 0px;
+    height: 100%;
+    font-size: 1.5rem;
+    .heading {
+        text-align: center;
+        margin-bottom: 20px;
+    }
 }
 
-.box-image{
+.box-image {
     margin: 10px;
     height: 80%;
-    
 }
 
-.content{
+.content {
     padding: 5px;
-    font-size: 15px;
+    font-size: 1.5rem;
     margin: 5px;
 }

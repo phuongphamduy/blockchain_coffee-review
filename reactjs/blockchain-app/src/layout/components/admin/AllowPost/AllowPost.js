@@ -1,7 +1,13 @@
+import styles from './AllowPost.module.scss';
+
 function AllowPost() {
     return (
         <>
-            <div className="box-container" style={{ backgroundColor: 'white', height: '100%', marginTop: '30px' }}>
+            <div className={styles['wrapper']}>
+                <h1>Post confirmation</h1>
+            </div>
+
+            {/* <div className="box-container" style={{ backgroundColor: 'white', height: '100%', marginTop: '30px' }}>
                 <div className="row" style={{ position: 'relative', top: '30px' }}>
                     <div className="container-image col-md-6" style={{ paddingRight: '0' }}>
                         <div
@@ -73,7 +79,7 @@ function AllowPost() {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> */}
         </>
     );
 }

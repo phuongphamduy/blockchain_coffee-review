@@ -9,6 +9,7 @@ import com.blockchain.dao.AccountDAO;
 import com.blockchain.model.Account;
 import com.blockchain.service.AccountService;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
 public class AccountServiceImpl implements AccountService {
@@ -28,7 +29,6 @@ public class AccountServiceImpl implements AccountService {
 			return null;
 		}
 		if(account.getPassword().equals(data.findValue("password").asText())) {
-			System.out.println("đúng");
 			return account;
 		}
 		return null;
@@ -39,6 +39,22 @@ public class AccountServiceImpl implements AccountService {
 	public Account signUp(Account acc) {
 		System.out.println(acc.getFullname());
 		Account account = dao.save(acc);
+		return account;
+	}
+
+	@Override
+	public Account giveAdmin(JsonNode acc) {
+		Account account = dao.findById(acc.get("id").asInt()).get();
+		account.setIsadmin(true);
+		account = dao.save(account);
+		return account;
+	}
+
+	@Override
+	public Account removeAdmin(JsonNode acc) {
+		Account account = dao.findById(acc.get("id").asInt()).get();
+		account.setIsadmin(false);
+		account = dao.save(account);
 		return account;
 	}
 
