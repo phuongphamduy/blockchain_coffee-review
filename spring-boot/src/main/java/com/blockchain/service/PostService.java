@@ -17,4 +17,6 @@ public interface PostService {
 
 	Post accept(Integer id);
 
+	void deletePost(Integer id);
+
 }

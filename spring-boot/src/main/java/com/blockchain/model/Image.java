@@ -27,6 +27,7 @@ public class Image implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Integer id;
 	String url;
+	String name;
 	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "Postid")

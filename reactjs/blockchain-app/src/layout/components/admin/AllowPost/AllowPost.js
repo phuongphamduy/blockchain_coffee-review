@@ -3,12 +3,18 @@ import styles from './AllowPost.module.scss';
 import { useEffect, useState } from 'react';
 import httpRequest from '~/utils/httpRequest';
 import { useNavigate } from 'react-router-dom';
+import * as buffer from 'buffer';
+import { storage } from '~/utils/firebase';
+import { deleteObject, ref } from 'firebase/storage';
 
 function AllowPost() {
     const [show, setShow] = useState(false);
     const [posts, setPosts] = useState([]);
     const [images, setImages] = useState([]);
+    const [showComment, setShowComment] = useState(false);
+    const [id, setId] = useState(null);
     const navigate = useNavigate();
+    window.Buffer = buffer.Buffer;
     useEffect(() => {
         httpRequest
             .get('/rest/post/notConfirm')
@@ -19,7 +25,7 @@ function AllowPost() {
                 console.log(error);
             });
     }, []);
-
+    // hiển thị modal ảnh
     const handleClose = () => setShow(false);
     const handleShow = (id) => {
         const post = posts.find((item) => {
@@ -27,6 +33,16 @@ function AllowPost() {
         });
         setImages(post.images);
         setShow(true);
+    };
+
+    // hiển thị modal nhận xét
+    const handleShowComment = (id) => {
+        setShowComment(true);
+        setId(id);
+    };
+    const handleCloseComment = () => {
+        setShowComment(false);
+        setId(null);
     };
 
     function handleAccept(id) {
@@ -38,6 +54,80 @@ function AllowPost() {
             .catch((error) => {
                 console.log(error);
             });
+    }
+
+    async function handleSend() {
+        var myHeaders = new Headers();
+        myHeaders.append('x-api-key', 'QeeLQ-Ia7f7LrP-M');
+        myHeaders.append('Content-Type', 'application/json');
+        var raw = JSON.stringify({
+            network: 'devnet',
+            from_address: '2P1EJ3W1TwUfQLJV9gBFSjZosEBhrz7iP8oJuH3PKxi2',
+            to_address: 'DdKXs2bwZ4AvCPP3WVMz46JiGxUgGcKWFBCg4142h7Ng',
+            amount: 0.1,
+        });
+
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow',
+        };
+
+        const result = await fetch('https://api.shyft.to/sol/v1/wallet/send_sol', requestOptions);
+        return result.json();
+    }
+
+    async function handleSign(encode) {
+        var myHeaders = new Headers();
+        myHeaders.append('x-api-key', 'QeeLQ-Ia7f7LrP-M');
+        myHeaders.append('Content-Type', 'application/json');
+        var raw = JSON.stringify({
+            network: 'devnet',
+            private_keys: ['4PNT842b5QAFdDsfuorJVc4JRp5YcyW9yRcr4DgAZPYTQNMWtVvGFEJPrGxirpUs8LQSNnxmHpczduJKNypAAvKQ'],
+            encoded_transaction: encode,
+        });
+
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow',
+        };
+
+        const result = await fetch('https://api.shyft.to/sol/v1/wallet/sign_transaction', requestOptions);
+        return result.json();
+    }
+
+    async function handleRefuse() {
+        var result = await handleSend();
+        setTimeout(async () => {
+            var encode = result.result.encoded_transaction;
+            var resultSign = await handleSign(encode);
+            if (resultSign.success) {
+                httpRequest
+                    .delete(`/rest/post/delete/${id}`)
+                    .then((res) => {
+                        var post = posts.find((item) => {
+                            return item.id === id;
+                        });
+                        var images = post.images;
+                        images.forEach((item) => {
+                            const imgRef = ref(storage, `images/${item.name}`);
+                            deleteObject(imgRef)
+                                .then(() => {})
+                                .catch((error) => {
+                                    console.log(error);
+                                });
+                        });
+                        alert('delete success');
+                        navigate(0);
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+            }
+        }, 1000);
     }
     return (
         <>
@@ -81,7 +171,11 @@ function AllowPost() {
                                         >
                                             Accept
                                         </Button>
-                                        <Button variant="danger" className={styles['btn']}>
+                                        <Button
+                                            variant="danger"
+                                            className={styles['btn']}
+                                            onClick={() => handleShowComment(item.id)}
+                                        >
                                             Refuse
                                         </Button>
                                     </td>
@@ -108,6 +202,22 @@ function AllowPost() {
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
                         Close
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+            <Modal size="lg" show={showComment} onHide={handleCloseComment}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Reason refuse</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <textarea className={styles['textarea']}></textarea>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseComment}>
+                        Close
+                    </Button>
+                    <Button variant="danger" onClick={handleRefuse}>
+                        Confirm
                     </Button>
                 </Modal.Footer>
             </Modal>

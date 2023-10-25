@@ -99,9 +99,11 @@ function PostNew({ close }) {
         if (isSend) {
             const imgUrls = [];
             for (var i = 0; i < ListImg.length; i++) {
-                var imgRef = ref(storage, `images/${ListImg[i].name + uuidv4()}`);
+                var obj = { name: `${ListImg[i].name + uuidv4()}` };
+                var imgRef = ref(storage, `images/${obj.name}`);
                 const snapshot = await uploadBytes(imgRef, ListImg[i].file);
-                imgUrls.push(await getDownloadURL(snapshot.ref));
+                obj.url = await getDownloadURL(snapshot.ref);
+                imgUrls.push(obj);
             }
             const post = {
                 name: name,
@@ -116,7 +118,8 @@ function PostNew({ close }) {
                 get images() {
                     return imgUrls.map((item) => {
                         return {
-                            url: item,
+                            url: item.url,
+                            name: item.name,
                         };
                     });
                 },
