@@ -59,4 +59,18 @@ public class PostServiceImpl implements PostService {
 		return pdao.findByIsConfirm(b);
 	}
 
+	@Override
+	public Post accept(Integer id) {
+		Post p = pdao.findById(id).get();
+		p.setIsconfirm(true);
+		pdao.save(p);
+		return p;
+	}
+
+	@Override
+	public void deletePost(Integer id) {
+		Post p = pdao.findById(id).get();
+		pdao.delete(p);
+	}
+
 }

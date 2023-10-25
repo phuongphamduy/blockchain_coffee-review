@@ -15,4 +15,6 @@ public interface AccountService {
 	public Account giveAdmin(JsonNode acc);
 
 	public Account removeAdmin(JsonNode acc);
+
+	public Account updateWallet(JsonNode wallet, Integer id);
 }

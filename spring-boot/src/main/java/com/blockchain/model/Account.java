@@ -37,6 +37,7 @@ public class Account implements Serializable {
 	String phone;
 	Boolean isblock = false;
 	Boolean isadmin = false;
+	String wallet;
 	@JsonIgnore
 	@OneToMany(mappedBy = "account")
 	List<Post> posts;

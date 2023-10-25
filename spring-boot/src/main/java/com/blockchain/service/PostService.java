@@ -15,4 +15,8 @@ public interface PostService {
 
 	List<Post> getByName(String name);
 
+	Post accept(Integer id);
+
+	void deletePost(Integer id);
+
 }

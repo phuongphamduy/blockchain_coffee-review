@@ -58,4 +58,12 @@ public class AccountServiceImpl implements AccountService {
 		return account;
 	}
 
+	@Override
+	public Account updateWallet(JsonNode wallet, Integer id) {
+		Account a = dao.findById(id).get();
+		a.setWallet(wallet.get("wallet").asText());
+		dao.save(a);
+		return a;
+	}
+
 }
