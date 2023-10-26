@@ -1,33 +1,14 @@
-// src/components/ProductCard.js
-import UserInfor from '~/statics/images/user_cafe.webp';
-import {Container, Row, Col } from 'react-bootstrap';
 import avt from '~/statics/images/noImg.png';
 import { Link} from 'react-router-dom';
 import React from 'react';
 import styles from './UserInfor.module.scss';
+import Like from './Like';
+import Post from './Post';
+import List from './List';
+import Followers from './Followers';
+import Following from './Following';
 
-const productData = [
-  {
-    id: 1,
-    image: UserInfor,
-    name: 'My List Coffee',
-    intro: '1 places including Coffeehouse',
-  },
-  {
-    id: 2,
-    image: UserInfor,
-    name: 'My Saved places',
-    intro: '1 places including Coffeehouse',
-  },
-  {
-    id: 3,
-    image: UserInfor,
-    name: 'My  Liked places',
-    intro: '1 places including Coffeehouse',
-  },
-  
 
-];
 
 
 const ProductCard = () => {
@@ -61,44 +42,26 @@ const ProductCard = () => {
             </div>
             <div className={styles.stat}>
               <span>200</span>
-              <span>Posts</span>
+              <span>Following</span>
             </div>
             <div className={styles.stat}>
               <span>10</span>
+              <span>Post</span>
+            </div>
+            <div className={styles.stat}>
+              <span>3</span>
               <span>List</span>
             </div>
           </div>
         </div>
         </div>
       </div>
-      <Container>
-      <div className={styles.container_card}>
-        <div className={styles.recentlist}>
-          <h2>Recent lists:</h2>
-        </div>
-        <Row>
-        
-          {productData.map((product) => (
-            <Col xs={4} md={3}>
-            <div key={product.id} >
-              <div className={styles['product-card']}>
-                <div className={styles['product-image']}>
-                  <img src={product.image} alt="Product" />
-                </div>
-                <div className={styles['product-info']}>
-                  <h5 className={styles['product-name']}>{product.name}</h5>
-                  <p className={styles['product-intro']}>{product.intro}</p>
-                </div>
-              </div>
-            </div>
-          
-            </Col>
-            ))}
-    
-        </Row> 
-      </div>
-      </Container>
-
+      
+      <Following />
+      <Followers />
+     <Post />
+      <Like />
+      <List />
 
     </div>
 
