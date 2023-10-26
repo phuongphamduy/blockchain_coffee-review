@@ -52,7 +52,14 @@ function App() {
                         />
                         <Route path="login" element={<Login />} />
                         <Route path="signup" element={<Signup />} />
-                        <Route path="EditProfile" element={<EditProfile />} />
+                        <Route
+                            path="EditProfile"
+                            element={
+                                <ProtectedRoute>
+                                    <EditProfile />
+                                </ProtectedRoute>
+                            }
+                        />
                     </Route>
                 </Routes>
             </Router>
