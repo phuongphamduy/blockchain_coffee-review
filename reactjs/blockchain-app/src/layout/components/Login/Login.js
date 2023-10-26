@@ -6,6 +6,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 import { faFacebookF } from '@fortawesome/free-brands-svg-icons';
+import GoogleLoginButton from './GoogleLoginButton';
 
 function LoginForm() {
     const [email, setEmail] = useState('');
@@ -104,13 +105,16 @@ function LoginForm() {
                                     </div>
                                     <hr className="my-4" />
                                     <div className="d-grid mb-2">
-                                        <button
-                                            className="btn btn-google btn-login text-uppercase fw-bold bg-danger text-white fs-4"
-                                            type="submit"
-                                        >
-                                            <FontAwesomeIcon icon={faGoogle} />
-                                            <span style={{ marginLeft: '8px' }}></span> Sign in with Google
-                                        </button>
+                                        <GoogleLoginButton>
+
+                                            <button
+                                                className="btn btn-google btn-login text-uppercase fw-bold bg-danger text-white fs-4"
+                                                type="submit"
+                                            >
+                                                <FontAwesomeIcon icon={faGoogle} />
+                                                <span style={{ marginLeft: '8px' }}></span> Sign in with Google
+                                            </button>
+                                        </GoogleLoginButton>
                                     </div>
                                     <div className="d-grid">
                                         <button
