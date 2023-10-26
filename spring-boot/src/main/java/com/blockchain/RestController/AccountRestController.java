@@ -41,10 +41,9 @@ public class AccountRestController {
 		return service.signUp(acc);
 	}
 	
-	@PutMapping("/exm")
+	@PutMapping("/updateProfile")
 	public Account sua(@RequestBody JsonNode node) {
-		System.out.println(node);
-		return null;
+		return service.pudateProfile(node);
 	}
 	
 	@PatchMapping("giveAdmin")

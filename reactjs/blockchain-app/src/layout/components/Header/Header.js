@@ -29,7 +29,6 @@ function Header() {
     var provider = null;
     const [place, setPlace] = useState('');
     const [listPlace, setListPlace] = useState([]);
-
     useEffect(() => {
         var debounce = _.debounce(() => {
             httpRequest

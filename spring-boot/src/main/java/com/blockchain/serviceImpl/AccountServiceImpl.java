@@ -1,5 +1,7 @@
 package com.blockchain.serviceImpl;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,6 +64,36 @@ public class AccountServiceImpl implements AccountService {
 	public Account updateWallet(JsonNode wallet, Integer id) {
 		Account a = dao.findById(id).get();
 		a.setWallet(wallet.get("wallet").asText());
+		dao.save(a);
+		return a;
+	}
+
+	@Override
+	public Account pudateProfile(JsonNode node) {
+		System.out.println(node);
+		Account a = dao.findById(node.get("id").asInt()).get();
+		a.setFullname(node.get("Fullname").asText());
+		a.setPassword(node.get("Password").asText());
+		if(node.get("Phone").asText().equals("")) {
+			a.setPhone(null);
+		}else {
+			a.setPhone(node.get("Phone").asText());
+		}
+		if(node.get("Wallet").asText().equals("")) {
+			a.setWallet(null);
+		}else {
+			a.setWallet(node.get("Wallet").asText());
+		}
+		if(node.get("Birthday").asText().equals("")) {
+			a.setPhone(null);
+		}else {
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+			try {
+				a.setBirthday(format.parse(node.get("Birthday").asText()));
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+		}
 		dao.save(a);
 		return a;
 	}
