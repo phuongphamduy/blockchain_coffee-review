@@ -58,10 +58,10 @@ const ProductCard = () => {
       </div>
       
       <Following />
-      <Followers />
+      {/* <Followers />
      <Post />
       <Like />
-      <List />
+      <List /> */}
 
     </div>
 
