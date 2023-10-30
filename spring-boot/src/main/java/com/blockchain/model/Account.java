@@ -38,16 +38,22 @@ public class Account implements Serializable {
 	Boolean isblock = false;
 	Boolean isadmin = false;
 	String wallet;
-	@JsonIgnore
+	@JsonManagedReference
 	@OneToMany(mappedBy = "account")
 	List<Post> posts;
-	@JsonIgnore
+	@JsonBackReference
 	@OneToMany(mappedBy = "account")
 	List<Review> reviews;
 	@JsonIgnore
 	@OneToMany(mappedBy = "account")
 	List<Favorite> favorites;
-	@JsonIgnore
+	@JsonManagedReference
 	@OneToMany(mappedBy = "account")
 	List<Interaction> interactions;
+	@JsonBackReference
+	@OneToMany(mappedBy = "follower")
+	List<Follow> followers;
+	@JsonBackReference
+	@OneToMany(mappedBy = "following")
+	List<Follow> followings;
 }

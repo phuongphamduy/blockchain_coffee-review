@@ -19,4 +19,6 @@ public interface AccountService {
 	public Account updateWallet(JsonNode wallet, Integer id);
 
 	public Account pudateProfile(JsonNode node);
+
+	public Account getById(Integer id);
 }

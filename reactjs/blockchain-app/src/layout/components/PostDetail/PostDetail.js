@@ -35,6 +35,7 @@ function getUser() {
 
 function PostDetail() {
     const [postDetail, setPostDetail] = useState(null);
+    const [reviews, setReviews] = useState(null);
     const [preview, setPreview] = useState('');
     const [input, setInput] = useState('');
     const [imageFile, setImageFile] = useState({});
@@ -63,6 +64,15 @@ function PostDetail() {
                         return;
                     }
                 });
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+        httpRequest
+            .get(`/rest/review/${id}`)
+            .then((res) => {
+                console.log(res.data);
+                setReviews(res.data);
             })
             .catch((error) => {
                 console.log(error);
@@ -346,8 +356,8 @@ function PostDetail() {
                                 </div>
                                 <div className={styles['comment-list']}>
                                     <div className={styles['no-comment']}>
-                                        {postDetail && postDetail.reviews && postDetail.reviews.length > 0 ? (
-                                            postDetail.reviews.map((item) => {
+                                        {reviews && reviews.length > 0 ? (
+                                            reviews.map((item) => {
                                                 return (
                                                     <div key={item.id} className={styles['comment-item']}>
                                                         <img src={CommentUser1} alt="img" />

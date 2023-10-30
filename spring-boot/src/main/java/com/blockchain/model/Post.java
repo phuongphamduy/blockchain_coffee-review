@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -38,10 +39,11 @@ public class Post implements Serializable {
 	Boolean isconfirm = false;
 	@Temporal(TemporalType.DATE)
 	Date createdate = new Date();
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "accountid")
 	Account account;
-	@JsonManagedReference
+	@JsonBackReference
 	@OneToMany(mappedBy = "post")
 	List<Review> reviews;
 	@JsonManagedReference

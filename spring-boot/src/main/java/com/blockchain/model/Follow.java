@@ -2,7 +2,8 @@ package com.blockchain.model;
 
 import java.io.Serializable;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -19,18 +20,17 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "Interactions")
-public class Interaction implements Serializable {
+@Table(name = "Follows")
+public class Follow implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Integer id;
-	Boolean islike;
-	@JsonBackReference
+	@JsonManagedReference
 	@ManyToOne
-	@JoinColumn(name = "postid")
-	Post post;
-	@JsonBackReference
+	@JoinColumn(name = "followerid")
+	Account follower;
+	@JsonManagedReference
 	@ManyToOne
-	@JoinColumn(name = "accountid")
-	Account account;
+	@JoinColumn(name = "followingid")
+	Account following;
 }
