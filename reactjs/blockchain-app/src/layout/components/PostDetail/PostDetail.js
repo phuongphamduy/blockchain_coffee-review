@@ -52,7 +52,7 @@ function PostDetail() {
                 setPostDetail(res.data);
                 const favorites = res.data.favorites;
                 favorites.forEach((item) => {
-                    if (item.account.id === user.id) {
+                    if (item.account.id === (user && user.id)) {
                         setFavorite(item);
                         return;
                     }
@@ -70,7 +70,7 @@ function PostDetail() {
                 console.log(error);
             });
         httpRequest
-            .get(`/rest/interact/postAndUser`, { params: { postid: id, userid: user.id } })
+            .get(`/rest/interact/postAndUser`, { params: { postid: id, userid: user && user.id } })
             .then((res) => {
                 setIsLike(res.data);
             })
@@ -248,50 +248,94 @@ function PostDetail() {
                                 </div>
                             </div>
                             <div className={styles['post-interact']}>
-                                {favorite ? (
-                                    <Button variant="warning" className={styles['btn']} onClick={handleRemoveSavePost}>
-                                        <FontAwesomeIcon icon={faBookmark} className={styles['icon']} />
-                                        Saved
-                                    </Button>
-                                ) : (
-                                    <Button variant="secondary" className={styles['btn']} onClick={handleSavePost}>
-                                        <FontAwesomeIcon icon={faBookmark} className={styles['icon']} />
-                                        Saved
-                                    </Button>
-                                )}
-                                {isLike && isLike.islike ? (
+                                {user ? (
                                     <>
-                                        <Button
-                                            variant="success"
-                                            data={isLike && isLike.id}
-                                            className={styles['btn']}
-                                            onClick={handleRemoveLike}
-                                        >
+                                        {favorite ? (
+                                            <Button
+                                                variant="warning"
+                                                className={styles['btn']}
+                                                onClick={handleRemoveSavePost}
+                                            >
+                                                <FontAwesomeIcon icon={faBookmark} className={styles['icon']} />
+                                                Saved
+                                            </Button>
+                                        ) : (
+                                            <Button
+                                                variant="secondary"
+                                                className={styles['btn']}
+                                                onClick={handleSavePost}
+                                            >
+                                                <FontAwesomeIcon icon={faBookmark} className={styles['icon']} />
+                                                Saved
+                                            </Button>
+                                        )}
+                                    </>
+                                ) : (
+                                    <>
+                                        <Button variant="secondary" className={styles['btn']} disabled>
+                                            <FontAwesomeIcon icon={faBookmark} className={styles['icon']} />
+                                            Saved
+                                        </Button>
+                                    </>
+                                )}
+
+                                {user ? (
+                                    <>
+                                        {isLike && isLike.islike ? (
+                                            <Button
+                                                variant="success"
+                                                data={isLike && isLike.id}
+                                                className={styles['btn']}
+                                                onClick={handleRemoveLike}
+                                            >
+                                                <FontAwesomeIcon icon={faHeart} className={styles['icon']} />
+                                                Liked
+                                            </Button>
+                                        ) : (
+                                            <Button variant="secondary" className={styles['btn']} onClick={handleLike}>
+                                                <FontAwesomeIcon icon={faHeart} className={styles['icon']} />
+                                                Liked
+                                            </Button>
+                                        )}
+                                    </>
+                                ) : (
+                                    <>
+                                        <Button variant="secondary" className={styles['btn']} disabled>
                                             <FontAwesomeIcon icon={faHeart} className={styles['icon']} />
                                             Liked
                                         </Button>
                                     </>
-                                ) : (
-                                    <Button variant="secondary" className={styles['btn']} onClick={handleLike}>
-                                        <FontAwesomeIcon icon={faHeart} className={styles['icon']} />
-                                        Liked
-                                    </Button>
                                 )}
-                                {isLike && !isLike.islike ? (
-                                    <Button
-                                        variant="danger"
-                                        className={styles['btn']}
-                                        data={isLike && isLike.id}
-                                        onClick={handleRemoveDislike}
-                                    >
-                                        <FontAwesomeIcon icon={faThumbsDown} className={styles['icon']} />
-                                        Disliked
-                                    </Button>
+                                {user ? (
+                                    <>
+                                        {isLike && !isLike.islike ? (
+                                            <Button
+                                                variant="danger"
+                                                className={styles['btn']}
+                                                data={isLike && isLike.id}
+                                                onClick={handleRemoveDislike}
+                                            >
+                                                <FontAwesomeIcon icon={faThumbsDown} className={styles['icon']} />
+                                                Disliked
+                                            </Button>
+                                        ) : (
+                                            <Button
+                                                variant="secondary"
+                                                className={styles['btn']}
+                                                onClick={handleDislike}
+                                            >
+                                                <FontAwesomeIcon icon={faThumbsDown} className={styles['icon']} />
+                                                Disliked
+                                            </Button>
+                                        )}
+                                    </>
                                 ) : (
-                                    <Button variant="secondary" className={styles['btn']} onClick={handleDislike}>
-                                        <FontAwesomeIcon icon={faThumbsDown} className={styles['icon']} />
-                                        Disliked
-                                    </Button>
+                                    <>
+                                        <Button variant="secondary" className={styles['btn']} disabled>
+                                            <FontAwesomeIcon icon={faThumbsDown} className={styles['icon']} />
+                                            Disliked
+                                        </Button>
+                                    </>
                                 )}
                             </div>
                         </div>
