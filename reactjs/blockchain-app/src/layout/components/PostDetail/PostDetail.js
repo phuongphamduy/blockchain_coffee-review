@@ -51,13 +51,6 @@ function PostDetail() {
             .then((res) => {
                 setPostDetail(res.data);
                 const favorites = res.data.favorites;
-                const interactions = res.data.interactions;
-                interactions.forEach((item) => {
-                    if (item.account.id === user.id) {
-                        setIsLike(item);
-                        return;
-                    }
-                });
                 favorites.forEach((item) => {
                     if (item.account.id === user.id) {
                         setFavorite(item);
@@ -72,6 +65,14 @@ function PostDetail() {
             .get(`/rest/review/${id}`)
             .then((res) => {
                 setReviews(res.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+        httpRequest
+            .get(`/rest/interact/postAndUser`, { params: { postid: id, userid: user.id } })
+            .then((res) => {
+                setIsLike(res.data);
             })
             .catch((error) => {
                 console.log(error);

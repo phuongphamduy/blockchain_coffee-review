@@ -9,4 +9,6 @@ public interface InteractionService {
 
 	void removeLike(Integer id);
 
+	Interaction getInteractionByPostAndUser(Integer postid, Integer userid);
+
 }
