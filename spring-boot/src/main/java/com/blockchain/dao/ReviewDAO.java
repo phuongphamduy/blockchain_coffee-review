@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.Query;
 import com.blockchain.model.Review;
 
 public interface ReviewDAO extends JpaRepository<Review, Integer> {
-	@Query("select r from Review r where r.post.id = ?1")
-	List<Review> findByPostId(Integer id);
+	@Query("select r, a from Review r join r.account a where r.post.id = ?1")
+	List<Object[]> findByPostId(Integer id);
+	
+	
 }

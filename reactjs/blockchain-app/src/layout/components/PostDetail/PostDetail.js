@@ -358,24 +358,24 @@ function PostDetail() {
                                         {reviews && reviews.length > 0 ? (
                                             reviews.map((item) => {
                                                 return (
-                                                    <div key={item.id} className={styles['comment-item']}>
+                                                    <div key={item[0].id} className={styles['comment-item']}>
                                                         <img src={CommentUser1} alt="img" />
                                                         <div className={styles['comment-content']}>
                                                             <div className={styles['comment-info']}>
-                                                                {/* <h4>{item.account.fullname}</h4> */}
+                                                                <h4>{item[1].fullname}</h4>
                                                                 <p>
-                                                                    {new Date(item.createdate).getDate() +
+                                                                    {new Date(item[0].createdate).getDate() +
                                                                         '-' +
-                                                                        (new Date(item.createdate).getMonth() + 1) +
+                                                                        (new Date(item[0].createdate).getMonth() + 1) +
                                                                         '-' +
-                                                                        new Date(item.createdate).getFullYear()}
+                                                                        new Date(item[0].createdate).getFullYear()}
                                                                 </p>
                                                             </div>
                                                             <div className={styles['comment-text']}>
-                                                                <p>{item.comment}</p>
+                                                                <p>{item[0].comment}</p>
                                                             </div>
-                                                            {item.image && item.image.url && (
-                                                                <img src={item.image.url} alt="img" />
+                                                            {item[0].image && item[0].image.url && (
+                                                                <img src={item[0].image.url} alt="img" />
                                                             )}
 
                                                             <div className={styles['btn-group']}>

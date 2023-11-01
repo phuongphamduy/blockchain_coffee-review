@@ -9,7 +9,7 @@ public interface ReviewService {
 
 	Review postComment(JsonNode review);
 
-	List<Review> getReviewByPostId(Integer id);
+	List<Object[]> getReviewByPostId(Integer id);
 
 	void deleteComment(Integer id);
 

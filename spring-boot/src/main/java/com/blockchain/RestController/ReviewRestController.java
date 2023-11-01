@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.blockchain.dao.ReviewDAO;
 import com.blockchain.model.Review;
 import com.blockchain.service.ReviewService;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -25,8 +27,12 @@ public class ReviewRestController {
 	@Autowired
 	ReviewService service;
 	
+	@Autowired
+	ReviewDAO rdao;
+	
 	@GetMapping("/{id}")
-	public List<Review> getListReview(@PathVariable("id") Integer id) {
+	@ResponseBody
+	public List<Object[]> getListReview(@PathVariable("id") Integer id) {
 		return service.getReviewByPostId(id);
 	}
 	
