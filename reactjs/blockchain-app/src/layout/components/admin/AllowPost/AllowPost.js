@@ -140,7 +140,6 @@ function AllowPost() {
                             <th>Address</th>
                             <th>Description</th>
                             <th className={styles['text']}>Create date</th>
-                            <th>Creator</th>
                             <th>Images</th>
                             <th>Actions</th>
                         </tr>
@@ -153,7 +152,6 @@ function AllowPost() {
                                     <td className={styles['block']}>{item.address}</td>
                                     <td className={styles['block']}>{item.description}</td>
                                     <td className={styles['block']}>{item.createdate}</td>
-                                    <td className={styles['block']}>{item.account.fullname}</td>
                                     <td>
                                         <Button
                                             variant="primary"

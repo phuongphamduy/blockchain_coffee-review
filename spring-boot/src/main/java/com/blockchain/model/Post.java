@@ -5,8 +5,10 @@ import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -39,20 +41,20 @@ public class Post implements Serializable {
 	Boolean isconfirm = false;
 	@Temporal(TemporalType.DATE)
 	Date createdate = new Date();
-	@JsonBackReference
+	@JsonBackReference(value = "post-account")
 	@ManyToOne
 	@JoinColumn(name = "accountid")
 	Account account;
-	@JsonBackReference
+	@JsonManagedReference(value = "post-review")
 	@OneToMany(mappedBy = "post")
 	List<Review> reviews;
-	@JsonManagedReference
+	@JsonManagedReference(value = "favorite-post")
 	@OneToMany(mappedBy = "post")
 	List<Favorite> favorites;
-	@JsonManagedReference
+	@JsonManagedReference(value = "image-post")
 	@OneToMany(mappedBy = "post")
 	List<Image> images;
-	@JsonManagedReference
+	@JsonManagedReference(value = "interaction-post")
 	@OneToMany(mappedBy = "post")
 	List<Interaction> interactions;
 

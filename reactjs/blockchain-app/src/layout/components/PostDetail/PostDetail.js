@@ -71,7 +71,6 @@ function PostDetail() {
         httpRequest
             .get(`/rest/review/${id}`)
             .then((res) => {
-                console.log(res.data);
                 setReviews(res.data);
             })
             .catch((error) => {
@@ -123,7 +122,7 @@ function PostDetail() {
                 var imageRef = ref(storage, `images/${imageFile.name + uuidv4()}`);
                 const snapshot = await uploadBytes(imageRef, imageFile.file);
                 imageUrl = await getDownloadURL(snapshot.ref);
-                obj.image = { url: imageUrl, post: { id: postDetail.id } };
+                obj.image = { url: imageUrl, post: { id: postDetail.id }, name: imageFile.name };
             }
             httpRequest
                 .post('/rest/review', obj)
@@ -363,7 +362,7 @@ function PostDetail() {
                                                         <img src={CommentUser1} alt="img" />
                                                         <div className={styles['comment-content']}>
                                                             <div className={styles['comment-info']}>
-                                                                <h4>{item.account.fullname}</h4>
+                                                                {/* <h4>{item.account.fullname}</h4> */}
                                                                 <p>
                                                                     {new Date(item.createdate).getDate() +
                                                                         '-' +

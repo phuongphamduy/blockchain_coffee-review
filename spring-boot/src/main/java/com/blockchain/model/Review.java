@@ -4,8 +4,10 @@ import java.io.Serializable;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -34,11 +36,11 @@ public class Review implements Serializable {
 	String comment;
 	@Temporal(TemporalType.DATE)
 	Date createdate = new Date();
-	@JsonManagedReference
+	@JsonBackReference(value = "review-account")
 	@ManyToOne
 	@JoinColumn(name = "accountid")
 	Account account;
-	@JsonManagedReference
+	@JsonBackReference(value = "post-review")
 	@ManyToOne
 	@JoinColumn(name = "postid")
 	Post post;

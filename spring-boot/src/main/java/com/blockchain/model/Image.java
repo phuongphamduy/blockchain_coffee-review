@@ -28,7 +28,7 @@ public class Image implements Serializable {
 	Integer id;
 	String url;
 	String name;
-	@JsonBackReference
+	@JsonBackReference(value = "image-post")
 	@ManyToOne
 	@JoinColumn(name = "Postid")
 	Post post;

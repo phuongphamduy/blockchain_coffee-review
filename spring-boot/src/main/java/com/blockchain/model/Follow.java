@@ -2,7 +2,7 @@ package com.blockchain.model;
 
 import java.io.Serializable;
 
-
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Entity;
@@ -25,11 +25,11 @@ public class Follow implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Integer id;
-	@JsonManagedReference
+	@JsonBackReference(value = "account-follower")
 	@ManyToOne
 	@JoinColumn(name = "followerid")
 	Account follower;
-	@JsonManagedReference
+	@JsonBackReference(value = "account-following")
 	@ManyToOne
 	@JoinColumn(name = "followingid")
 	Account following;

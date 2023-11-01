@@ -28,7 +28,7 @@ public class Favorite implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "accountid")
 	Account account;
-	@JsonBackReference
+	@JsonBackReference(value = "favorite-post")
 	@ManyToOne
 	@JoinColumn(name = "postid")
 	Post post;
