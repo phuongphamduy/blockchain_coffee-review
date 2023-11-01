@@ -98,4 +98,9 @@ public class AccountServiceImpl implements AccountService {
 		return a;
 	}
 
+	@Override
+	public Account getById(Integer id) {
+		return dao.findById(id).get();
+	}
+
 }

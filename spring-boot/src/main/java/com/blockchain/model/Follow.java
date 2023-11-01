@@ -11,29 +11,26 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Data;	
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "Images")
-public class Image implements Serializable {
+@Table(name = "Follows")
+public class Follow implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Integer id;
-	String url;
-	String name;
-	@JsonBackReference(value = "image-post")
+	@JsonBackReference(value = "account-follower")
 	@ManyToOne
-	@JoinColumn(name = "Postid")
-	Post post;
-	@JsonBackReference(value = "image")
-	@OneToOne(mappedBy = "image")
-	Review review;
-
+	@JoinColumn(name = "followerid")
+	Account follower;
+	@JsonBackReference(value = "account-following")
+	@ManyToOne
+	@JoinColumn(name = "followingid")
+	Account following;
 }

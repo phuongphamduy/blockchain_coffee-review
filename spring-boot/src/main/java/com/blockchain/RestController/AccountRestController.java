@@ -31,6 +31,11 @@ public class AccountRestController {
 		return service.getAll();
 	}
 	
+	@GetMapping("{id}")
+	public Account getById(@PathVariable("id") Integer id) {
+		return service.getById(id);
+	}
+	
 	@PostMapping("login")
 	public Account login(@RequestBody JsonNode data) {
 		return service.login(data);

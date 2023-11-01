@@ -35,6 +35,7 @@ function getUser() {
 
 function PostDetail() {
     const [postDetail, setPostDetail] = useState(null);
+    const [reviews, setReviews] = useState(null);
     const [preview, setPreview] = useState('');
     const [input, setInput] = useState('');
     const [imageFile, setImageFile] = useState({});
@@ -50,19 +51,28 @@ function PostDetail() {
             .then((res) => {
                 setPostDetail(res.data);
                 const favorites = res.data.favorites;
-                const interactions = res.data.interactions;
-                interactions.forEach((item) => {
-                    if (item.account.id === user.id) {
-                        setIsLike(item);
-                        return;
-                    }
-                });
                 favorites.forEach((item) => {
-                    if (item.account.id === user.id) {
+                    if (item.account.id === (user && user.id)) {
                         setFavorite(item);
                         return;
                     }
                 });
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+        httpRequest
+            .get(`/rest/review/${id}`)
+            .then((res) => {
+                setReviews(res.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+        httpRequest
+            .get(`/rest/interact/postAndUser`, { params: { postid: id, userid: user && user.id } })
+            .then((res) => {
+                setIsLike(res.data);
             })
             .catch((error) => {
                 console.log(error);
@@ -113,7 +123,7 @@ function PostDetail() {
                 var imageRef = ref(storage, `images/${imageFile.name + uuidv4()}`);
                 const snapshot = await uploadBytes(imageRef, imageFile.file);
                 imageUrl = await getDownloadURL(snapshot.ref);
-                obj.image = { url: imageUrl, post: { id: postDetail.id } };
+                obj.image = { url: imageUrl, post: { id: postDetail.id }, name: imageFile.name };
             }
             httpRequest
                 .post('/rest/review', obj)
@@ -238,50 +248,94 @@ function PostDetail() {
                                 </div>
                             </div>
                             <div className={styles['post-interact']}>
-                                {favorite ? (
-                                    <Button variant="warning" className={styles['btn']} onClick={handleRemoveSavePost}>
-                                        <FontAwesomeIcon icon={faBookmark} className={styles['icon']} />
-                                        Saved
-                                    </Button>
-                                ) : (
-                                    <Button variant="secondary" className={styles['btn']} onClick={handleSavePost}>
-                                        <FontAwesomeIcon icon={faBookmark} className={styles['icon']} />
-                                        Saved
-                                    </Button>
-                                )}
-                                {isLike && isLike.islike ? (
+                                {user ? (
                                     <>
-                                        <Button
-                                            variant="success"
-                                            data={isLike && isLike.id}
-                                            className={styles['btn']}
-                                            onClick={handleRemoveLike}
-                                        >
+                                        {favorite ? (
+                                            <Button
+                                                variant="warning"
+                                                className={styles['btn']}
+                                                onClick={handleRemoveSavePost}
+                                            >
+                                                <FontAwesomeIcon icon={faBookmark} className={styles['icon']} />
+                                                Saved
+                                            </Button>
+                                        ) : (
+                                            <Button
+                                                variant="secondary"
+                                                className={styles['btn']}
+                                                onClick={handleSavePost}
+                                            >
+                                                <FontAwesomeIcon icon={faBookmark} className={styles['icon']} />
+                                                Saved
+                                            </Button>
+                                        )}
+                                    </>
+                                ) : (
+                                    <>
+                                        <Button variant="secondary" className={styles['btn']} disabled>
+                                            <FontAwesomeIcon icon={faBookmark} className={styles['icon']} />
+                                            Saved
+                                        </Button>
+                                    </>
+                                )}
+
+                                {user ? (
+                                    <>
+                                        {isLike && isLike.islike ? (
+                                            <Button
+                                                variant="success"
+                                                data={isLike && isLike.id}
+                                                className={styles['btn']}
+                                                onClick={handleRemoveLike}
+                                            >
+                                                <FontAwesomeIcon icon={faHeart} className={styles['icon']} />
+                                                Liked
+                                            </Button>
+                                        ) : (
+                                            <Button variant="secondary" className={styles['btn']} onClick={handleLike}>
+                                                <FontAwesomeIcon icon={faHeart} className={styles['icon']} />
+                                                Liked
+                                            </Button>
+                                        )}
+                                    </>
+                                ) : (
+                                    <>
+                                        <Button variant="secondary" className={styles['btn']} disabled>
                                             <FontAwesomeIcon icon={faHeart} className={styles['icon']} />
                                             Liked
                                         </Button>
                                     </>
-                                ) : (
-                                    <Button variant="secondary" className={styles['btn']} onClick={handleLike}>
-                                        <FontAwesomeIcon icon={faHeart} className={styles['icon']} />
-                                        Liked
-                                    </Button>
                                 )}
-                                {isLike && !isLike.islike ? (
-                                    <Button
-                                        variant="danger"
-                                        className={styles['btn']}
-                                        data={isLike && isLike.id}
-                                        onClick={handleRemoveDislike}
-                                    >
-                                        <FontAwesomeIcon icon={faThumbsDown} className={styles['icon']} />
-                                        Disliked
-                                    </Button>
+                                {user ? (
+                                    <>
+                                        {isLike && !isLike.islike ? (
+                                            <Button
+                                                variant="danger"
+                                                className={styles['btn']}
+                                                data={isLike && isLike.id}
+                                                onClick={handleRemoveDislike}
+                                            >
+                                                <FontAwesomeIcon icon={faThumbsDown} className={styles['icon']} />
+                                                Disliked
+                                            </Button>
+                                        ) : (
+                                            <Button
+                                                variant="secondary"
+                                                className={styles['btn']}
+                                                onClick={handleDislike}
+                                            >
+                                                <FontAwesomeIcon icon={faThumbsDown} className={styles['icon']} />
+                                                Disliked
+                                            </Button>
+                                        )}
+                                    </>
                                 ) : (
-                                    <Button variant="secondary" className={styles['btn']} onClick={handleDislike}>
-                                        <FontAwesomeIcon icon={faThumbsDown} className={styles['icon']} />
-                                        Disliked
-                                    </Button>
+                                    <>
+                                        <Button variant="secondary" className={styles['btn']} disabled>
+                                            <FontAwesomeIcon icon={faThumbsDown} className={styles['icon']} />
+                                            Disliked
+                                        </Button>
+                                    </>
                                 )}
                             </div>
                         </div>
@@ -346,27 +400,27 @@ function PostDetail() {
                                 </div>
                                 <div className={styles['comment-list']}>
                                     <div className={styles['no-comment']}>
-                                        {postDetail && postDetail.reviews && postDetail.reviews.length > 0 ? (
-                                            postDetail.reviews.map((item) => {
+                                        {reviews && reviews.length > 0 ? (
+                                            reviews.map((item) => {
                                                 return (
-                                                    <div key={item.id} className={styles['comment-item']}>
+                                                    <div key={item[0].id} className={styles['comment-item']}>
                                                         <img src={CommentUser1} alt="img" />
                                                         <div className={styles['comment-content']}>
                                                             <div className={styles['comment-info']}>
-                                                                <h4>{item.account.fullname}</h4>
+                                                                <h4>{item[1].fullname}</h4>
                                                                 <p>
-                                                                    {new Date(item.createdate).getDate() +
+                                                                    {new Date(item[0].createdate).getDate() +
                                                                         '-' +
-                                                                        (new Date(item.createdate).getMonth() + 1) +
+                                                                        (new Date(item[0].createdate).getMonth() + 1) +
                                                                         '-' +
-                                                                        new Date(item.createdate).getFullYear()}
+                                                                        new Date(item[0].createdate).getFullYear()}
                                                                 </p>
                                                             </div>
                                                             <div className={styles['comment-text']}>
-                                                                <p>{item.comment}</p>
+                                                                <p>{item[0].comment}</p>
                                                             </div>
-                                                            {item.image && item.image.url && (
-                                                                <img src={item.image.url} alt="img" />
+                                                            {item[0].image && item[0].image.url && (
+                                                                <img src={item[0].image.url} alt="img" />
                                                             )}
 
                                                             <div className={styles['btn-group']}>

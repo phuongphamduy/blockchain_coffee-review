@@ -41,8 +41,8 @@ public class ReviewServiceImpl implements ReviewService {
 	}
 
 	@Override
-	public List<Review> getReviewByPostId(Integer id) {
-		List<Review> list = rdao.findByPostId(id);
+	public List<Object[]> getReviewByPostId(Integer id) {
+		List<Object[]> list = rdao.findByPostId(id);
 		if(list.isEmpty()) {
 			return null;
 		}

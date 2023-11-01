@@ -190,7 +190,7 @@ function PostNew({ close }) {
                         return <img key={item.id} src={item.preview} height="200px" width="230px" alt="img" />;
                     })}
                     {ListImg.length >= 4 ? (
-                        <div style={{ height: '200px', width: '230px', backgroundColor: '#ccc', display: 'flex' }}>
+                        <div style={{ height: '200px', width: '200px', backgroundColor: '#ccc', display: 'flex' }}>
                             <h4 className={styles['more-img']}>+ {ListImg.length - 3}</h4>
                         </div>
                     ) : (

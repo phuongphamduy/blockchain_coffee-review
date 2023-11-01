@@ -32,4 +32,10 @@ public class InteractionServiceImpl implements InteractionService {
 		
 	}
 
+	@Override
+	public Interaction getInteractionByPostAndUser(Integer postid, Integer userid) {
+		Interaction i = dao.findByPostAndAccount(postid, userid);
+		return i;
+	}
+
 }

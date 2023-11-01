@@ -25,10 +25,11 @@ public class Interaction implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Integer id;
 	Boolean islike;
-	@JsonBackReference
+	@JsonBackReference(value = "interaction-post")
 	@ManyToOne
 	@JoinColumn(name = "postid")
 	Post post;
+	@JsonBackReference(value = "interaction-account")
 	@ManyToOne
 	@JoinColumn(name = "accountid")
 	Account account;

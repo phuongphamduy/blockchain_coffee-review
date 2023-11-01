@@ -5,8 +5,10 @@ import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -38,16 +40,22 @@ public class Account implements Serializable {
 	Boolean isblock = false;
 	Boolean isadmin = false;
 	String wallet;
-	@JsonIgnore
+	@JsonManagedReference(value = "post-account")
 	@OneToMany(mappedBy = "account")
 	List<Post> posts;
-	@JsonIgnore
+	@JsonManagedReference(value = "review-account")
 	@OneToMany(mappedBy = "account")
 	List<Review> reviews;
 	@JsonIgnore
 	@OneToMany(mappedBy = "account")
 	List<Favorite> favorites;
-	@JsonIgnore
+	@JsonManagedReference(value = "interaction-account")
 	@OneToMany(mappedBy = "account")
 	List<Interaction> interactions;
+	@JsonManagedReference(value = "account-follower")
+	@OneToMany(mappedBy = "follower")
+	List<Follow> followers;
+	@JsonManagedReference(value = "account-following")
+	@OneToMany(mappedBy = "following")
+	List<Follow> followings;
 }

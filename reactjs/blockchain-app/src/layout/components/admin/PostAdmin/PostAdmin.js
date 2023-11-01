@@ -28,7 +28,6 @@ function PostAdmin() {
                             <th>Address</th>
                             <th>Description</th>
                             <th>Create date</th>
-                            <th>Creator</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -41,7 +40,6 @@ function PostAdmin() {
                                         <td>{item.address}</td>
                                         <td>{item.description}</td>
                                         <td>{item.createdate}</td>
-                                        <td>{item.account.fullname}</td>
                                     </tr>
                                 );
                             })}

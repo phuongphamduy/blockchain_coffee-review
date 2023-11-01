@@ -1,201 +1,188 @@
 // src/components/ProductCard.module.scss
-.background-color{
-  background-color: #2E2D2D; /* Màu nền với độ trong suốt */
-  width: 100%;
+.background-color {
+    background-color: #2e2d2d; /* Màu nền với độ trong suốt */
+    width: 100%;
     height: 100vh;
 }
 
-
 .container_card {
-  display: flex;
-  flex-direction: column;
-  
-  background-color: #2E2D2D; /* Màu nền với độ trong suốt */
- 
-  min-height: 30vh;
-  margin: 0 auto;
+    display: flex;
+    flex-direction: column;
 
+    background-color: #2e2d2d; /* Màu nền với độ trong suốt */
+
+    min-height: 30vh;
+    margin: 0 auto;
 }
 
-.recentlist{
-  margin: 10px;
-  color: #ffffff;
+.recentlist {
+    margin: 10px;
+    color: #ffffff;
 }
 
 .product-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  
-  background-color: #ffffff;
-  
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(255, 255, 255, 0.1);
-  margin: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
-  .product-image {
-   
-    border-top-right-radius: 10px;
-    border-top-left-radius: 10px;
-    overflow: hidden;
+    background-color: #ffffff;
 
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-  }
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(255, 255, 255, 0.1);
+    margin: 10px;
 
-  .product-info {
-    text-align: center;
+    .product-image {
+        border-top-right-radius: 10px;
+        border-top-left-radius: 10px;
+        overflow: hidden;
 
-    .product-name {
-      margin: 10px 0;
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
     }
 
-    .product-intro {
-      font-weight: bold;
+    .product-info {
+        text-align: center;
+
+        .product-name {
+            margin: 10px 0;
+        }
+
+        .product-intro {
+            font-weight: bold;
+        }
     }
-  }
 }
 .container_user {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 20vh;
-  margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    min-height: 20vh;
+    margin: 0 auto;
+    padding-top: 40px;
 }
 
-
-
 .userProfile {
-  width: 80%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+    width: 80%;
 }
 
 .leftSection {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+    display: flex;
+    flex-direction: row;
 }
 
 .userInfo {
-  margin-left: 10px;
-  color: white;
-  font-size: 1.2em;
-  margin-top: 10px; 
+    margin-left: 10px;
+    color: white;
+    font-size: 1.3em;
+
+    h2 {
+        font-size: 3rem;
+    }
 }
 
 .avatar img {
-  width: 50px;
-  height: 50px;
-  border-radius: 10%;
-  margin-right: 10px;
+    width: 130px;
+    height: 130px;
+    border-radius: 10%;
+    margin-right: 10px;
 }
 
 .rightSection {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
 }
 
 .rightSection {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding-left: 20px; /* Tạo khoảng cách giữa ảnh và thông tin */
-  color: #ffffff;
-  font-size: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 20px; /* Tạo khoảng cách giữa ảnh và thông tin */
+    color: #ffffff;
+    font-size: 15px;
 }
-
-
-
 
 .stats {
-  display: flex;
-  text-align: center;
-  flex-direction: row; /* Sắp xếp theo hàng ngang */
+    display: flex;
+    text-align: center;
+    flex-direction: row; /* Sắp xếp theo hàng ngang */
 }
 
 .stat {
-  margin-right: 15px; /* Khoảng cách giữa mỗi mục */
-  padding-right: 10px; /* Khoảng cách giữa số lượng và tên */
-  border-right: 1px solid #ccc; /* Vách ngăn */
+    margin-right: 15px; /* Khoảng cách giữa mỗi mục */
+    padding-right: 10px; /* Khoảng cách giữa số lượng và tên */
+    border-right: 1px solid #ccc; /* Vách ngăn */
 }
 
 .stat:last-child {
-  margin-right: 0; /* Loại bỏ khoảng cách và vách ngăn của mục cuối cùng */
-  border-right: none; /* Loại bỏ vách ngăn của mục cuối cùng */
+    margin-right: 0; /* Loại bỏ khoảng cách và vách ngăn của mục cuối cùng */
+    border-right: none; /* Loại bỏ vách ngăn của mục cuối cùng */
 }
 .stat span {
-  display: block; /* Hiển thị mỗi số và tên trên một dòng */
-  margin-bottom: 5px; /* Khoảng cách giữa số và tên */
+    display: block; /* Hiển thị mỗi số và tên trên một dòng */
+    margin-bottom: 5px; /* Khoảng cách giữa số và tên */
 }
 
 .stat span:first-child {
-  font-weight: bold; /* Đặt chữ số là đậm */
+    font-weight: bold; /* Đặt chữ số là đậm */
 }
-
 
 .editButton {
-  margin-top: 10px;
-  padding: 10px 15px; /* Điều chỉnh padding để nút gần hơn */
-  margin-left: 10px; /* Điều chỉnh margin để nút và thông tin gần hơn */
-  background-color: #3498db;
-  border-radius: 10px;
-  color: white;
-  border: none;
-  cursor: pointer;
-  font-size: 1.2em;
+    padding: 5px 10px; /* Điều chỉnh padding để nút gần hơn */
+    background-color: #3498db;
+    border-radius: 10px;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2em;
 }
 .like {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 70vh; // Đảm bảo chiều cao 100% của màn hình  
-  background-color: #2E2D2D; /* Màu nền với độ trong suốt */
-  font-size: 20px;
-  color: #ffffff
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 70vh; // Đảm bảo chiều cao 100% của màn hình
+    background-color: #2e2d2d; /* Màu nền với độ trong suốt */
+    font-size: 20px;
+    color: #ffffff;
 }
 
 .post {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 70vh; // Đảm bảo chiều cao 100% của màn hình
-  background-color: #2E2D2D; /* Màu nền với độ trong suốt */
-  font-size: 20px;
-  color: #ffffff
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 70vh; // Đảm bảo chiều cao 100% của màn hình
+    background-color: #2e2d2d; /* Màu nền với độ trong suốt */
+    font-size: 20px;
+    color: #ffffff;
 }
 
 .Follower {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 70vh; // Đảm bảo chiều cao 100% của màn hình
-  background-color: #2E2D2D; /* Màu nền với độ trong suốt */
-  font-size: 20px;
-  color: #ffffff
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 70vh; // Đảm bảo chiều cao 100% của màn hình
+    background-color: #2e2d2d; /* Màu nền với độ trong suốt */
+    font-size: 20px;
+    color: #ffffff;
 }
 
 .Following {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 70vh; // Đảm bảo chiều cao 100% của màn hình
-  background-color: #2E2D2D; /* Màu nền với độ trong suốt */
-  font-size: 20px;
-  color: #ffffff
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 70vh; // Đảm bảo chiều cao 100% của màn hình
+    background-color: #2e2d2d; /* Màu nền với độ trong suốt */
+    font-size: 20px;
+    color: #ffffff;
 }
 
 img {
-  width: 200px;
-  height: 200px;
+    width: 200px;
+    height: 200px;
 }

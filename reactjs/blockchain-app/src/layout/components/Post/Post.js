@@ -78,13 +78,13 @@ function Post() {
                                                     <h5 className={styles['heading']}>Description</h5>
                                                     <p className={styles['text']}>{item.description}</p>
                                                 </div>
-                                                {item.reviews.length > 0 ? (
+                                                {/* {item.reviews.length > 0 ? (
                                                     <div className={styles['rating-wrapper']}>
                                                         <span>8.5</span>
                                                     </div>
                                                 ) : (
                                                     <></>
-                                                )}
+                                                )} */}
                                             </div>
                                         </Link>
                                     );
