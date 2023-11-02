@@ -46,7 +46,7 @@ public class Account implements Serializable {
 	@JsonManagedReference(value = "review-account")
 	@OneToMany(mappedBy = "account")
 	List<Review> reviews;
-	@JsonIgnore
+	@JsonManagedReference("favorite-account")
 	@OneToMany(mappedBy = "account")
 	List<Favorite> favorites;
 	@JsonManagedReference(value = "interaction-account")

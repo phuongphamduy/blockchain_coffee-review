@@ -51,12 +51,22 @@ function PostDetail() {
             .then((res) => {
                 setPostDetail(res.data);
                 const favorites = res.data.favorites;
-                favorites.forEach((item) => {
-                    if (item.account.id === (user && user.id)) {
-                        setFavorite(item);
-                        return;
-                    }
-                });
+                if (favorites) {
+                    favorites.forEach((item1) => {
+                        let isFind = false;
+                        user &&
+                            user.favorites.forEach((item2) => {
+                                if (item1.id === item2.id) {
+                                    isFind = true;
+                                    setFavorite(item1);
+                                    return;
+                                }
+                            });
+                        if (isFind) {
+                            return;
+                        }
+                    });
+                }
             })
             .catch((error) => {
                 console.log(error);

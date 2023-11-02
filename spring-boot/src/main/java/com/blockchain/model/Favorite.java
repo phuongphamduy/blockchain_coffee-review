@@ -25,6 +25,7 @@ public class Favorite implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Integer Id;
+	@JsonBackReference(value = "favorite-account")
 	@ManyToOne
 	@JoinColumn(name = "accountid")
 	Account account;
