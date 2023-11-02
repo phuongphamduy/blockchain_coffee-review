@@ -25,6 +25,7 @@ import Tippy from '@tippyjs/react/headless';
 import { v4 as uuidv4 } from 'uuid';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { storage } from '~/utils/firebase';
+import { useBootstrapBreakpoints } from 'react-bootstrap/esm/ThemeProvider';
 
 function getUser() {
     if (sessionStorage.getItem('user')) {
@@ -41,52 +42,46 @@ function PostDetail() {
     const [imageFile, setImageFile] = useState({});
     const [isLike, setIsLike] = useState(null);
     const [favorite, setFavorite] = useState(null);
+    const [currentUser, setCurrentUser] = useState(null);
     const navigate = useNavigate();
     const location = useLocation();
     const user = getUser();
     useEffect(() => {
         const id = location.pathname.charAt(location.pathname.length - 1);
-        httpRequest
-            .get(`/rest/post/${id}`)
-            .then((res) => {
-                setPostDetail(res.data);
-                const favorites = res.data.favorites;
-                if (favorites) {
-                    favorites.forEach((item1) => {
-                        let isFind = false;
-                        user &&
-                            user.favorites.forEach((item2) => {
-                                if (item1.id === item2.id) {
-                                    isFind = true;
-                                    setFavorite(item1);
-                                    return;
-                                }
-                            });
-                        if (isFind) {
-                            return;
-                        }
-                    });
-                }
-            })
-            .catch((error) => {
-                console.log(error);
+        async function getAccount() {
+            const u = await httpRequest.get(`/rest/account/${user.id}`);
+            setCurrentUser(u.data);
+            const p = await httpRequest.get(`/rest/post/${id}`);
+            const favorites = p.data.favorites;
+            if (favorites) {
+                favorites.forEach((item1) => {
+                    let isFind = false;
+                    u.data &&
+                        u.data.favorites.forEach((item2) => {
+                            if (item1.id === item2.id) {
+                                isFind = true;
+                                setFavorite(item1);
+                                return;
+                            }
+                        });
+                    if (isFind) {
+                        return;
+                    }
+                });
+            }
+            setPostDetail(p.data);
+        }
+        getAccount();
+        async function getPost() {
+            const r = await httpRequest.get(`/rest/review/${id}`);
+            setReviews(r.data);
+            const pu = await httpRequest.get(`/rest/interact/postAndUser`, {
+                params: { postid: id, userid: user && user.id },
             });
-        httpRequest
-            .get(`/rest/review/${id}`)
-            .then((res) => {
-                setReviews(res.data);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-        httpRequest
-            .get(`/rest/interact/postAndUser`, { params: { postid: id, userid: user && user.id } })
-            .then((res) => {
-                setIsLike(res.data);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+            setIsLike(pu.data);
+        }
+
+        getPost();
     }, [location]);
 
     useEffect(() => {
@@ -148,7 +143,11 @@ function PostDetail() {
 
     function handleSavePost() {
         httpRequest
-            .post('/rest/favorites', { account: { id: user.id }, post: { id: postDetail.id } })
+            .post('/rest/favorites', {
+                account: { id: user.id },
+                post: { id: postDetail.id },
+                postname: postDetail.name,
+            })
             .then((res) => {
                 setFavorite(res.data);
             })

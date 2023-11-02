@@ -19,6 +19,7 @@ function getUser() {
 const ProductCard = () => {
     const user = getUser();
     const [account, setAccount] = useState({});
+    const [favorites, setFavorites] = useState([]);
     useEffect(() => {
         httpRequest
             .get(`/rest/account/${user.id}`)
@@ -35,6 +36,7 @@ const ProductCard = () => {
                 });
                 let acc = { ...res.data, countLike: countLike, countPost: countPost };
                 setAccount(acc);
+                setFavorites(res.data.favorites);
             })
             .catch((error) => {
                 console.log(error);
@@ -88,7 +90,7 @@ const ProductCard = () => {
             <Followers />
             <Post />
             <Like /> */}
-            <List />
+            <List favorites={favorites} />
         </div>
     );
 };
