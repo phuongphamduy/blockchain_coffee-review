@@ -1,6 +1,6 @@
 import avt from '~/statics/images/noImg.png';
-import { Link } from 'react-router-dom';
-import React, { useEffect, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import React, { useEffect, useMemo, useState } from 'react';
 import styles from './UserInfor.module.scss';
 import Like from './Like';
 import Post from './Post';
@@ -17,13 +17,24 @@ function getUser() {
     return null;
 }
 const ProductCard = () => {
-    const user = getUser();
+    const userLogin = useMemo(() => {
+        return getUser();
+    }, []);
+    const [user, setUser] = useState();
     const [account, setAccount] = useState({});
     const [favorites, setFavorites] = useState([]);
+    const [liked, setLiked] = useState([]);
+    const [showLike, setShowLike] = useState(false);
+    const [showFollower, setShowFollower] = useState(false);
+    const [showList, setShowList] = useState(true);
+    const [showFollowing, setshowFollowing] = useState(false);
+    const [showPost, setShowPost] = useState(false);
+    const { id } = useParams();
     useEffect(() => {
         httpRequest
-            .get(`/rest/account/${user.id}`)
+            .get(`/rest/account/${id}`)
             .then((res) => {
+                setUser(res.data);
                 let countLike = 0;
                 let countPost = 0;
                 res.data.interactions.forEach((item) => {
@@ -41,7 +52,54 @@ const ProductCard = () => {
             .catch((error) => {
                 console.log(error);
             });
+        httpRequest
+            .get(`/rest/interact/likedPost/${id}`)
+            .then((res) => {
+                setLiked(res.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     }, []);
+
+    function handleShowLike() {
+        setShowLike(true);
+        setShowList(false);
+        setShowFollower(false);
+        setshowFollowing(false);
+        setShowPost(false);
+    }
+    function handleShowList() {
+        setShowList(true);
+        setShowFollower(false);
+        setshowFollowing(false);
+        setShowLike(false);
+        setShowPost(false);
+    }
+
+    function handleShowFollower() {
+        setShowFollower(true);
+        setShowList(false);
+        setshowFollowing(false);
+        setShowLike(false);
+        setShowPost(false);
+    }
+
+    function handleShowFollowing() {
+        setshowFollowing(true);
+        setShowList(false);
+        setShowFollower(false);
+        setShowLike(false);
+        setShowPost(false);
+    }
+
+    function handleShowPost() {
+        setShowPost(true);
+        setshowFollowing(false);
+        setShowList(false);
+        setShowFollower(false);
+        setShowLike(false);
+    }
     return (
         <div className={styles['background-color']}>
             <Container>
@@ -52,45 +110,46 @@ const ProductCard = () => {
                                 <img src={avt} alt="Avatar" />
                             </div>
                             <div className={styles.userInfo}>
-                                <h2>{user.fullname}</h2>
-                                <Link to={'/editProfile'}>
-                                    <button className={styles.editButton}>Edit Profile</button>
-                                </Link>
+                                <h2>{user && user.fullname}</h2>
+                                {userLogin && user && userLogin.id === user.id && (
+                                    <Link to={'/editProfile'}>
+                                        <button className={styles.editButton}>Edit Profile</button>
+                                    </Link>
+                                )}
                             </div>
                         </div>
                     </div>
                     <div className={styles.rightSection}>
                         <div className={styles.stats}>
-                            <div className={styles.stat}>
+                            <div className={styles.stat} onClick={() => handleShowLike()}>
                                 <span>{account && account.countLike}</span>
                                 <span>Likes</span>
                             </div>
-                            <div className={styles.stat}>
+                            <div className={styles.stat} onClick={() => handleShowFollower()}>
                                 <span>1000</span>
                                 <span>Followers</span>
                             </div>
-                            <div className={styles.stat}>
+                            <div className={styles.stat} onClick={() => handleShowFollowing()}>
                                 <span>200</span>
                                 <span>Following</span>
                             </div>
-                            <div className={styles.stat}>
+                            <div className={styles.stat} onClick={() => handleShowPost()}>
                                 <span>{account && account.countPost}</span>
                                 <span>Post</span>
                             </div>
-                            <div className={styles.stat}>
+                            <div className={styles.stat} onClick={() => handleShowList()}>
                                 <span>3</span>
                                 <span>List</span>
                             </div>
                         </div>
                     </div>
                 </div>
+                {showFollowing && <Following />}
+                {showFollower && <Followers />}
+                {showPost && <Post />}
+                {showLike && <Like />}
+                {showList && <List saved={favorites} liked={liked} />}
             </Container>
-
-            {/* <Following />
-            <Followers />
-            <Post />
-            <Like /> */}
-            <List favorites={favorites} />
         </div>
     );
 };

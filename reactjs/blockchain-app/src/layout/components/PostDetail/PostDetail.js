@@ -18,7 +18,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import Map from '~/components/Map';
 import { createRef, useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import httpRequest from '~/utils/httpRequest';
 import CommentUser1 from '~/statics/images/noImg.png';
 import Tippy from '@tippyjs/react/headless';
@@ -48,26 +48,30 @@ function PostDetail() {
     const user = getUser();
     useEffect(() => {
         const id = location.pathname.charAt(location.pathname.length - 1);
+
         async function getAccount() {
-            const u = await httpRequest.get(`/rest/account/${user.id}`);
-            setCurrentUser(u.data);
             const p = await httpRequest.get(`/rest/post/${id}`);
-            const favorites = p.data.favorites;
-            if (favorites) {
-                favorites.forEach((item1) => {
-                    let isFind = false;
-                    u.data &&
-                        u.data.favorites.forEach((item2) => {
-                            if (item1.id === item2.id) {
-                                isFind = true;
-                                setFavorite(item1);
-                                return;
-                            }
-                        });
-                    if (isFind) {
-                        return;
-                    }
-                });
+
+            if (user) {
+                const u = await httpRequest.get(`/rest/account/${user.id}`);
+                setCurrentUser(u.data);
+                const favorites = p.data.favorites;
+                if (favorites) {
+                    favorites.forEach((item1) => {
+                        let isFind = false;
+                        u.data &&
+                            u.data.favorites.forEach((item2) => {
+                                if (item1.id === item2.id) {
+                                    isFind = true;
+                                    setFavorite(item1);
+                                    return;
+                                }
+                            });
+                        if (isFind) {
+                            return;
+                        }
+                    });
+                }
             }
             setPostDetail(p.data);
         }
@@ -75,10 +79,14 @@ function PostDetail() {
         async function getPost() {
             const r = await httpRequest.get(`/rest/review/${id}`);
             setReviews(r.data);
-            const pu = await httpRequest.get(`/rest/interact/postAndUser`, {
-                params: { postid: id, userid: user && user.id },
-            });
-            setIsLike(pu.data);
+            try {
+                const pu = await httpRequest.get(`/rest/interact/postAndUser`, {
+                    params: { postid: id, userid: user && user.id },
+                });
+                setIsLike(pu.data);
+            } catch (error) {
+                console.log(error);
+            }
         }
 
         getPost();
@@ -413,10 +421,17 @@ function PostDetail() {
                                             reviews.map((item) => {
                                                 return (
                                                     <div key={item[0].id} className={styles['comment-item']}>
-                                                        <img src={CommentUser1} alt="img" />
+                                                        <Link to={`/userinfo/${item[0].id}`}>
+                                                            <img src={CommentUser1} alt="img" />
+                                                        </Link>
                                                         <div className={styles['comment-content']}>
                                                             <div className={styles['comment-info']}>
-                                                                <h4>{item[1].fullname}</h4>
+                                                                <Link
+                                                                    className={styles['link']}
+                                                                    to={`/userinfo/${item[0].id}`}
+                                                                >
+                                                                    <h4>{item[1].fullname}</h4>
+                                                                </Link>
                                                                 <p>
                                                                     {new Date(item[0].createdate).getDate() +
                                                                         '-' +

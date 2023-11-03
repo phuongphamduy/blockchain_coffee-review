@@ -4,16 +4,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 import React, { useEffect, useState } from 'react';
 import styles from './UserInfor.module.scss';
 
-const List = ({ favorites }) => {
-    const [count, setCount] = useState();
-    useEffect(() => {
-        let c = 0;
-        favorites &&
-            favorites.forEach((item) => {
-                c++;
-            });
-        setCount(c);
-    }, []);
+const List = ({ saved, liked }) => {
     return (
         <Container>
             <div className={styles.container_card}>
@@ -28,16 +19,16 @@ const List = ({ favorites }) => {
                                     <img src={UserInfor} alt="Product" />
                                 </div>
                                 <div className={styles['product-info']}>
-                                    <h5 className={styles['product-name']}>My likes places</h5>
-                                    {favorites && favorites.length > 0 ? (
+                                    <h5 className={styles['product-name']}>saved places</h5>
+                                    {saved && saved.length > 0 ? (
                                         <p className={styles['product-intro']}>
-                                            1 places including
-                                            {favorites.map((item) => {
+                                            {saved && saved.length} places including
+                                            {saved.map((item) => {
                                                 return <span key={item.id}> {item.postname}</span>;
                                             })}
                                         </p>
                                     ) : (
-                                        <p>0 places</p>
+                                        <p className={styles['product-intro']}>0 places</p>
                                     )}
                                 </div>
                             </div>
@@ -50,8 +41,13 @@ const List = ({ favorites }) => {
                                     <img src={UserInfor} alt="Product" />
                                 </div>
                                 <div className={styles['product-info']}>
-                                    <h5 className={styles['product-name']}>My saved places</h5>
-                                    <p className={styles['product-intro']}>1 places including ...</p>
+                                    <h5 className={styles['product-name']}>liked places</h5>
+                                    <p className={styles['product-intro']}>
+                                        {liked && liked.length} places including{' '}
+                                        {liked.map((item) => {
+                                            return <span key={item[1].id}> {item[1].name}</span>;
+                                        })}
+                                    </p>
                                 </div>
                             </div>
                         </div>

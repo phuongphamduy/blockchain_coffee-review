@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.blockchain.dao.InteractionDAO;
 import com.blockchain.model.Interaction;
 import com.blockchain.service.InteractionService;
 
@@ -21,6 +23,9 @@ public class InteractionRestController {
 	
 	@Autowired
 	InteractionService service;
+	
+	@Autowired
+	InteractionDAO dao;
 	
 	@GetMapping("/postAndUser")
 	public Interaction getInteractionByPostAndUser(@RequestParam("postid") Integer postid, @RequestParam("userid") Integer userid) {
@@ -35,5 +40,11 @@ public class InteractionRestController {
 	@DeleteMapping("/removeLike/{id}")
 	public void removeLike(@PathVariable("id") Integer id) {
 		service.removeLike(id);
+	}
+	
+	@GetMapping("/likedPost/{id}")
+	@ResponseBody
+	public Object[] getInteractionWithAccount(@PathVariable("id") Integer id) {
+		return dao.getInteractionWithAccount(id);
 	}
 }
