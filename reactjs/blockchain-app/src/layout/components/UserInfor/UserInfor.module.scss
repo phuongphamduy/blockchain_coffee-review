@@ -111,9 +111,13 @@
 }
 
 .stat {
-    margin-right: 15px; /* Khoảng cách giữa mỗi mục */
-    padding-right: 10px; /* Khoảng cách giữa số lượng và tên */
+    width: 100px;
     border-right: 1px solid #ccc; /* Vách ngăn */
+
+    &:hover {
+        background-color: #ccc;
+        cursor: pointer;
+    }
 }
 
 .stat:last-child {

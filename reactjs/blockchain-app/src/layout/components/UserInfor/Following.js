@@ -25,29 +25,47 @@ const Following = () => {
         { username: 'user2', address: 'Address 2', image: avt },
         { username: 'user1', address: 'Address 1', image: avt },
         { username: 'user2', address: 'Address 2', image: avt },
+        { username: 'user1', address: 'Address 1', image: avt },
+        { username: 'user2', address: 'Address 2', image: avt },
+        { username: 'user1', address: 'Address 1', image: avt },
+        { username: 'user2', address: 'Address 2', image: avt },
+        { username: 'user1', address: 'Address 1', image: avt },
+        { username: 'user2', address: 'Address 2', image: avt },
+        { username: 'user1', address: 'Address 1', image: avt },
+        { username: 'user2', address: 'Address 2', image: avt },
+        { username: 'user1', address: 'Address 1', image: avt },
+        { username: 'user2', address: 'Address 2', image: avt },
+        { username: 'user1', address: 'Address 1', image: avt },
+        { username: 'user2', address: 'Address 2', image: avt },
+        { username: 'user1', address: 'Address 1', image: avt },
+        { username: 'user2', address: 'Address 2', image: avt },
+        { username: 'user1', address: 'Address 1', image: avt },
+        { username: 'user2', address: 'Address 2', image: avt },
+        { username: 'user1', address: 'Address 1', image: avt },
+        { username: 'user2', address: 'Address 2', image: avt },
+        { username: 'user1', address: 'Address 1', image: avt },
+        { username: 'user2', address: 'Address 2', image: avt },
         // Thêm các tài khoản khác ở đây
     ];
     return (
-        <Container>
-            <div className={styles['Following']}>
-                <Row className={styles['following-row']}>
-                    {followingList.map((user, index) => (
-                        <Col key={index} sm={12} md={6} lg={4} xl={3}>
-                            <Card className={styles['following-card']}>
-                                <div className={styles['user-info']}>
-                                    <img src={user.image} alt={user.username} className={styles['user-image']} />
-                                    <div className={styles['user-details']}>
-                                        <Card.Title>{user.username}</Card.Title>
-                                        <Card.Text>{user.address}</Card.Text>
-                                    </div>
+        <div className={styles['Following']}>
+            <Row className={styles['following-row']}>
+                {followingList.map((user, index) => (
+                    <Col key={index} sm={12} md={6} lg={4} xl={3}>
+                        <Card className={styles['following-card']}>
+                            <div className={styles['user-info']}>
+                                <img src={user.image} alt={user.username} className={styles['user-image']} />
+                                <div className={styles['user-details']}>
+                                    <Card.Title>{user.username}</Card.Title>
+                                    <Card.Text>{user.address}</Card.Text>
                                 </div>
-                            </Card>
-                        </Col>
-                    ))}
-                </Row>
-            </div>
-        </Container>
+                            </div>
+                        </Card>
+                    </Col>
+                ))}
+            </Row>
+        </div>
     );
-}
+};
 
 export default Following;

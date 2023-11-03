@@ -1,34 +1,10 @@
 // src/components/ProductCard.js
 import UserInfor from '~/statics/images/user_cafe.webp';
 import { Container, Row, Col } from 'react-bootstrap';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './UserInfor.module.scss';
 
-
-const productData = [
-    {
-        id: 1,
-        image: UserInfor,
-        name: 'My List Coffee',
-        intro: '1 places including Coffeehouse',
-    },
-    {
-        id: 2,
-        image: UserInfor,
-        name: 'My Saved places',
-        intro: '1 places including Coffeehouse',
-    },
-    {
-        id: 3,
-        image: UserInfor,
-        name: 'My  Liked places',
-        intro: '1 places including Coffeehouse',
-    },
-
-
-];
-
-const List = () => {
+const List = ({ saved, liked }) => {
     return (
         <Container>
             <div className={styles.container_card}>
@@ -36,28 +12,49 @@ const List = () => {
                     <h2>Recent lists:</h2>
                 </div>
                 <Row>
-
-                    {productData.map((product) => (
-                        <Col xs={4} md={3}>
-                            <div key={product.id} >
-                                <div className={styles['product-card']}>
-                                    <div className={styles['product-image']}>
-                                        <img src={product.image} alt="Product" />
-                                    </div>
-                                    <div className={styles['product-info']}>
-                                        <h5 className={styles['product-name']}>{product.name}</h5>
-                                        <p className={styles['product-intro']}>{product.intro}</p>
-                                    </div>
+                    <Col xs={4} md={3}>
+                        <div>
+                            <div className={styles['product-card']}>
+                                <div className={styles['product-image']}>
+                                    <img src={UserInfor} alt="Product" />
+                                </div>
+                                <div className={styles['product-info']}>
+                                    <h5 className={styles['product-name']}>saved places</h5>
+                                    {saved && saved.length > 0 ? (
+                                        <p className={styles['product-intro']}>
+                                            {saved && saved.length} places including
+                                            {saved.map((item) => {
+                                                return <span key={item.id}> {item.postname}</span>;
+                                            })}
+                                        </p>
+                                    ) : (
+                                        <p className={styles['product-intro']}>0 places</p>
+                                    )}
                                 </div>
                             </div>
-
-                        </Col>
-                    ))}
-
+                        </div>
+                    </Col>
+                    <Col xs={4} md={3}>
+                        <div>
+                            <div className={styles['product-card']}>
+                                <div className={styles['product-image']}>
+                                    <img src={UserInfor} alt="Product" />
+                                </div>
+                                <div className={styles['product-info']}>
+                                    <h5 className={styles['product-name']}>liked places</h5>
+                                    <p className={styles['product-intro']}>
+                                        {liked && liked.length} places including{' '}
+                                        {liked.map((item) => {
+                                            return <span key={item[1].id}> {item[1].name}</span>;
+                                        })}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </Col>
                 </Row>
             </div>
-
         </Container>
     );
-}
+};
 export default List;

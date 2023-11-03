@@ -42,14 +42,7 @@ function App() {
                         <Route path="post/:postId" element={<PostDetail />} />
                         <Route path="login" element={<Login />} />
                         <Route path="signup" element={<Signup />} />
-                        <Route
-                            path="userinfo"
-                            element={
-                                <ProtectedRoute>
-                                    <UserInfor />
-                                </ProtectedRoute>
-                            }
-                        />
+                        <Route path="userinfo/:id" element={<UserInfor />} />
                         <Route path="login" element={<Login />} />
                         <Route path="signup" element={<Signup />} />
                         <Route

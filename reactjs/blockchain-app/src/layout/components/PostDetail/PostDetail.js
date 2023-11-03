@@ -18,13 +18,14 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import Map from '~/components/Map';
 import { createRef, useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import httpRequest from '~/utils/httpRequest';
 import CommentUser1 from '~/statics/images/noImg.png';
 import Tippy from '@tippyjs/react/headless';
 import { v4 as uuidv4 } from 'uuid';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { storage } from '~/utils/firebase';
+import { useBootstrapBreakpoints } from 'react-bootstrap/esm/ThemeProvider';
 
 function getUser() {
     if (sessionStorage.getItem('user')) {
@@ -41,42 +42,54 @@ function PostDetail() {
     const [imageFile, setImageFile] = useState({});
     const [isLike, setIsLike] = useState(null);
     const [favorite, setFavorite] = useState(null);
+    const [currentUser, setCurrentUser] = useState(null);
     const navigate = useNavigate();
     const location = useLocation();
     const user = getUser();
     useEffect(() => {
         const id = location.pathname.charAt(location.pathname.length - 1);
-        httpRequest
-            .get(`/rest/post/${id}`)
-            .then((res) => {
-                setPostDetail(res.data);
-                const favorites = res.data.favorites;
-                favorites.forEach((item) => {
-                    if (item.account.id === (user && user.id)) {
-                        setFavorite(item);
-                        return;
-                    }
+
+        async function getAccount() {
+            const p = await httpRequest.get(`/rest/post/${id}`);
+
+            if (user) {
+                const u = await httpRequest.get(`/rest/account/${user.id}`);
+                setCurrentUser(u.data);
+                const favorites = p.data.favorites;
+                if (favorites) {
+                    favorites.forEach((item1) => {
+                        let isFind = false;
+                        u.data &&
+                            u.data.favorites.forEach((item2) => {
+                                if (item1.id === item2.id) {
+                                    isFind = true;
+                                    setFavorite(item1);
+                                    return;
+                                }
+                            });
+                        if (isFind) {
+                            return;
+                        }
+                    });
+                }
+            }
+            setPostDetail(p.data);
+        }
+        getAccount();
+        async function getPost() {
+            const r = await httpRequest.get(`/rest/review/${id}`);
+            setReviews(r.data);
+            try {
+                const pu = await httpRequest.get(`/rest/interact/postAndUser`, {
+                    params: { postid: id, userid: user && user.id },
                 });
-            })
-            .catch((error) => {
+                setIsLike(pu.data);
+            } catch (error) {
                 console.log(error);
-            });
-        httpRequest
-            .get(`/rest/review/${id}`)
-            .then((res) => {
-                setReviews(res.data);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-        httpRequest
-            .get(`/rest/interact/postAndUser`, { params: { postid: id, userid: user && user.id } })
-            .then((res) => {
-                setIsLike(res.data);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+            }
+        }
+
+        getPost();
     }, [location]);
 
     useEffect(() => {
@@ -138,7 +151,11 @@ function PostDetail() {
 
     function handleSavePost() {
         httpRequest
-            .post('/rest/favorites', { account: { id: user.id }, post: { id: postDetail.id } })
+            .post('/rest/favorites', {
+                account: { id: user.id },
+                post: { id: postDetail.id },
+                postname: postDetail.name,
+            })
             .then((res) => {
                 setFavorite(res.data);
             })
@@ -404,10 +421,17 @@ function PostDetail() {
                                             reviews.map((item) => {
                                                 return (
                                                     <div key={item[0].id} className={styles['comment-item']}>
-                                                        <img src={CommentUser1} alt="img" />
+                                                        <Link to={`/userinfo/${item[0].id}`}>
+                                                            <img src={CommentUser1} alt="img" />
+                                                        </Link>
                                                         <div className={styles['comment-content']}>
                                                             <div className={styles['comment-info']}>
-                                                                <h4>{item[1].fullname}</h4>
+                                                                <Link
+                                                                    className={styles['link']}
+                                                                    to={`/userinfo/${item[0].id}`}
+                                                                >
+                                                                    <h4>{item[1].fullname}</h4>
+                                                                </Link>
                                                                 <p>
                                                                     {new Date(item[0].createdate).getDate() +
                                                                         '-' +

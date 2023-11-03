@@ -192,7 +192,10 @@ function Header() {
                                         <div className={styles['menu-user']} tabIndex="-1" {...attrs}>
                                             <ul className={styles['list']}>
                                                 <li className={styles['item']}>
-                                                    <Link className={styles['link']} to={'/userinfo'}>
+                                                    <Link
+                                                        className={styles['link']}
+                                                        to={`/userinfo/${user && user.id}`}
+                                                    >
                                                         Profile
                                                     </Link>
                                                 </li>
