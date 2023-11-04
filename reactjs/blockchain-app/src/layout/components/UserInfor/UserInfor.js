@@ -1,4 +1,5 @@
 import avt from '~/statics/images/noImg.png';
+import Follow from '~/statics/images/plus.png';
 import { Link, useParams } from 'react-router-dom';
 import React, { useEffect, useMemo, useState } from 'react';
 import styles from './UserInfor.module.scss';
@@ -142,6 +143,7 @@ const ProductCard = () => {
                                 <span>List</span>
                             </div>
                         </div>
+                        <button className={styles.followButton} ><img src={Follow}/> Follow User </button>
                     </div>
                 </div>
                 {showFollowing && <Following />}

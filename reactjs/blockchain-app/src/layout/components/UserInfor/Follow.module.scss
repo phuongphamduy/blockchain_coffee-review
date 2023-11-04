@@ -1,6 +1,6 @@
 /* Follow.module.scss */
 
-.Following {
+.Follow {
     margin: 10px 0;
     display: flex;
     flex-direction: column;
@@ -11,13 +11,13 @@
     color: #ffffff;
 }
 
-.following-row {
+.follow-row {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
 }
 
-.following-card {
+.follow-card {
     width: 100%;
     margin-bottom: 20px;
 }
@@ -56,4 +56,27 @@
 
 .card-text {
     font-size: 1rem;
+}
+
+
+.Follower {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 70vh; // Đảm bảo chiều cao 100% của màn hình
+    background-color: #2e2d2d; /* Màu nền với độ trong suốt */
+    font-size: 20px;
+    color: #ffffff;
+}
+
+.Following {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 70vh; // Đảm bảo chiều cao 100% của màn hình
+    background-color: #2e2d2d; /* Màu nền với độ trong suốt */
+    font-size: 20px;
+    color: #ffffff;
 }
