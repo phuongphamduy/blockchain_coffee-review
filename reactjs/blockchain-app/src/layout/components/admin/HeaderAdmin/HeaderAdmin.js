@@ -3,7 +3,24 @@ import styles from './HeaderAdmin.module.scss';
 import Logo from '~/statics/images/Logo_Coffe.png';
 import NoImage from '~/statics/images/noImg.png';
 import { Link } from 'react-router-dom';
+import Tippy from '@tippyjs/react/headless';
+import 'tippy.js/dist/tippy.css'
+
+
+
+function getUser() {
+    if (sessionStorage.getItem('user')) {
+        return JSON.parse(sessionStorage.getItem('user'))
+    }
+    return null;
+}
+
+function handleSignOut(){
+    sessionStorage.removeItem("user");
+}
+
 function HeaderAdmin() {
+    const user = getUser();
     return (
         <>
             <Row>
@@ -20,7 +37,54 @@ function HeaderAdmin() {
                         </Link>
                         <div className={styles['account-section']}>
                             <img src={NoImage} className={styles['img']} alt="img" />
-                            <h4>Phương Phạm</h4>
+                            {/* <h4><span className={styles['user-name']}>{user.fullname}</span></h4> */}
+                            <>
+                                <Tippy
+                                    placement="bottom-end"
+                                    interactive
+                                    trigger="mouseenter"
+                                    render={(attrs) => {
+                                        return (
+                                            <div className={styles['menu-user']} tabIndex="-1" {...attrs}>
+                                                <ul className={styles['list']}>
+                                                    <li className={styles['item']}>
+                                                        <Link
+                                                            className={styles['link']}
+                                                            to={`/userinfo/${user && user.id}`}
+                                                        >
+                                                            Profile
+                                                        </Link>
+                                                    </li>
+                                                    <li className={styles['item']}>
+                                                        <Link className={styles['link']} to={'/editProfile'}>
+                                                            Edit information
+                                                        </Link>
+                                                    </li>
+                                                    {user && user.isadmin && (
+                                                        <li className={styles['item']}>
+                                                            <Link to="/post" className={styles['link']}>
+                                                                Home
+                                                            </Link>
+                                                        </li>
+                                                    )}
+
+                                                    <li className={styles['item']}>
+                                                        <Link className={styles['link']} onClick={handleSignOut}>
+                                                            Sign out
+                                                        </Link>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        );
+                                    }}
+                                >
+                                    <h4>
+
+                                    <span className={styles['user-name']}>{user.fullname}</span>
+                                    </h4>
+                                </Tippy>
+                            </>
+
                         </div>
                     </div>
                 </Col>
