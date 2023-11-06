@@ -10,4 +10,6 @@ public interface FollowService {
 
 	List<Follow> getFollowerById(Integer id);
 
+	List<Follow> getFollowingById(Integer id);
+
 }

@@ -23,4 +23,9 @@ public class FollowServiceImpl implements FollowService {
 	public List<Follow> getFollowerById(Integer id) {
 		return dao.getFollowerById(id);
 	}
+
+	@Override
+	public List<Follow> getFollowingById(Integer id) {
+		return dao.getFollowingById(id);
+	}
 }

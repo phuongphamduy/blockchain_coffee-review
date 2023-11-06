@@ -24,9 +24,14 @@ public class FollowRestController {
 	@Autowired
 	FollowService service;
 	
-	@GetMapping("follower/{id}")
+	@GetMapping("/follower/{id}")
 	public List<Follow> getFollowerById(@PathVariable("id") Integer id) {
 		return service.getFollowerById(id);
+	}
+	
+	@GetMapping("/following/{id}")
+	public List<Follow> getFollowingById(@PathVariable("id") Integer id) {
+		return service.getFollowingById(id);
 	}
 	
 	@PostMapping

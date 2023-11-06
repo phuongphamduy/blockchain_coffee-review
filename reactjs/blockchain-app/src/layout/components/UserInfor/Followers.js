@@ -1,61 +1,49 @@
 import React from 'react';
 import { Container, Row, Col, Card } from 'react-bootstrap';
 import avt from '~/statics/images/noImg.png';
-import styles from './Follow.module.scss'; 
+import styles from './Follow.module.scss';
 
 import Trong from '~/statics/images/Trong.png';
+import { Link } from 'react-router-dom';
 
-const Followers = () => {
-    const followingList = [
-        { username: 'user1', address: 'Address 1', image: avt },
-        { username: 'user2', address: 'Address 2', image: avt },
-        { username: 'user1', address: 'Address 1', image: avt },
-        { username: 'user2', address: 'Address 2', image: avt },
-        { username: 'user1', address: 'Address 1', image: avt },
-        { username: 'user2', address: 'Address 2', image: avt },
-        { username: 'user1', address: 'Address 1', image: avt },
-        { username: 'user2', address: 'Address 2', image: avt },
-        { username: 'user1', address: 'Address 1', image: avt },
-        { username: 'user2', address: 'Address 2', image: avt },
-        { username: 'user1', address: 'Address 1', image: avt },
-        { username: 'user2', address: 'Address 2', image: avt },
-        { username: 'user1', address: 'Address 1', image: avt },
-        { username: 'user2', address: 'Address 2', image: avt },
-        { username: 'user1', address: 'Address 1', image: avt },
-        { username: 'user2', address: 'Address 2', image: avt },
-        { username: 'user1', address: 'Address 1', image: avt },
-        { username: 'user2', address: 'Address 2', image: avt },
-        { username: 'user1', address: 'Address 1', image: avt },
-        { username: 'user2', address: 'Address 2', image: avt },
-        // Thêm các tài khoản khác ở đây
-    ];
+const Followers = ({ follower }) => {
     return (
-        <div className={styles['Follow']}>
-            <Row className={styles['follow-row']}>
-                {followingList.map((user, index) => (
-                    <Col key={index} sm={12} md={6} lg={4} xl={3}>
-                        <Card className={styles['follow-card']}>
-                            <div className={styles['user-info']}>
-                                <img src={user.image} alt={user.username} className={styles['user-image']} />
-                                <div className={styles['user-details']}>
-                                    <Card.Title>{user.username}</Card.Title>
-                                    <Card.Text>{user.address}</Card.Text>
-                                </div>
-                            </div>
-                        </Card>
-                    </Col>
-                ))}
-            </Row>
-
-            {/* <Container>
-            <div className={styles['Follower']}>
-                <img src={Trong} alt="Trong"></img>
-                <p>User has no followers yet.</p>
-            </div>
-        </Container> */}
-        </div>
+        <>
+            {follower && follower.length > 0 ? (
+                <div className={styles['Follow']}>
+                    <Row className={styles['follow-row']} lg={follower.length > 4 && 4}>
+                        {follower.map((item) => (
+                            <Col key={item.follower.id}>
+                                <Link to={`/userinfo/${item.follower.id}`} style={{ textDecoration: 'none' }}>
+                                    <Card className={styles['follow-card']}>
+                                        <div className={styles['user-info']}>
+                                            <img
+                                                src={avt}
+                                                alt={item.follower.fullname}
+                                                className={styles['user-image']}
+                                            />
+                                            <div className={styles['user-details']}>
+                                                <Card.Title>{item.follower.fullname}</Card.Title>
+                                            </div>
+                                        </div>
+                                    </Card>
+                                </Link>
+                            </Col>
+                        ))}
+                    </Row>
+                </div>
+            ) : (
+                <div className={styles['not-follow']}>
+                    <Row className={styles['follow-row']}>
+                        <div className={styles['Following']}>
+                            <img src={Trong} alt="Trong"></img>
+                            <p>User has no follower yet.</p>
+                        </div>
+                    </Row>
+                </div>
+            )}
+        </>
     );
 };
-
 
 export default Followers;
