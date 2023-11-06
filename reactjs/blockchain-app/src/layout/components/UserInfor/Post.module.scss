@@ -1,7 +1,7 @@
 .post {
     background-color: #f0f0f0;
 
-    margin-top: 10px;
+    margin-top: 20px;
 
     border-radius: 10px;
     display: flex;
@@ -22,9 +22,7 @@
     border-radius: 15%;
 }
 
-
 .backpost-container {
-    max-height: 100px;
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
     overflow: hidden;
@@ -33,7 +31,7 @@
 
 .backpost {
     width: 100%;
-    height: auto;
+    height: 150px;
 }
 
 .follow-button {
@@ -50,18 +48,19 @@
 
 .follow-button:hover {
     background-color: #094169; /* Change to your preferred hover color */
-  }
+}
 
 .info {
     text-align: left;
-    
-    margin-top: 20px;
+
+    margin-top: 10px;
     margin-left: 10px;
 }
 
 .name {
     font-weight: bold;
     color: #007bff;
+    font-size: 1.6rem;
 }
 
 .address {
@@ -71,15 +70,14 @@
 
 .divider {
     border: none;
-    border-top: 1px solid #303030; 
-    margin: 1px 1px; 
- }
+    border-top: 1px solid #303030;
+    margin: 1px 1px;
+}
 
 .description {
-    margin-top: 10px;
+    margin-top: 5px;
     text-align: left;
     margin-left: 10px;
-
 }
 
 .like_trong {

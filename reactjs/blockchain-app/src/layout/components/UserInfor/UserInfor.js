@@ -25,6 +25,7 @@ const ProductCard = () => {
     const [account, setAccount] = useState({});
     const [favorites, setFavorites] = useState([]);
     const [liked, setLiked] = useState([]);
+    const [posts, setPosts] = useState([]);
     const [showLike, setShowLike] = useState(false);
     const [showFollower, setShowFollower] = useState(false);
     const [showList, setShowList] = useState(true);
@@ -49,6 +50,7 @@ const ProductCard = () => {
                 let acc = { ...res.data, countLike: countLike, countPost: countPost };
                 setAccount(acc);
                 setFavorites(res.data.favorites);
+                setPosts(res.data.posts);
             })
             .catch((error) => {
                 console.log(error);
@@ -143,13 +145,15 @@ const ProductCard = () => {
                                 <span>List</span>
                             </div>
                         </div>
-                        <button className={styles.followButton} ><img src={Follow}/> Follow User </button>
+                        <button className={styles.followButton}>
+                            <img src={Follow} alt="follow" /> Follow User
+                        </button>
                     </div>
                 </div>
                 {showFollowing && <Following />}
                 {showFollower && <Followers />}
-                {showPost && <Post />}
-                {showLike && <Like />}
+                {showPost && <Post posts={posts} />}
+                {showLike && <Like liked={liked} />}
                 {showList && <List saved={favorites} liked={liked} />}
             </Container>
         </div>
