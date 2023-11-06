@@ -184,7 +184,7 @@ const ProductCard = () => {
                         )}
 
                         <button className={styles.CancelfollowButton} onClick={() => handleFollow()}>
-                            <img src={CancelFollow} alt="cancelfollow" /> Follow User
+                            <img src={CancelFollow} alt="cancelfollow" /> Unfollow User
                         </button>
                         </div>
 
