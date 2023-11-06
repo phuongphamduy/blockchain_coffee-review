@@ -9,7 +9,79 @@ const Following = ({ following }) => {
         <>
             {following && following.length > 0 ? (
                 <div className={styles['Follow']}>
-                    <Row className={styles['follow-row']}>
+                    <Row className={styles['follow-row']} lg={following.length > 4 && 4}>
+                        {following.map((item) => (
+                            <Col key={item.following.id}>
+                                <Link to={`/userinfo/${item.following.id}`} style={{ textDecoration: 'none' }}>
+                                    <Card className={styles['follow-card']}>
+                                        <div className={styles['user-info']}>
+                                            <img
+                                                src={avt}
+                                                alt={item.following.fullname}
+                                                className={styles['user-image']}
+                                            />
+                                            <div className={styles['user-details']}>
+                                                <Card.Title>{item.following.fullname}</Card.Title>
+                                            </div>
+                                        </div>
+                                    </Card>
+                                </Link>
+                            </Col>
+                        ))}
+                        {following.map((item) => (
+                            <Col key={item.following.id}>
+                                <Link to={`/userinfo/${item.following.id}`} style={{ textDecoration: 'none' }}>
+                                    <Card className={styles['follow-card']}>
+                                        <div className={styles['user-info']}>
+                                            <img
+                                                src={avt}
+                                                alt={item.following.fullname}
+                                                className={styles['user-image']}
+                                            />
+                                            <div className={styles['user-details']}>
+                                                <Card.Title>{item.following.fullname}</Card.Title>
+                                            </div>
+                                        </div>
+                                    </Card>
+                                </Link>
+                            </Col>
+                        ))}
+                        {following.map((item) => (
+                            <Col key={item.following.id}>
+                                <Link to={`/userinfo/${item.following.id}`} style={{ textDecoration: 'none' }}>
+                                    <Card className={styles['follow-card']}>
+                                        <div className={styles['user-info']}>
+                                            <img
+                                                src={avt}
+                                                alt={item.following.fullname}
+                                                className={styles['user-image']}
+                                            />
+                                            <div className={styles['user-details']}>
+                                                <Card.Title>{item.following.fullname}</Card.Title>
+                                            </div>
+                                        </div>
+                                    </Card>
+                                </Link>
+                            </Col>
+                        ))}
+                        {following.map((item) => (
+                            <Col key={item.following.id}>
+                                <Link to={`/userinfo/${item.following.id}`} style={{ textDecoration: 'none' }}>
+                                    <Card className={styles['follow-card']}>
+                                        <div className={styles['user-info']}>
+                                            <img
+                                                src={avt}
+                                                alt={item.following.fullname}
+                                                className={styles['user-image']}
+                                            />
+                                            <div className={styles['user-details']}>
+                                                <Card.Title>{item.following.fullname}</Card.Title>
+                                            </div>
+                                        </div>
+                                    </Card>
+                                </Link>
+                            </Col>
+                        ))}
                         {following.map((item) => (
                             <Col key={item.following.id}>
                                 <Link to={`/userinfo/${item.following.id}`} style={{ textDecoration: 'none' }}>
