@@ -1,5 +1,6 @@
 import avt from '~/statics/images/noImg.png';
 import Follow from '~/statics/images/plus.png';
+import CancelFollow from '~/statics/images/cancel.png';
 import { Link, useParams } from 'react-router-dom';
 import React, { useEffect, useMemo, useState } from 'react';
 import styles from './UserInfor.module.scss';
@@ -174,11 +175,20 @@ const ProductCard = () => {
                                 <span>List</span>
                             </div>
                         </div>
+                        <div className={styles.follow}>
                         {userLogin && user && user.id !== userLogin.id && (
                             <button className={styles.followButton} onClick={() => handleFollow()}>
                                 <img src={Follow} alt="follow" /> Follow User
                             </button>
+
                         )}
+
+                        <button className={styles.CancelfollowButton} onClick={() => handleFollow()}>
+                            <img src={CancelFollow} alt="cancelfollow" /> Follow User
+                        </button>
+                        </div>
+
+
                     </div>
                 </div>
                 {showFollowing && <Following following={following} />}

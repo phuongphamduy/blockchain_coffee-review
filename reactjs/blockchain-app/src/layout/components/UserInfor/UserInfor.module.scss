@@ -146,10 +146,15 @@
     background-color: #094169;
 }
 
+.follow {
+    display: flex;
+}
+
+
 .followButton {
     background-color: #41b0fa; /* Change to your preferred background color */
     color: white;
-    margin-left: 200px;
+    margin-left: 115px;
     padding: 8px 16px;
     border: none;
     border-radius: 4px;
@@ -165,6 +170,27 @@
 
 .followButton:hover {
     background-color: #094169; /* Change to your preferred hover color */
+}
+
+.CancelfollowButton {
+    background-color: #fa4141; /* Change to your preferred background color */
+    color: white;
+    margin-left: 10px;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 8px; /* Add margin to separate it from the Like button */
+    img {
+        font-weight: bold;
+        max-width: 15px;
+        max-height: 15px;
+        color: #ffffff;
+    }
+}
+
+.CancelfollowButton:hover {
+    background-color: #5f0909; /* Change to your preferred hover color */
 }
 
 img {
