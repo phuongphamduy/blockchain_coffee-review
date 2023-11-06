@@ -25,6 +25,9 @@ const ProductCard = () => {
     const [account, setAccount] = useState({});
     const [favorites, setFavorites] = useState([]);
     const [liked, setLiked] = useState([]);
+    const [posts, setPosts] = useState([]);
+    const [following, setFollowing] = useState([]);
+    const [follower, setFollower] = useState([]);
     const [showLike, setShowLike] = useState(false);
     const [showFollower, setShowFollower] = useState(false);
     const [showList, setShowList] = useState(true);
@@ -49,6 +52,7 @@ const ProductCard = () => {
                 let acc = { ...res.data, countLike: countLike, countPost: countPost };
                 setAccount(acc);
                 setFavorites(res.data.favorites);
+                setPosts(res.data.posts);
             })
             .catch((error) => {
                 console.log(error);
@@ -61,7 +65,23 @@ const ProductCard = () => {
             .catch((error) => {
                 console.log(error);
             });
-    }, []);
+        httpRequest
+            .get(`/rest/follow/follower/${id}`)
+            .then((res) => {
+                setFollowing(res.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+        httpRequest
+            .get(`/rest/follow/following/${id}`)
+            .then((res) => {
+                setFollower(res.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }, [id]);
 
     function handleShowLike() {
         setShowLike(true);
@@ -101,6 +121,17 @@ const ProductCard = () => {
         setShowFollower(false);
         setShowLike(false);
     }
+
+    function handleFollow() {
+        httpRequest
+            .post('/rest/follow', { follower: { id: userLogin.id }, following: { id: user.id } })
+            .then((res) => {
+                console.log(res);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
     return (
         <div className={styles['background-color']}>
             <Container>
@@ -127,11 +158,11 @@ const ProductCard = () => {
                                 <span>Likes</span>
                             </div>
                             <div className={styles.stat} onClick={() => handleShowFollower()}>
-                                <span>1000</span>
+                                <span>{follower && follower.length}</span>
                                 <span>Followers</span>
                             </div>
                             <div className={styles.stat} onClick={() => handleShowFollowing()}>
-                                <span>200</span>
+                                <span>{following && following.length}</span>
                                 <span>Following</span>
                             </div>
                             <div className={styles.stat} onClick={() => handleShowPost()}>
@@ -139,17 +170,21 @@ const ProductCard = () => {
                                 <span>Post</span>
                             </div>
                             <div className={styles.stat} onClick={() => handleShowList()}>
-                                <span>3</span>
+                                <span>2</span>
                                 <span>List</span>
                             </div>
                         </div>
-                        <button className={styles.followButton} ><img src={Follow}/> Follow User </button>
+                        {userLogin && user && user.id !== userLogin.id && (
+                            <button className={styles.followButton} onClick={() => handleFollow()}>
+                                <img src={Follow} alt="follow" /> Follow User
+                            </button>
+                        )}
                     </div>
                 </div>
-                {showFollowing && <Following />}
-                {showFollower && <Followers />}
-                {showPost && <Post />}
-                {showLike && <Like />}
+                {showFollowing && <Following following={following} />}
+                {showFollower && <Followers follower={follower} />}
+                {showPost && <Post posts={posts} />}
+                {showLike && <Like liked={liked} />}
                 {showList && <List saved={favorites} liked={liked} />}
             </Container>
         </div>
