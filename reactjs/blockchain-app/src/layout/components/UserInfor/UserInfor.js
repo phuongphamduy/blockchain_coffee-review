@@ -26,6 +26,7 @@ const ProductCard = () => {
     const [favorites, setFavorites] = useState([]);
     const [liked, setLiked] = useState([]);
     const [posts, setPosts] = useState([]);
+    const [following, setFollowing] = useState([]);
     const [showLike, setShowLike] = useState(false);
     const [showFollower, setShowFollower] = useState(false);
     const [showList, setShowList] = useState(true);
@@ -63,7 +64,15 @@ const ProductCard = () => {
             .catch((error) => {
                 console.log(error);
             });
-    }, []);
+        httpRequest
+            .get(`/rest/follow/follower/${id}`)
+            .then((res) => {
+                setFollowing(res.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }, [id]);
 
     function handleShowLike() {
         setShowLike(true);
@@ -103,6 +112,17 @@ const ProductCard = () => {
         setShowFollower(false);
         setShowLike(false);
     }
+
+    function handleFollow() {
+        httpRequest
+            .post('/rest/follow/follower/', { follower: { id: userLogin.id }, following: { id: user.id } })
+            .then((res) => {
+                console.log(res);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
     return (
         <div className={styles['background-color']}>
             <Container>
@@ -133,7 +153,7 @@ const ProductCard = () => {
                                 <span>Followers</span>
                             </div>
                             <div className={styles.stat} onClick={() => handleShowFollowing()}>
-                                <span>200</span>
+                                <span>{following && following.length}</span>
                                 <span>Following</span>
                             </div>
                             <div className={styles.stat} onClick={() => handleShowPost()}>
@@ -141,16 +161,18 @@ const ProductCard = () => {
                                 <span>Post</span>
                             </div>
                             <div className={styles.stat} onClick={() => handleShowList()}>
-                                <span>3</span>
+                                <span>2</span>
                                 <span>List</span>
                             </div>
                         </div>
-                        <button className={styles.followButton}>
-                            <img src={Follow} alt="follow" /> Follow User
-                        </button>
+                        {userLogin && user && user.id !== userLogin.id && (
+                            <button className={styles.followButton} onClick={() => handleFollow()}>
+                                <img src={Follow} alt="follow" /> Follow User
+                            </button>
+                        )}
                     </div>
                 </div>
-                {showFollowing && <Following />}
+                {showFollowing && <Following following={following} />}
                 {showFollower && <Followers />}
                 {showPost && <Post posts={posts} />}
                 {showLike && <Like liked={liked} />}

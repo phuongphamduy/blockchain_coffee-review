@@ -52,10 +52,10 @@ public class Account implements Serializable {
 	@JsonManagedReference(value = "interaction-account")
 	@OneToMany(mappedBy = "account")
 	List<Interaction> interactions;
-	@JsonManagedReference(value = "account-follower")
+	@JsonIgnore
 	@OneToMany(mappedBy = "follower")
 	List<Follow> followers;
-	@JsonManagedReference(value = "account-following")
+	@JsonIgnore
 	@OneToMany(mappedBy = "following")
 	List<Follow> followings;
 }

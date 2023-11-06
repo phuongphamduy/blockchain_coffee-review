@@ -421,14 +421,14 @@ function PostDetail() {
                                             reviews.map((item) => {
                                                 return (
                                                     <div key={item[0].id} className={styles['comment-item']}>
-                                                        <Link to={`/userinfo/${item[0].id}`}>
+                                                        <Link to={`/userinfo/${item[1].id}`}>
                                                             <img src={CommentUser1} alt="img" />
                                                         </Link>
                                                         <div className={styles['comment-content']}>
                                                             <div className={styles['comment-info']}>
                                                                 <Link
                                                                     className={styles['link']}
-                                                                    to={`/userinfo/${item[0].id}`}
+                                                                    to={`/userinfo/${item[1].id}`}
                                                                 >
                                                                     <h4>{item[1].fullname}</h4>
                                                                 </Link>

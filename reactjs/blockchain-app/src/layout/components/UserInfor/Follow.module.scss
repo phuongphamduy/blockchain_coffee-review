@@ -5,6 +5,17 @@
     display: flex;
     flex-direction: column;
 
+    align-items: flex-start;
+    min-height: 30vh; // Đảm bảo chiều cao 100% của màn hình
+    background-color: #2e2d2d; /* Màu nền với độ trong suốt */
+    color: #ffffff;
+}
+
+.not-follow {
+    margin: 10px 0;
+    display: flex;
+    flex-direction: column;
+
     align-items: center;
     min-height: 30vh; // Đảm bảo chiều cao 100% của màn hình
     background-color: #2e2d2d; /* Màu nền với độ trong suốt */
@@ -57,7 +68,6 @@
 .card-text {
     font-size: 1rem;
 }
-
 
 .Follower {
     display: flex;

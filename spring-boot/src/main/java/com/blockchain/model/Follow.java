@@ -25,11 +25,9 @@ public class Follow implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Integer id;
-	@JsonBackReference(value = "account-follower")
 	@ManyToOne
 	@JoinColumn(name = "followerid")
 	Account follower;
-	@JsonBackReference(value = "account-following")
 	@ManyToOne
 	@JoinColumn(name = "followingid")
 	Account following;
