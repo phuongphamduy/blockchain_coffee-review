@@ -12,4 +12,6 @@ public interface FollowService {
 
 	List<Follow> getFollowingById(Integer id);
 
+	void unFollow(Integer followerid, Integer followingid);
+
 }

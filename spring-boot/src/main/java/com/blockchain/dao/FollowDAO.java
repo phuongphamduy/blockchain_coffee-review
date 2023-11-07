@@ -12,4 +12,6 @@ public interface FollowDAO extends JpaRepository<Follow, Integer> {
 	List<Follow> getFollowerById(Integer id);
 	@Query("select f from Follow f where f.following.id = ?1")
 	List<Follow> getFollowingById(Integer id);
+	@Query("select f from Follow f where f.follower.id = ?1 and f.following.id = ?2")
+	Follow getFollowByFollowerIdAndFollowingId(Integer followerid, Integer followingid);
 }
