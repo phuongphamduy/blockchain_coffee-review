@@ -10,6 +10,7 @@ import AllowPost from './layout/components/admin/AllowPost';
 
 import Login from './layout/components/Login';
 import Signup from './layout/components/Signup';
+import Forgot from './layout/components/Forgot';
 
 import Home from './layout/components/Home';
 import UserInfor from './layout/components/UserInfor';
@@ -42,6 +43,7 @@ function App() {
                         <Route path="post/:postId" element={<PostDetail />} />
                         <Route path="login" element={<Login />} />
                         <Route path="signup" element={<Signup />} />
+                        <Route path="forgot" element={<Forgot />} />
                         <Route path="userinfo/:id" element={<UserInfor />} />
                         <Route path="login" element={<Login />} />
                         <Route path="signup" element={<Signup />} />

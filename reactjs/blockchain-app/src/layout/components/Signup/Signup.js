@@ -55,7 +55,7 @@ function RegisterForm() {
             <div className={styles['full-height']}>
                 <div className="row">
                     <div className="col-lg-5 col-xl-12 mx-auto p-5">
-                        <div className="card flex-row my-5 border-0 shadow rounded-3 overflow-hidden col-lg-5 m-auto">
+                        <div className="card flex-row my-5 border-0 shadow rounded-3 overflow-hidden m-auto">
                             <div className="card-img-left d-none d-md-flex col-lg-6">
                                 {/* Background image for card set in CSS! */}
                                 <img src={Logo_Coffe} alt="Images" className={styles['card-img-left']} />
