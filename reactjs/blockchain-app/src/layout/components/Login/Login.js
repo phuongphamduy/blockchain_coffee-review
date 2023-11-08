@@ -6,6 +6,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 import { faFacebookF } from '@fortawesome/free-brands-svg-icons';
+import { Link } from 'react-router-dom';
+
 
 function LoginForm() {
     const [email, setEmail] = useState('');
@@ -102,8 +104,12 @@ function LoginForm() {
                                             Sign in
                                         </button>
                                     </div>
-
-                                    
+                                <hr></hr>
+                                    <div className="d-grid">
+                                    <Link to="/forgot" className="d-block text-center mt-2 small fs-4">
+                                        Forgot Password?
+                                    </Link>
+                                    </div>
 
                                     <hr className="my-4" />
                                     <div className="d-grid mb-2">
