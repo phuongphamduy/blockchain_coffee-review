@@ -25,7 +25,18 @@
 .follow-row {
     display: flex;
     flex-wrap: wrap;
+    justify-content: flex-start;
 }
+
+.follow-col {
+    flex-basis: 25%;
+    max-width: 25%;
+    margin-bottom: 15px;
+    box-sizing: border-box; /* Đảm bảo rằng các padding và biên tính trong kích thước của cột */
+    padding: 0 15px; /* Khoảng cách giữa các cột */
+}
+
+
 
 .follow-card {
     width: 100%;

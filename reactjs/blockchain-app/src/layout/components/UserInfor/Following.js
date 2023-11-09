@@ -9,9 +9,9 @@ const Following = ({ following }) => {
         <>
             {following && following.length > 0 ? (
                 <div className={styles['Follow']}>
-                    <Row className={styles['follow-row']} lg={following.length > 4 && 4}>
+                    <Row className={styles['follow-row']} >
                         {following.map((item) => (
-                            <Col key={item.following.id}>
+                            <Col key={item.following.id} className={styles['follow-col']}>
                                 <Link to={`/userinfo/${item.following.id}`} style={{ textDecoration: 'none' }}>
                                     <Card className={styles['follow-card']}>
                                         <div className={styles['user-info']}>

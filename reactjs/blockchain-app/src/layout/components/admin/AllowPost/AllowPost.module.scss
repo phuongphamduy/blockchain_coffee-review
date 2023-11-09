@@ -15,7 +15,9 @@
     }
 
     .block {
-        max-height: 50px;
+        max-height: 100px;
+        white-space: nowrap; 
+        overflow: hidden; 
         text-overflow: ellipsis;
         overflow: hidden;
         max-width: 100px;

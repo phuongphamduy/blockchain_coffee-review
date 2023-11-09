@@ -188,6 +188,7 @@ const ProductCard = () => {
                                 <span>List</span>
                             </div>
                         </div>
+
                         <div className={styles.follow}>
                             {userLogin &&
                                 user &&
@@ -210,6 +211,7 @@ const ProductCard = () => {
                                     </button>
                                 )}
                         </div>
+
                     </div>
                 </div>
                 {showFollowing && <Following following={following} />}
