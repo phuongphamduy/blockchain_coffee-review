@@ -1,7 +1,7 @@
 import avt from '~/statics/images/noImg.png';
 import Follow from '~/statics/images/plus.png';
 import CancelFollow from '~/statics/images/cancel.png';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import React, { useEffect, useMemo, useState } from 'react';
 import styles from './UserInfor.module.scss';
 import Like from './Like';
@@ -34,6 +34,7 @@ const ProductCard = () => {
     const [showList, setShowList] = useState(true);
     const [showFollowing, setshowFollowing] = useState(false);
     const [showPost, setShowPost] = useState(false);
+    const navigate = useNavigate();
     const { id } = useParams();
     useEffect(() => {
         httpRequest
@@ -128,6 +129,18 @@ const ProductCard = () => {
             .post('/rest/follow', { follower: { id: userLogin.id }, following: { id: user.id } })
             .then((res) => {
                 console.log(res);
+                navigate(0);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+
+    function handleUnFollow() {
+        httpRequest
+            .delete('/rest/follow/delete', { params: { followerid: userLogin.id, followingid: user.id } })
+            .then((res) => {
+                navigate(0);
             })
             .catch((error) => {
                 console.log(error);
@@ -155,7 +168,7 @@ const ProductCard = () => {
                     <div className={styles.rightSection}>
                         <div className={styles.stats}>
                             <div className={styles.stat} onClick={() => handleShowLike()}>
-                                <span>{account && account.countLike}</span>
+                                <span>{(account && account.countLike) || 0}</span>
                                 <span>Likes</span>
                             </div>
                             <div className={styles.stat} onClick={() => handleShowFollower()}>
@@ -167,7 +180,7 @@ const ProductCard = () => {
                                 <span>Following</span>
                             </div>
                             <div className={styles.stat} onClick={() => handleShowPost()}>
-                                <span>{account && account.countPost}</span>
+                                <span>{(account && account.countPost) || 0}</span>
                                 <span>Post</span>
                             </div>
                             <div className={styles.stat} onClick={() => handleShowList()}>
@@ -175,23 +188,29 @@ const ProductCard = () => {
                                 <span>List</span>
                             </div>
                         </div>
-                        
-                        <div>
-                        {userLogin && user && user.id !== userLogin.id && (
-                            <button className={styles.followButton} onClick={() => handleFollow()}>
-                                <img src={Follow} alt="follow" /> Follow User
-                            </button>
 
-                        )}
+                        <div className={styles.follow}>
+                            {userLogin &&
+                                user &&
+                                user.id !== userLogin.id &&
+                                follower.every((item) => {
+                                    return item.follower.id !== userLogin.id;
+                                }) && (
+                                    <button className={styles.followButton} onClick={() => handleFollow()}>
+                                        <img src={Follow} alt="follow" /> Follow User
+                                    </button>
+                                )}
+                            {userLogin &&
+                                user &&
+                                user.id !== userLogin.id &&
+                                follower.some((item) => {
+                                    return item.follower.id === userLogin.id;
+                                }) && (
+                                    <button className={styles.CancelfollowButton} onClick={() => handleUnFollow()}>
+                                        <img src={CancelFollow} alt="cancelfollow" /> Unfollow User
+                                    </button>
+                                )}
                         </div>
-                        <div>
-                        <button className={styles.CancelfollowButton} onClick={() => handleFollow()}>
-                            <img src={CancelFollow} alt="cancelfollow" /> Unfollow User
-                        </button>
-                        </div>
-                        
-                       
-
 
                     </div>
                 </div>

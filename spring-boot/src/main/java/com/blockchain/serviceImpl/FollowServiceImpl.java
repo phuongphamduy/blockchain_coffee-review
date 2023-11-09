@@ -28,4 +28,10 @@ public class FollowServiceImpl implements FollowService {
 	public List<Follow> getFollowingById(Integer id) {
 		return dao.getFollowingById(id);
 	}
+
+	@Override
+	public void unFollow(Integer followerid, Integer followingid) {
+		Follow f = dao.getFollowByFollowerIdAndFollowingId(followerid, followingid);
+		dao.delete(f);
+	}
 }
