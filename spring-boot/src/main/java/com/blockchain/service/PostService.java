@@ -19,4 +19,6 @@ public interface PostService {
 
 	void deletePost(Integer id);
 
+	List<Post> getOrderBy(String order);
+
 }

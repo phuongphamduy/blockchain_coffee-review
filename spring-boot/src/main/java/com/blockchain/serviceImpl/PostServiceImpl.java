@@ -1,5 +1,6 @@
 package com.blockchain.serviceImpl;
 
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -71,6 +72,25 @@ public class PostServiceImpl implements PostService {
 	public void deletePost(Integer id) {
 		Post p = pdao.findById(id).get();
 		pdao.delete(p);
+	}
+
+	@Override
+	public List<Post> getOrderBy(String order) {
+		List<Post> list;
+		switch (order) {
+		case "asc": {
+			list = pdao.findAllByOrderByCreatedateAsc();
+			return list;
+		}
+		case "desc": {
+			list = pdao.findAllByOrderByCreatedateDesc();
+			return list;
+		}
+		default:
+			list = pdao.findAll();
+			return list;
+		}
+		
 	}
 
 }

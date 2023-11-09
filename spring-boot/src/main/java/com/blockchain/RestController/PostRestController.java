@@ -28,6 +28,7 @@ public class PostRestController {
 	@Autowired
 	PostService service;
 	
+	
 	@GetMapping
 	public List<Post> getAll() {
 		return service.getPostConfirm(true);
@@ -46,6 +47,11 @@ public class PostRestController {
 	@GetMapping("get/places")
 	public List<Post> getPostByName(@RequestParam("name") String name) {
 		return service.getByName(name);
+	}
+	
+	@GetMapping("/ordersByDate")
+	public List<Post> getPostOrderByDate(@RequestParam("order") String order) {
+		return service.getOrderBy(order);
 	}
 
 	@PostMapping()
