@@ -26,6 +26,19 @@ function Post() {
                 console.log(error);
             });
     }, []);
+
+    function handleChangeSelect(e) {
+        let order = e.target.value;
+        httpRequest
+            .get('/rest/post/ordersByDate', { params: { order: order } })
+            .then((res) => {
+                setListPost(res.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+
     return (
         <>
             <div className={styles['post-section-background-color']}>
@@ -41,12 +54,14 @@ function Post() {
                                 </div>
                                 <div className={styles['filter-section']}>
                                     <label>Filter</label>
-                                    <Form.Select aria-label="Default select example" className={styles['select-input']}>
+                                    <Form.Select
+                                        aria-label="Default select example"
+                                        className={styles['select-input']}
+                                        onChange={(e) => handleChangeSelect(e)}
+                                    >
                                         <option>Open filter menu</option>
-                                        <option value="1">Newest to oldest</option>
-                                        <option value="2">Oldest to newest</option>
-                                        <option value="2">Highest rating to lowest rating</option>
-                                        <option value="2">Lowest rating to highest rating</option>
+                                        <option value="desc">Newest to oldest</option>
+                                        <option value="asc">Oldest to newest</option>
                                     </Form.Select>
                                 </div>
                                 {listPost.map((item) => {
