@@ -1,21 +1,17 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app';
 import { getStorage } from 'firebase/storage';
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-    apiKey: 'AIzaSyAazIafa8AvunRd_t4uZ3dsmYRiNrK4nIA',
-    authDomain: 'poly-java-6-5ef9e.firebaseapp.com',
-    databaseURL: 'https://poly-java-6-5ef9e-default-rtdb.firebaseio.com',
-    projectId: 'poly-java-6-5ef9e',
-    storageBucket: 'poly-java-6-5ef9e.appspot.com',
-    messagingSenderId: '1010394302350',
-    appId: '1:1010394302350:web:f512c86d758f09225246df',
-    measurementId: 'G-B7W2C43XF9',
-};
 
-// Initialize Firebase
+
+const firebaseConfig = {
+    apiKey: "AIzaSyAu2ociPNrJc-Gpjj4V8Mc1LxtDT7gWk7k",
+    authDomain: "foodreview-2c772.firebaseapp.com",
+    projectId: "foodreview-2c772",
+    storageBucket: "foodreview-2c772.appspot.com",
+    messagingSenderId: "143811519440",
+    appId: "1:143811519440:web:1342e7e1b489747b484fd5"
+  };
+
+
 const app = initializeApp(firebaseConfig);
 export const storage = getStorage(app);

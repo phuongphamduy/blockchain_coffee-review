@@ -175,18 +175,22 @@ const ProductCard = () => {
                                 <span>List</span>
                             </div>
                         </div>
-                        <div className={styles.follow}>
+                        
+                        <div>
                         {userLogin && user && user.id !== userLogin.id && (
                             <button className={styles.followButton} onClick={() => handleFollow()}>
                                 <img src={Follow} alt="follow" /> Follow User
                             </button>
 
                         )}
-
+                        </div>
+                        <div>
                         <button className={styles.CancelfollowButton} onClick={() => handleFollow()}>
                             <img src={CancelFollow} alt="cancelfollow" /> Unfollow User
                         </button>
                         </div>
+                        
+                       
 
 
                     </div>
