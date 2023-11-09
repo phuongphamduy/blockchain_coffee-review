@@ -1,13 +1,21 @@
 .background-color {
-    background: #007bff;
-    background: linear-gradient(to right, #0062e6, #33aeff);
+    background: #47525f;
+    background: linear-gradient(to right, #3b3d41, #2c1212);
 }
 
 .card-img-left {
-    width: 100%;
+
+    width:80%;
+
     /* Link to your background image using in the property below! */
 
-    background-size: cover;
+    // background-size: cover;
+
+    height: auto !important;
+    margin: 1rem;
+    padding: 0px;
+    border-radius: 8px;
+    // padding-bottom: 11rem;
 }
 
 .btn-login {
@@ -30,5 +38,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
     min-height: 100vh; /* Thiết lập chiều cao tối thiểu là 100% của viewport */
 }
