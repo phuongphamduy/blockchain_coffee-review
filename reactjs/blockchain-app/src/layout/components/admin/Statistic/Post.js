@@ -1,6 +1,6 @@
 import { Button, Table } from 'react-bootstrap';
 import styles from './Statistic.module.scss';
-function Post({ handleShowAccount }) {
+function Post({ handleShowAccount, posts }) {
     return (
         <>
             <div className={styles['wrapper-heading']}>
@@ -13,21 +13,26 @@ function Post({ handleShowAccount }) {
                 <Table striped bordered hover>
                     <thead>
                         <tr>
-                            <th>Id</th>
                             <th>Name</th>
                             <th>Address</th>
-                            <th>Description</th>
-                            <th>Create date</th>
+                            <th>Comments</th>
+                            <th>Like</th>
+                            <th>Dislike</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                        </tr>
+                        {posts &&
+                            posts.map((item) => {
+                                return (
+                                    <tr>
+                                        <td>{item[0]}</td>
+                                        <td>{item[1]}</td>
+                                        <td>{item[2]}</td>
+                                        <td>{item[3]}</td>
+                                        <td>{item[4]}</td>
+                                    </tr>
+                                );
+                            })}
                     </tbody>
                 </Table>
             </div>

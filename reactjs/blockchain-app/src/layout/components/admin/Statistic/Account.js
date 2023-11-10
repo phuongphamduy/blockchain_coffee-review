@@ -1,6 +1,6 @@
 import { Button, Table } from 'react-bootstrap';
 import styles from './Statistic.module.scss';
-function Account({ handleShowPost }) {
+function Account({ handleShowPost, accounts }) {
     return (
         <>
             <div className={styles['wrapper-heading']}>
@@ -13,21 +13,46 @@ function Account({ handleShowPost }) {
                 <Table striped bordered hover>
                     <thead>
                         <tr>
-                            <th>Id</th>
-                            <th>Name</th>
-                            <th>Address</th>
-                            <th>Description</th>
-                            <th>Create date</th>
+                            <th>Fullname</th>
+                            <th>posts</th>
+                            <th>comment</th>
+                            <th>Like</th>
+                            <th>Dislike</th>
+                            <th>Saved</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                        </tr>
+                        {accounts &&
+                            accounts.map((item) => {
+                                return (
+                                    <tr>
+                                        <td>{item.fullname}</td>
+                                        <td>{item.posts.length}</td>
+                                        <td>{item.reviews.length}</td>
+                                        <td>
+                                            {item.interactions &&
+                                                item.interactions.reduce((accum, item) => {
+                                                    if (item.islike) {
+                                                        return accum + 1;
+                                                    } else {
+                                                        return accum;
+                                                    }
+                                                }, 0)}
+                                        </td>
+                                        <td>
+                                            {item.interactions &&
+                                                item.interactions.reduce((accum, item) => {
+                                                    if (!item.islike) {
+                                                        return accum + 1;
+                                                    } else {
+                                                        return accum;
+                                                    }
+                                                }, 0)}
+                                        </td>
+                                        <td>{item.favorites.length}</td>
+                                    </tr>
+                                );
+                            })}
                     </tbody>
                 </Table>
             </div>
