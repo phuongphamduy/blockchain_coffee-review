@@ -93,4 +93,9 @@ public class PostServiceImpl implements PostService {
 		
 	}
 
+	@Override
+	public List<Object[]> getPostReport() {
+		return pdao.getPostDetails();
+	}
+
 }

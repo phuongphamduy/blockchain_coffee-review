@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.blockchain.dao.PostDAO;
 import com.blockchain.model.Post;
 import com.blockchain.service.PostService;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -27,6 +29,9 @@ public class PostRestController {
 
 	@Autowired
 	PostService service;
+	
+	@Autowired
+	PostDAO dao;
 	
 	
 	@GetMapping
@@ -52,6 +57,12 @@ public class PostRestController {
 	@GetMapping("/ordersByDate")
 	public List<Post> getPostOrderByDate(@RequestParam("order") String order) {
 		return service.getOrderBy(order);
+	}
+	
+	@GetMapping("/report")
+	@ResponseBody
+	public List<Object[]> getPostReport() {
+		return service.getPostReport();
 	}
 
 	@PostMapping()

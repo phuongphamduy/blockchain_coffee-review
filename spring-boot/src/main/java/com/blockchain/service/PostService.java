@@ -21,4 +21,6 @@ public interface PostService {
 
 	List<Post> getOrderBy(String order);
 
+	List<Object[]> getPostReport();
+
 }
