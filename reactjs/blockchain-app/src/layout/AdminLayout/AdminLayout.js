@@ -22,40 +22,52 @@ function AdminLayout() {
                                 <h2>Admin Menu</h2>
                                 <ul className={styles['sidebar-menu']}>
                                     <li className={styles['sidebar-menu-item']}>
-                                        <NavLink to="account" 
+                                        <NavLink
+                                            to="account"
                                             className={({ isActive }) => {
                                                 return isActive ? styles['active'] : styles['link'];
-                                            }}>Quản lý tài khoản
+                                            }}
+                                        >
+                                            Quản lý tài khoản
                                         </NavLink>
                                     </li>
                                     <li className={styles['sidebar-menu-item']}>
-                                        <NavLink to="post" 
+                                        <NavLink
+                                            to="post"
                                             className={({ isActive }) => {
                                                 return isActive ? styles['active'] : styles['link'];
-                                            }}>Quản lý bài đăng
+                                            }}
+                                        >
+                                            Quản lý bài đăng
                                         </NavLink>
                                     </li>
                                     <li className={styles['sidebar-menu-item']}>
-                                        <NavLink to="statistic" 
+                                        <NavLink
+                                            to="statistic"
                                             className={({ isActive }) => {
                                                 return isActive ? styles['active'] : styles['link'];
-                                            }}>Thống kê
+                                            }}
+                                        >
+                                            Thống kê
                                         </NavLink>
                                     </li>
                                     <li className={styles['sidebar-menu-item']}>
-                                        <NavLink to="allowPost" 
+                                        <NavLink
+                                            to="allowPost"
                                             className={({ isActive }) => {
                                                 return isActive ? styles['active'] : styles['link'];
-                                            }}>Duyệt bài
+                                            }}
+                                        >
+                                            Duyệt bài
                                         </NavLink>
                                     </li>
-                                    <li className={styles['sidebar-menu-item']}>
+                                    {/* <li className={styles['sidebar-menu-item']}>
                                         <NavLink to="reportFeedback" 
                                             className={({ isActive }) => {
                                                 return isActive ? styles['active'] : styles['link'];
                                             }}>Báo cáo & Phản hồi
                                         </NavLink>
-                                    </li>
+                                    </li> */}
                                 </ul>
                             </div>
                         </Col>
