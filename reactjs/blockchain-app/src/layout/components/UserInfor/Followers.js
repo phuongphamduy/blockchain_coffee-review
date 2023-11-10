@@ -2,10 +2,8 @@ import React from 'react';
 import { Container, Row, Col, Card } from 'react-bootstrap';
 import avt from '~/statics/images/noImg.png';
 import styles from './Follow.module.scss';
-
 import Trong from '~/statics/images/Trong.png';
 import { Link } from 'react-router-dom';
-
 const Followers = ({ follower }) => {
     return (
         <>
