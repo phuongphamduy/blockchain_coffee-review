@@ -40,7 +40,7 @@ function Price() {
             SystemProgram.transfer({
                 fromPubkey: Keypair.fromSecretKey(
                     bs58.decode(
-                        '4PNT842b5QAFdDsfuorJVc4JRp5YcyW9yRcr4DgAZPYTQNMWtVvGFEJPrGxirpUs8LQSNnxmHpczduJKNypAAvKQ',
+                        '6iodM6fLEZCFDkcCeGJCebVWTvDYqa7pr9amhsrRJuXZNm63tjpUDBzprWoLr4FqfCfdkqFy3Youpe8YPNk6LSp',
                     ),
                 ).publicKey,
                 toPubkey: wallet,
@@ -50,7 +50,7 @@ function Price() {
         let blockhash = (await connection.getLatestBlockhash('finalized')).blockhash;
         transaction.recentBlockhash = blockhash;
         transaction.feePayer = Keypair.fromSecretKey(
-            bs58.decode('4PNT842b5QAFdDsfuorJVc4JRp5YcyW9yRcr4DgAZPYTQNMWtVvGFEJPrGxirpUs8LQSNnxmHpczduJKNypAAvKQ'),
+            bs58.decode('6iodM6fLEZCFDkcCeGJCebVWTvDYqa7pr9amhsrRJuXZNm63tjpUDBzprWoLr4FqfCfdkqFy3Youpe8YPNk6LSp'),
         ).publicKey;
         try {
             const { signature } = await provider.signAndSendTransaction(transaction);
