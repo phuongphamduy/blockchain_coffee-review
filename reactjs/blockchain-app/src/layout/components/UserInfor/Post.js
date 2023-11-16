@@ -8,13 +8,20 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGift } from '@fortawesome/free-solid-svg-icons';
 import httpRequest from '~/utils/httpRequest';
 
-const Post = ({ posts }) => {
+function getUser() {
+    if (sessionStorage.getItem('user')) {
+        return JSON.parse(sessionStorage.getItem('user'));
+    }
+    return null;
+}
+
+const Post = ({ posts, account }) => {
     const [show, setShow] = useState(false);
     const [prices, setPrices] = useState([]);
     const [postStatistics, setPostStatistics] = useState([]);
     const [pstatistic, setPStatistic] = useState();
     const [pricepost, setPricePost] = useState();
-
+    const user = getUser();
     useEffect(() => {
         httpRequest
             .get('/rest/price')
@@ -101,14 +108,16 @@ const Post = ({ posts }) => {
                                             <p className={styles['description']}>{item.description}</p>
                                         </div>
                                     </Link>
-                                    <Button
-                                        variant="primary"
-                                        className={styles['gift-btn']}
-                                        onClick={() => handleOpen(item.id)}
-                                    >
-                                        <FontAwesomeIcon icon={faGift} className={styles['gift-icon']} />
-                                        Gift
-                                    </Button>
+                                    {user && user.id === account.id && (
+                                        <Button
+                                            variant="primary"
+                                            className={styles['gift-btn']}
+                                            onClick={() => handleOpen(item.id)}
+                                        >
+                                            <FontAwesomeIcon icon={faGift} className={styles['gift-icon']} />
+                                            Gift
+                                        </Button>
+                                    )}
                                 </div>
                             </Col>
                         ))}

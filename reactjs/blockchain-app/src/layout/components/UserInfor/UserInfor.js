@@ -211,12 +211,11 @@ const ProductCard = () => {
                                     </button>
                                 )}
                         </div>
-
                     </div>
                 </div>
                 {showFollowing && <Following following={following} />}
                 {showFollower && <Followers follower={follower} />}
-                {showPost && <Post posts={posts} />}
+                {showPost && <Post posts={posts} account={account} />}
                 {showLike && <Like liked={liked} />}
                 {showList && <List saved={favorites} liked={liked} />}
             </Container>
