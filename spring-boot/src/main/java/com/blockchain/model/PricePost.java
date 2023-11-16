@@ -26,7 +26,8 @@ public class PricePost implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Integer id;
 	Integer idp;
-	Integer idprice;	
+	Integer idprice;
+	Boolean issend = false;
 	@JsonBackReference(value = "pricepost-post")
 	@ManyToOne
 	@JoinColumn(name = "postid")

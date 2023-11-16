@@ -61,6 +61,16 @@ function AdminLayout() {
                                             Duyệt bài
                                         </NavLink>
                                     </li>
+                                    <li className={styles['sidebar-menu-item']}>
+                                        <NavLink
+                                            to="price"
+                                            className={({ isActive }) => {
+                                                return isActive ? styles['active'] : styles['link'];
+                                            }}
+                                        >
+                                            Chuyển thưởng
+                                        </NavLink>
+                                    </li>
                                     {/* <li className={styles['sidebar-menu-item']}>
                                         <NavLink to="reportFeedback" 
                                             className={({ isActive }) => {

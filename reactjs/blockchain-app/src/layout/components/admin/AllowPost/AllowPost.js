@@ -167,7 +167,7 @@ function AllowPost() {
                                             className={styles['btn']}
                                             onClick={() => handleAccept(item.id)}
                                         >
-                                            Accept
+                                            Approve
                                         </Button>
                                         <Button
                                             variant="danger"

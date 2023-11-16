@@ -64,6 +64,7 @@ const Post = ({ posts }) => {
             .post('/rest/pricepost/request', {
                 idp: pstatistic[0],
                 idprice: priceid,
+                issend: false,
                 post: { id: pstatistic[0] },
                 price: { id: priceid },
             })
