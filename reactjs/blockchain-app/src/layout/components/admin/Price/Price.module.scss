@@ -1,0 +1,39 @@
+.heading {
+    color: rgb(30, 184, 46);
+}
+
+.container {
+    // background-color: rgb(230, 240, 231);
+    text-align: center;
+    font: bold;
+    height: 100%;
+}
+.table-content {
+    border: 1px solid #ccc;
+    padding: 16px;
+    background-color: #f9f9f9;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    th,
+    td {
+        padding: 8px;
+        font-size: 1.4rem;
+        border-bottom: 1px solid #ccc;
+    }
+
+    th {
+        background-color: #f2f2f2;
+        font-weight: bold;
+    }
+}
+
+.btn-group {
+    display: flex;
+    justify-content: center;
+
+    .btn {
+        width: 50px;
+        margin: 0 4px;
+    }
+}

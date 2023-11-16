@@ -56,78 +56,99 @@ function AllowPost() {
             });
     }
 
-    async function handleSend() {
-        var myHeaders = new Headers();
-        myHeaders.append('x-api-key', 'QeeLQ-Ia7f7LrP-M');
-        myHeaders.append('Content-Type', 'application/json');
-        var raw = JSON.stringify({
-            network: 'devnet',
-            from_address: '2P1EJ3W1TwUfQLJV9gBFSjZosEBhrz7iP8oJuH3PKxi2',
-            to_address: 'DdKXs2bwZ4AvCPP3WVMz46JiGxUgGcKWFBCg4142h7Ng',
-            amount: 0.1,
-        });
+    // async function handleSend() {
+    //     var myHeaders = new Headers();
+    //     myHeaders.append('x-api-key', 'QeeLQ-Ia7f7LrP-M');
+    //     myHeaders.append('Content-Type', 'application/json');
+    //     var raw = JSON.stringify({
+    //         network: 'devnet',
+    //         from_address: '2P1EJ3W1TwUfQLJV9gBFSjZosEBhrz7iP8oJuH3PKxi2',
+    //         to_address: 'DdKXs2bwZ4AvCPP3WVMz46JiGxUgGcKWFBCg4142h7Ng',
+    //         amount: 0.1,
+    //     });
 
-        var requestOptions = {
-            method: 'POST',
-            headers: myHeaders,
-            body: raw,
-            redirect: 'follow',
-        };
+    //     var requestOptions = {
+    //         method: 'POST',
+    //         headers: myHeaders,
+    //         body: raw,
+    //         redirect: 'follow',
+    //     };
 
-        const result = await fetch('https://api.shyft.to/sol/v1/wallet/send_sol', requestOptions);
-        return result.json();
-    }
+    //     const result = await fetch('https://api.shyft.to/sol/v1/wallet/send_sol', requestOptions);
+    //     return result.json();
+    // }
 
-    async function handleSign(encode) {
-        var myHeaders = new Headers();
-        myHeaders.append('x-api-key', 'QeeLQ-Ia7f7LrP-M');
-        myHeaders.append('Content-Type', 'application/json');
-        var raw = JSON.stringify({
-            network: 'devnet',
-            private_keys: ['4PNT842b5QAFdDsfuorJVc4JRp5YcyW9yRcr4DgAZPYTQNMWtVvGFEJPrGxirpUs8LQSNnxmHpczduJKNypAAvKQ'],
-            encoded_transaction: encode,
-        });
+    // async function handleSign(encode) {
+    //     var myHeaders = new Headers();
+    //     myHeaders.append('x-api-key', 'QeeLQ-Ia7f7LrP-M');
+    //     myHeaders.append('Content-Type', 'application/json');
+    //     var raw = JSON.stringify({
+    //         network: 'devnet',
+    //         private_keys: ['4PNT842b5QAFdDsfuorJVc4JRp5YcyW9yRcr4DgAZPYTQNMWtVvGFEJPrGxirpUs8LQSNnxmHpczduJKNypAAvKQ'],
+    //         encoded_transaction: encode,
+    //     });
 
-        var requestOptions = {
-            method: 'POST',
-            headers: myHeaders,
-            body: raw,
-            redirect: 'follow',
-        };
+    //     var requestOptions = {
+    //         method: 'POST',
+    //         headers: myHeaders,
+    //         body: raw,
+    //         redirect: 'follow',
+    //     };
 
-        const result = await fetch('https://api.shyft.to/sol/v1/wallet/sign_transaction', requestOptions);
-        return result.json();
-    }
+    //     const result = await fetch('https://api.shyft.to/sol/v1/wallet/sign_transaction', requestOptions);
+    //     return result.json();
+    // }
 
     async function handleRefuse() {
-        var result = await handleSend();
-        setTimeout(async () => {
-            var encode = result.result.encoded_transaction;
-            var resultSign = await handleSign(encode);
-            if (resultSign.success) {
-                httpRequest
-                    .delete(`/rest/post/delete/${id}`)
-                    .then((res) => {
-                        var post = posts.find((item) => {
-                            return item.id === id;
+        // var result = await handleSend();
+        // setTimeout(async () => {
+        //     var encode = result.result.encoded_transaction;
+        //     var resultSign = await handleSign(encode);
+        //     if (resultSign.success) {
+        //         httpRequest
+        //             .delete(`/rest/post/delete/${id}`)
+        //             .then((res) => {
+        //                 var post = posts.find((item) => {
+        //                     return item.id === id;
+        //                 });
+        //                 var images = post.images;
+        //                 images.forEach((item) => {
+        //                     const imgRef = ref(storage, `images/${item.name}`);
+        //                     deleteObject(imgRef)
+        //                         .then(() => {})
+        //                         .catch((error) => {
+        //                             console.log(error);
+        //                         });
+        //                 });
+        //                 alert('delete success');
+        //                 navigate(0);
+        //             })
+        //             .catch((error) => {
+        //                 console.log(error);
+        //             });
+        //     }
+        // }, 1000);
+        httpRequest
+            .delete(`/rest/post/delete/${id}`)
+            .then((res) => {
+                var post = posts.find((item) => {
+                    return item.id === id;
+                });
+                var images = post.images;
+                images.forEach((item) => {
+                    const imgRef = ref(storage, `images/${item.name}`);
+                    deleteObject(imgRef)
+                        .then(() => {})
+                        .catch((error) => {
+                            console.log(error);
                         });
-                        var images = post.images;
-                        images.forEach((item) => {
-                            const imgRef = ref(storage, `images/${item.name}`);
-                            deleteObject(imgRef)
-                                .then(() => {})
-                                .catch((error) => {
-                                    console.log(error);
-                                });
-                        });
-                        alert('delete success');
-                        navigate(0);
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                    });
-            }
-        }, 1000);
+                });
+                alert('delete success');
+                navigate(0);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     }
     return (
         <>
@@ -167,7 +188,7 @@ function AllowPost() {
                                             className={styles['btn']}
                                             onClick={() => handleAccept(item.id)}
                                         >
-                                            Accept
+                                            Approve
                                         </Button>
                                         <Button
                                             variant="danger"

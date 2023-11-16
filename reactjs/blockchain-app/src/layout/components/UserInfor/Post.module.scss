@@ -1,8 +1,13 @@
+.post-wrapper {
+    position: relative;
+}
+
 .post {
     background-color: #f0f0f0;
 
     margin-top: 20px;
-
+    color: #2e2d2d;
+    text-decoration: none;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
@@ -100,4 +105,58 @@
     background-color: #2e2d2d; /* Màu nền với độ trong suốt */
     font-size: 20px;
     color: #ffffff;
+}
+
+.gift-btn {
+    position: absolute;
+    font-size: 1.4rem;
+    right: 5px;
+    top: 5px;
+    z-index: 100;
+}
+
+.gift-icon {
+    margin-right: 4px;
+}
+
+.modal-wrapper {
+    max-height: 470px;
+    overflow-y: scroll;
+}
+
+.modal {
+    display: flex;
+    margin-bottom: 10px;
+    .img-background {
+        background-color: #ffb323;
+        display: flex;
+        width: 132px;
+        height: 146px;
+        border-radius: 30px;
+        .gift-icon-modal {
+            margin: auto;
+            font-size: 5rem;
+        }
+    }
+
+    .text-heading {
+        font-size: 1.4rem;
+    }
+
+    .text {
+        margin: 0;
+        font-size: 1.2rem;
+
+        .bold {
+            font-weight: 700;
+        }
+    }
+
+    .wrapper-btn {
+        margin-top: 10px;
+
+        .btn {
+            font-size: 1.3rem;
+        }
+    }
 }

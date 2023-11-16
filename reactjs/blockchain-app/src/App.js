@@ -14,9 +14,9 @@ import Forgot from './layout/components/Forgot';
 
 import Home from './layout/components/Home';
 import UserInfor from './layout/components/UserInfor';
-import ReportFeedback from './layout/components/admin/ReportFeedback';
 import ProtectedRoute from './components/ProtectedRoute';
 import EditProfile from './layout/components/EditProfile';
+import Price from './layout/components/admin/Price';
 
 function App() {
     return (
@@ -35,7 +35,7 @@ function App() {
                         <Route path="post" element={<PostAdmin />} />
                         <Route path="statistic" element={<Statistic />} />
                         <Route path="allowPost" element={<AllowPost />} />
-                        <Route path="reportFeedback" element={<ReportFeedback />} />
+                        <Route path="price" element={<Price />} />
                     </Route>
                     <Route path="/" element={<MainLayout />}>
                         <Route index element={<Home />} />

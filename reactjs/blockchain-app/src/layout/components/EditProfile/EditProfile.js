@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './EditProfile.module.scss';
 import httpRequest from '~/utils/httpRequest';
 import { useNavigate } from 'react-router-dom';
@@ -11,7 +11,7 @@ function getUser() {
 }
 
 const EditProfile = () => {
-    const user = getUser();
+    let user = getUser();
     const [accountData, setAccountData] = useState({
         Fullname: user && user.fullname,
         Password: user && user.password,
@@ -25,6 +25,23 @@ const EditProfile = () => {
         phone: '',
     });
     const navigate = useNavigate();
+
+    useEffect(() => {
+        httpRequest
+            .get(`/rest/account/${user.id}`)
+            .then((res) => {
+                setAccountData({
+                    Fullname: res.data.fullname,
+                    Password: res.data.password,
+                    Birthday: res.data.birthday,
+                    Phone: res.data.phone,
+                    Wallet: res.data.wallet,
+                });
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }, []);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
