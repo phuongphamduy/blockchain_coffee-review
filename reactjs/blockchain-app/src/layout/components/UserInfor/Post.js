@@ -11,6 +11,8 @@ import httpRequest from '~/utils/httpRequest';
 const Post = ({ posts }) => {
     const [show, setShow] = useState(false);
     const [prices, setPrices] = useState([]);
+    const [postStatistics, setPostStatistics] = useState([]);
+    const [pstatistic, setPStatistic] = useState();
 
     useEffect(() => {
         httpRequest
@@ -21,13 +23,25 @@ const Post = ({ posts }) => {
             .catch((error) => {
                 console.log(error);
             });
-    });
+        httpRequest
+            .get('/rest/post/report')
+            .then((res) => {
+                setPostStatistics(res.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }, []);
 
     function handleClose() {
         setShow(false);
     }
 
-    function handleOpen() {
+    function handleOpen(id) {
+        let p = postStatistics.find((item) => {
+            return item[0] === id;
+        });
+        setPStatistic(p);
         setShow(true);
     }
     return (
@@ -58,7 +72,7 @@ const Post = ({ posts }) => {
                                     <Button
                                         variant="primary"
                                         className={styles['gift-btn']}
-                                        onClick={() => handleOpen()}
+                                        onClick={() => handleOpen(item.id)}
                                     >
                                         <FontAwesomeIcon icon={faGift} className={styles['gift-icon']} />
                                         Gift
@@ -83,7 +97,7 @@ const Post = ({ posts }) => {
                         {prices &&
                             prices.map((item) => {
                                 return (
-                                    <div className={styles['modal']}>
+                                    <div key={item.id} className={styles['modal']}>
                                         <div className={styles['img-background']}>
                                             <FontAwesomeIcon icon={faGift} className={styles['gift-icon-modal']} />
                                         </div>
@@ -97,11 +111,21 @@ const Post = ({ posts }) => {
                                             <p className={styles['text']}>
                                                 - Đồng sols: <span className={styles['bold']}>{item.sols} sol</span>
                                             </p>
-                                            <div className={styles['wrapper-btn']}>
-                                                <Button variant="primary" className={styles['btn']}>
-                                                    Yêu cầu phần thưởng
-                                                </Button>
-                                            </div>
+                                            {pstatistic &&
+                                            pstatistic[3] >= item.comments &&
+                                            pstatistic[4] >= item.likes ? (
+                                                <div className={styles['wrapper-btn']}>
+                                                    <Button variant="primary" className={styles['btn']}>
+                                                        Yêu cầu phần thưởng
+                                                    </Button>
+                                                </div>
+                                            ) : (
+                                                <div className={styles['wrapper-btn']}>
+                                                    <Button variant="danger" className={styles['btn']} disabled>
+                                                        Không thỏa mãn điều kiện
+                                                    </Button>
+                                                </div>
+                                            )}
                                         </div>
                                     </div>
                                 );

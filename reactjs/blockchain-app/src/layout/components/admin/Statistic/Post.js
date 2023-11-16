@@ -13,6 +13,7 @@ function Post({ handleShowAccount, posts }) {
                 <Table striped bordered hover>
                     <thead>
                         <tr>
+                            <th>Id</th>
                             <th>Name</th>
                             <th>Address</th>
                             <th>Comments</th>
@@ -30,6 +31,7 @@ function Post({ handleShowAccount, posts }) {
                                         <td>{item[2]}</td>
                                         <td>{item[3]}</td>
                                         <td>{item[4]}</td>
+                                        <td>{item[5]}</td>
                                     </tr>
                                 );
                             })}

@@ -57,5 +57,8 @@ public class Post implements Serializable {
 	@JsonManagedReference(value = "interaction-post")
 	@OneToMany(mappedBy = "post")
 	List<Interaction> interactions;
+	@JsonManagedReference(value = "pricepost-post")
+	@OneToMany(mappedBy = "post")
+	List<PricePost> priceposts;
 
 }
