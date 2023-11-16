@@ -13,6 +13,7 @@ const Post = ({ posts }) => {
     const [prices, setPrices] = useState([]);
     const [postStatistics, setPostStatistics] = useState([]);
     const [pstatistic, setPStatistic] = useState();
+    const [pricepost, setPricePost] = useState();
 
     useEffect(() => {
         httpRequest
@@ -37,10 +38,23 @@ const Post = ({ posts }) => {
         setShow(false);
     }
 
+    async function getPostPrice(postid) {
+        await httpRequest
+            .get(`/rest/pricepost/byPost/${postid}`)
+            .then((res) => {
+                console.log(res.data);
+                setPricePost(res.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+
     function handleOpen(id) {
         let p = postStatistics.find((item) => {
             return item[0] === id;
         });
+        getPostPrice(id);
         setPStatistic(p);
         setShow(true);
     }
@@ -59,6 +73,7 @@ const Post = ({ posts }) => {
             .catch((error) => {
                 console.log(error);
             });
+        await getPostPrice(pstatistic[0]);
     }
     return (
         <>
@@ -112,43 +127,58 @@ const Post = ({ posts }) => {
                     <div className={styles['modal-wrapper']}>
                         {prices &&
                             prices.map((item) => {
-                                return (
-                                    <div key={item.id} className={styles['modal']}>
-                                        <div className={styles['img-background']}>
-                                            <FontAwesomeIcon icon={faGift} className={styles['gift-icon-modal']} />
-                                        </div>
-                                        <div className={styles['info']}>
-                                            <h5 className={styles['text-heading']}>Điều kiện</h5>
-                                            <p className={styles['text']}>
-                                                - Số lượng comment đạt: {item.comments} lượt
-                                            </p>
-                                            <p className={styles['text']}>- Số lượng like đạt: {item.likes} lượt</p>
-                                            <h5 className={styles['text-heading']}>Phần thưởng</h5>
-                                            <p className={styles['text']}>
-                                                - Đồng sols: <span className={styles['bold']}>{item.sols} sol</span>
-                                            </p>
-                                            {pstatistic &&
-                                            pstatistic[3] >= item.comments &&
-                                            pstatistic[4] >= item.likes ? (
-                                                <div className={styles['wrapper-btn']}>
-                                                    <Button
-                                                        variant="primary"
-                                                        className={styles['btn']}
-                                                        onClick={() => requestPrice(item.id)}
-                                                    >
-                                                        Yêu cầu phần thưởng
-                                                    </Button>
+                                if (pricepost) {
+                                    if (
+                                        pricepost.every((pp) => {
+                                            return pp.idprice !== item.id;
+                                        })
+                                    ) {
+                                        return (
+                                            <div key={item.id} className={styles['modal']}>
+                                                <div className={styles['img-background']}>
+                                                    <FontAwesomeIcon
+                                                        icon={faGift}
+                                                        className={styles['gift-icon-modal']}
+                                                    />
                                                 </div>
-                                            ) : (
-                                                <div className={styles['wrapper-btn']}>
-                                                    <Button variant="danger" className={styles['btn']} disabled>
-                                                        Không thỏa mãn điều kiện
-                                                    </Button>
+                                                <div className={styles['info']}>
+                                                    <h5 className={styles['text-heading']}>Điều kiện</h5>
+                                                    <p className={styles['text']}>
+                                                        - Số lượng comment đạt: {item.comments} lượt
+                                                    </p>
+                                                    <p className={styles['text']}>
+                                                        - Số lượng like đạt: {item.likes} lượt
+                                                    </p>
+                                                    <h5 className={styles['text-heading']}>Phần thưởng</h5>
+                                                    <p className={styles['text']}>
+                                                        - Đồng sols:{' '}
+                                                        <span className={styles['bold']}>{item.sols} sol</span>
+                                                    </p>
+                                                    {pstatistic &&
+                                                    pstatistic[3] >= item.comments &&
+                                                    pstatistic[4] >= item.likes ? (
+                                                        <div className={styles['wrapper-btn']}>
+                                                            <Button
+                                                                variant="primary"
+                                                                className={styles['btn']}
+                                                                onClick={() => requestPrice(item.id)}
+                                                            >
+                                                                Yêu cầu phần thưởng
+                                                            </Button>
+                                                        </div>
+                                                    ) : (
+                                                        <div className={styles['wrapper-btn']}>
+                                                            <Button variant="danger" className={styles['btn']} disabled>
+                                                                Không thỏa mãn điều kiện
+                                                            </Button>
+                                                        </div>
+                                                    )}
                                                 </div>
-                                            )}
-                                        </div>
-                                    </div>
-                                );
+                                            </div>
+                                        );
+                                    }
+                                }
+                                return <></>;
                             })}
                     </div>
                 </Modal.Body>

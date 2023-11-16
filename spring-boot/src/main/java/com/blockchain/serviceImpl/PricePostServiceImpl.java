@@ -29,4 +29,9 @@ public class PricePostServiceImpl implements PricePostService {
 		return dao.save(pricepost);
 	}
 
+	@Override
+	public List<PricePost> getByPostId(Integer id) {
+		return dao.getByPostId(id);
+	}
+
 }

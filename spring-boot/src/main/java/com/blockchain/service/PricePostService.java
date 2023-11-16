@@ -11,4 +11,6 @@ public interface PricePostService {
 
 	PricePost request(JsonNode pp);
 
+	List<PricePost> getByPostId(Integer id);
+
 }
