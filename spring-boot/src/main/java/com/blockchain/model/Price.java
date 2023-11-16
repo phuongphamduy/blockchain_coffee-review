@@ -27,7 +27,7 @@ public class Price implements Serializable {
 	Integer comments;
 	Integer likes;
 	Double sols;
-	@JsonManagedReference
+	@JsonManagedReference(value = "pricepost-price")
 	@OneToMany(mappedBy = "price")
 	List<PricePost> priceposts;
 }

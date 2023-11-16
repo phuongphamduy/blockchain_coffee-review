@@ -44,6 +44,22 @@ const Post = ({ posts }) => {
         setPStatistic(p);
         setShow(true);
     }
+
+    async function requestPrice(priceid) {
+        await httpRequest
+            .post('/rest/pricepost/request', {
+                idp: pstatistic[0],
+                idprice: priceid,
+                post: { id: pstatistic[0] },
+                price: { id: priceid },
+            })
+            .then((res) => {
+                console.log(res.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
     return (
         <>
             <Container>
@@ -115,7 +131,11 @@ const Post = ({ posts }) => {
                                             pstatistic[3] >= item.comments &&
                                             pstatistic[4] >= item.likes ? (
                                                 <div className={styles['wrapper-btn']}>
-                                                    <Button variant="primary" className={styles['btn']}>
+                                                    <Button
+                                                        variant="primary"
+                                                        className={styles['btn']}
+                                                        onClick={() => requestPrice(item.id)}
+                                                    >
                                                         Yêu cầu phần thưởng
                                                     </Button>
                                                 </div>
