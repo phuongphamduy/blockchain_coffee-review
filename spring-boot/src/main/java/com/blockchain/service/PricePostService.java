@@ -13,4 +13,10 @@ public interface PricePostService {
 
 	List<PricePost> getByPostId(Integer id);
 
+	List<Object[]> getRequestPrice();
+
+	void updateSend(JsonNode send);
+
+	void delete(Integer id);
+
 }

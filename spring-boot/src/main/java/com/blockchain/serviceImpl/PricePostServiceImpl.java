@@ -34,4 +34,22 @@ public class PricePostServiceImpl implements PricePostService {
 		return dao.getByPostId(id);
 	}
 
+	@Override
+	public List<Object[]> getRequestPrice() {
+		return dao.getRequestPrice();
+	}
+
+	@Override
+	public void updateSend(JsonNode send) {
+		PricePost pp = dao.findById(send.get("id").asInt()).get();
+		pp.setIssend(send.get("issend").asBoolean());
+		dao.save(pp);
+	}
+
+	@Override
+	public void delete(Integer id) {
+		dao.deleteById(id);
+		
+	}
+
 }
