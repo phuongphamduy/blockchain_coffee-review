@@ -10,9 +10,9 @@ import { storage } from '~/utils/firebase';
 import { v4 as uuidv4 } from 'uuid';
 import httpRequest from '~/utils/httpRequest';
 import { useSelector } from 'react-redux';
-import { Connection, SystemProgram, Transaction, clusterApiUrl, LAMPORTS_PER_SOL, Keypair } from '@solana/web3.js';
-import bs58 from 'bs58';
-import * as buffer from 'buffer';
+// import { Connection, SystemProgram, Transaction, clusterApiUrl, LAMPORTS_PER_SOL, Keypair } from '@solana/web3.js';
+// import bs58 from 'bs58';
+// import * as buffer from 'buffer';
 
 function getUser() {
     if (sessionStorage.getItem('user')) {
@@ -27,17 +27,17 @@ function PostNew({ close }) {
     const [show, setShow] = useState(false);
     const coordinate = useSelector((state) => state.coordinate.value);
     const user = getUser();
-    var provider;
-    const getProvider = () => {
-        if ('phantom' in window) {
-            const provider = window.phantom?.solana;
+    // var provider;
+    // const getProvider = () => {
+    //     if ('phantom' in window) {
+    //         const provider = window.phantom?.solana;
 
-            if (provider?.isPhantom) {
-                return provider;
-            }
-        }
-    };
-    window.Buffer = buffer.Buffer;
+    //         if (provider?.isPhantom) {
+    //             return provider;
+    //         }
+    //     }
+    // };
+    // window.Buffer = buffer.Buffer;
     function handleChange(e) {
         var fileList = e.target.files;
         var array = [];
@@ -62,80 +62,76 @@ function PostNew({ close }) {
         setShow(true);
     }
 
-    async function handleSend() {
-        provider = getProvider();
-        const connection = new Connection(clusterApiUrl('devnet'), 'confirmed');
-        const transaction = new Transaction().add(
-            SystemProgram.transfer({
-                fromPubkey: provider.publicKey,
-                toPubkey: Keypair.fromSecretKey(
-                    bs58.decode(
-                        '4PNT842b5QAFdDsfuorJVc4JRp5YcyW9yRcr4DgAZPYTQNMWtVvGFEJPrGxirpUs8LQSNnxmHpczduJKNypAAvKQ',
-                    ),
-                ).publicKey,
-                lamports: 0.1 * LAMPORTS_PER_SOL,
-            }),
-        );
-        let blockhash = (await connection.getLatestBlockhash('finalized')).blockhash;
-        transaction.recentBlockhash = blockhash;
-        transaction.feePayer = provider.publicKey;
-        try {
-            const { signature } = await provider.signAndSendTransaction(transaction);
-            await connection.getSignatureStatus(signature);
-            alert('payment success!');
-            await httpRequest.patch(`/rest/account/wallet/${user.id}`, { wallet: provider.publicKey });
-            return true;
-        } catch (error) {
-            return false;
-        }
-    }
+    // async function handleSend() {
+    //     provider = getProvider();
+    //     const connection = new Connection(clusterApiUrl('devnet'), 'confirmed');
+    //     const transaction = new Transaction().add(
+    //         SystemProgram.transfer({
+    //             fromPubkey: provider.publicKey,
+    //             toPubkey: Keypair.fromSecretKey(
+    //                 bs58.decode(
+    //                     '4PNT842b5QAFdDsfuorJVc4JRp5YcyW9yRcr4DgAZPYTQNMWtVvGFEJPrGxirpUs8LQSNnxmHpczduJKNypAAvKQ',
+    //                 ),
+    //             ).publicKey,
+    //             lamports: 0.1 * LAMPORTS_PER_SOL,
+    //         }),
+    //     );
+    //     let blockhash = (await connection.getLatestBlockhash('finalized')).blockhash;
+    //     transaction.recentBlockhash = blockhash;
+    //     transaction.feePayer = provider.publicKey;
+    //     try {
+    //         const { signature } = await provider.signAndSendTransaction(transaction);
+    //         await connection.getSignatureStatus(signature);
+    //         alert('payment success!');
+    //         await httpRequest.patch(`/rest/account/wallet/${user.id}`, { wallet: provider.publicKey });
+    //         return true;
+    //     } catch (error) {
+    //         return false;
+    //     }
+    // }
 
     async function handlePost() {
         if (ListImg.length < 7) {
             alert('Choose atlest 7 images');
             return;
         }
-        var isSend = await handleSend();
-        if (isSend) {
-            const imgUrls = [];
-            for (var i = 0; i < ListImg.length; i++) {
-                var obj = { name: `${ListImg[i].name + uuidv4()}` };
-                var imgRef = ref(storage, `images/${obj.name}`);
-                const snapshot = await uploadBytes(imgRef, ListImg[i].file);
-                obj.url = await getDownloadURL(snapshot.ref);
-                imgUrls.push(obj);
-            }
-            const post = {
-                name: name,
-                address: coordinate.address,
-                lat: coordinate.lat,
-                lng: coordinate.lng,
-                description,
-                createdate: new Date(),
-                account: {
-                    id: user.id,
-                },
-                get images() {
-                    return imgUrls.map((item) => {
-                        return {
-                            url: item.url,
-                            name: item.name,
-                        };
-                    });
-                },
-            };
-            httpRequest
-                .post('/rest/post', post)
-                .then((res) => {
-                    alert('Post success');
-                    close();
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
-        } else {
-            alert('post failed');
+        const imgUrls = [];
+        for (var i = 0; i < ListImg.length; i++) {
+            var obj = { name: `${ListImg[i].name + uuidv4()}` };
+            var imgRef = ref(storage, `images/${obj.name}`);
+            const snapshot = await uploadBytes(imgRef, ListImg[i].file);
+            obj.url = await getDownloadURL(snapshot.ref);
+            imgUrls.push(obj);
         }
+        const post = {
+            name: name,
+            address: coordinate.address,
+            lat: coordinate.lat,
+            lng: coordinate.lng,
+            description,
+            createdate: new Date(),
+            account: {
+                id: user.id,
+            },
+            get images() {
+                return imgUrls.map((item) => {
+                    return {
+                        url: item.url,
+                        name: item.name,
+                    };
+                });
+            },
+        };
+        httpRequest
+            .post('/rest/post', post)
+            .then((res) => {
+                alert('Post success');
+                close();
+            })
+            .catch((error) => {
+                alert('post failed');
+                console.log(error);
+            });
     }
 
     function handleDelete(e) {

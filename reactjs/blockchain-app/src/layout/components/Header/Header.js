@@ -85,6 +85,7 @@ function Header() {
             const resp = await provider.request({ method: 'connect' });
             setIsConnect(provider.isConnected);
             console.log(resp.publicKey.toString());
+            httpRequest.patch(`/rest/account/wallet/${user.id}`, { wallet: provider.publicKey });
         } catch (err) {
             // { code: 4001, message: 'User rejected the request.' }
         }
