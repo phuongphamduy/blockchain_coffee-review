@@ -132,7 +132,7 @@ function RegisterForm() {
 
                                     <hr className="my-4" />
 
-                                    <div className="d-grid mb-2">
+                                    {/* <div className="d-grid mb-2">
                                         <button
                                             className="btn btn-lg btn-google btn-login fw-bold text-uppercase text-white bg-danger"
                                             type="submit"
@@ -150,7 +150,7 @@ function RegisterForm() {
                                             <FontAwesomeIcon icon={faFacebookF} />{' '}
                                             <span style={{ marginLeft: '8px' }}></span> Sign up with Facebook
                                         </button>
-                                    </div>
+                                    </div> */}
                                 </form>
                             </div>
                         </div>

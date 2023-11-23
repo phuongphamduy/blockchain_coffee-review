@@ -105,7 +105,7 @@ function LoginForm() {
                                         </button>
                                     </div>
                                 <hr></hr>
-                                    <div className="d-grid">
+                                    {/* <div className="d-grid">
                                     <Link to="/forgot" className="d-block text-center mt-2 small fs-4">
                                         Forgot Password?
                                     </Link>
@@ -129,7 +129,7 @@ function LoginForm() {
                                             <FontAwesomeIcon icon={faFacebookF} />
                                             <span style={{ marginLeft: '8px' }}></span> Sign in with Facebook
                                         </button>
-                                    </div>
+                                    </div> */}
                                 </form>
                             </div>
                         </div>
