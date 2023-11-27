@@ -60,3 +60,22 @@
         }
     }
 }
+
+.icon-wrapper {
+    display: flex;
+}
+
+.loading-icon {
+    margin: auto;
+    font-size: 2rem;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

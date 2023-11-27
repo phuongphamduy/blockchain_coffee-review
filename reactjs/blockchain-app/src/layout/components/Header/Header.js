@@ -103,7 +103,7 @@ function Header() {
     return (
         <>
             <Col className={styles['d-flex']}>
-                <Link to="/" className={styles['logo-section']}>
+                <Link to="/post" className={styles['logo-section']}>
                     <img src={Logo} className={styles['header-logo']} alt="Logo" />
                     <h1>Coffee Review</h1>
                 </Link>

@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form';
 import { useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faSpinner, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { storage } from '~/utils/firebase';
 import { v4 as uuidv4 } from 'uuid';
@@ -27,6 +27,7 @@ function PostNew({ close }) {
     const [show, setShow] = useState(false);
     const coordinate = useSelector((state) => state.coordinate.value);
     const user = getUser();
+    const [loadingIcon, setLoadingIcon] = useState(false);
     // var provider;
     // const getProvider = () => {
     //     if ('phantom' in window) {
@@ -95,6 +96,7 @@ function PostNew({ close }) {
             alert('Choose atlest 7 images');
             return;
         }
+        setLoadingIcon(true);
         const imgUrls = [];
         for (var i = 0; i < ListImg.length; i++) {
             var obj = { name: `${ListImg[i].name + uuidv4()}` };
@@ -126,6 +128,7 @@ function PostNew({ close }) {
             .post('/rest/post', post)
             .then((res) => {
                 alert('Post success');
+                setLoadingIcon(false);
                 close();
             })
             .catch((error) => {
@@ -197,9 +200,15 @@ function PostNew({ close }) {
                     <Button variant="primary" className={styles['btn']} onClick={handlePost}>
                         Post
                     </Button>
+
                     <Button variant="danger" className={styles['btn']} onClick={handleShow}>
                         View image
                     </Button>
+                    {loadingIcon && (
+                        <div className={styles['icon-wrapper']}>
+                            <FontAwesomeIcon icon={faSpinner} className={styles['loading-icon']} />
+                        </div>
+                    )}
                 </div>
             </div>
             <Modal show={show} onHide={handleClose} size="lg">
