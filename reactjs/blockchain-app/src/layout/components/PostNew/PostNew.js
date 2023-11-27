@@ -197,13 +197,18 @@ function PostNew({ close }) {
                     )}
                 </div>
                 <div className={styles['btn-group']}>
-                    <Button variant="primary" className={styles['btn']} onClick={handlePost}>
-                        Post
-                    </Button>
+                    {!loadingIcon && (
+                        <>
+                            <Button variant="primary" className={styles['btn']} onClick={handlePost}>
+                                Post
+                            </Button>
 
-                    <Button variant="danger" className={styles['btn']} onClick={handleShow}>
-                        View image
-                    </Button>
+                            <Button variant="danger" className={styles['btn']} onClick={handleShow}>
+                                View image
+                            </Button>
+                        </>
+                    )}
+
                     {loadingIcon && (
                         <div className={styles['icon-wrapper']}>
                             <FontAwesomeIcon icon={faSpinner} className={styles['loading-icon']} />
